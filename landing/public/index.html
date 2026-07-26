@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Denial is a Flutter-native Wayland compositor.">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#09090b">
+    <title>Denial — Flutter-native Wayland compositor</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background: #09090b;
+        color: #fafafa;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 30%, rgb(90 65 180 / 18%), transparent 32rem),
+          #09090b;
+      }
+
+      main {
+        width: min(38rem, calc(100% - 3rem));
+        text-align: center;
+      }
+
+      .eyebrow {
+        margin: 0 0 1rem;
+        color: #a1a1aa;
+        font-size: 0.75rem;
+        font-weight: 650;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(4rem, 18vw, 8rem);
+        font-weight: 700;
+        letter-spacing: -0.08em;
+        line-height: 0.9;
+      }
+
+      p {
+        max-width: 31rem;
+        margin: 1.75rem auto 0;
+        color: #a1a1aa;
+        font-size: clamp(1rem, 3vw, 1.15rem);
+        line-height: 1.65;
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      a {
+        color: #e4e4e7;
+        font-size: 0.9rem;
+        text-underline-offset: 0.3em;
+        transition: color 160ms ease;
+      }
+
+      a:hover,
+      a:focus-visible {
+        color: #c4b5fd;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Something different is taking shape</p>
+      <h1>Denial</h1>
+      <p>
+        A Flutter-native Wayland compositor. The full website is being built;
+        the compositor is already alive.
+      </p>
+      <nav aria-label="Project links">
+        <a href="https://manual.denialwm.org/">Manual</a>
+        <a href="https://github.com/denialwm/denial">GitHub</a>
+      </nav>
+    </main>
+  </body>
+</html>
