@@ -17,25 +17,34 @@ markup:
 
 menu:
   main:
+    - name: Website
+      url: "https://denialwm.org/"
+      weight: 1
     - name: Manual
       pageRef: /docs
-      weight: 1
-    - name: Search
       weight: 2
+    - name: Search
+      weight: 3
       params:
         type: search
     - name: GitHub
       url: "https://github.com/denialwm/denial"
-      weight: 3
+      weight: 4
       params:
         icon: github
 
 params:
-  description: "Documentation for the Denial Wayland compositor."
+  description: "Documentation for Denial, a Flutter-native Wayland compositor."
 
   navbar:
-    displayTitle: true
-    displayLogo: false
+    displayTitle: false
+    displayLogo: true
+    logo:
+      path: images/denial.svg
+      dark: images/denial-dark.svg
+      link: /
+      width: 116
+      height: 35
 
   theme:
     default: system

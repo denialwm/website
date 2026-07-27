@@ -3,97 +3,657 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Denial is a Flutter-native Wayland compositor.">
-    <meta name="robots" content="noindex">
-    <meta name="theme-color" content="#09090b">
+    <meta
+      name="description"
+      content="Denial is a Flutter-native Wayland compositor. Flutter owns the desktop scene itself: the shell, its motion, and the composition of Wayland applications."
+    >
+    <meta name="theme-color" content="#0b0910">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://denialwm.org/">
+    <meta property="og:title" content="Denial — Flutter-native Wayland compositor">
+    <meta
+      property="og:description"
+      content="Origin does not have to dictate purpose. A Wayland compositor with Flutter at its foundation."
+    >
+    <meta property="og:image" content="https://denialwm.org/assets/desktop.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="/assets/denial-dark.svg" type="image/svg+xml">
     <title>Denial — Flutter-native Wayland compositor</title>
     <style>
       :root {
         color-scheme: dark;
+        --bg: #0b0910;
+        --surface: #121019;
+        --surface-raised: #181521;
+        --line: rgb(240 238 245 / 10%);
+        --line-strong: rgb(183 157 232 / 24%);
+        --text: #f0eef5;
+        --muted: #aba6b5;
+        --quiet: #77717f;
+        --accent: #9c79db;
+        --accent-bright: #bea6ea;
+        --accent-deep: #7150b8;
         font-family:
           Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
           "Segoe UI", sans-serif;
-        background: #09090b;
-        color: #fafafa;
+        background: var(--bg);
+        color: var(--text);
+        font-synthesis: none;
       }
 
       * {
         box-sizing: border-box;
       }
 
-      body {
-        min-height: 100vh;
-        margin: 0;
-        display: grid;
-        place-items: center;
-        overflow: hidden;
-        background:
-          radial-gradient(circle at 50% 30%, rgb(90 65 180 / 18%), transparent 32rem),
-          #09090b;
+      html {
+        scroll-behavior: smooth;
       }
 
-      main {
-        width: min(38rem, calc(100% - 3rem));
+      body {
+        min-width: 20rem;
+        margin: 0;
+        overflow-x: hidden;
+        background:
+          radial-gradient(circle at 76% 10%, rgb(113 80 184 / 17%), transparent 30rem),
+          radial-gradient(circle at 8% 38%, rgb(56 89 153 / 10%), transparent 28rem),
+          var(--bg);
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-image:
+          linear-gradient(rgb(255 255 255 / 1.5%) 1px, transparent 1px),
+          linear-gradient(90deg, rgb(255 255 255 / 1.5%) 1px, transparent 1px);
+        background-size: 4rem 4rem;
+        content: "";
+        mask-image: linear-gradient(to bottom, black, transparent 70%);
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      a:focus-visible {
+        outline: 2px solid var(--accent-bright);
+        outline-offset: 4px;
+      }
+
+      .container {
+        width: min(72rem, calc(100% - 3rem));
+        margin-inline: auto;
+      }
+
+      .site-header {
+        display: flex;
+        min-height: 5.25rem;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .site-logo {
+        width: 7.3rem;
+      }
+
+      .site-nav {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .site-nav a {
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 160ms ease;
+      }
+
+      .site-nav a:hover {
+        color: var(--text);
+      }
+
+      .hero {
+        padding: clamp(5.5rem, 12vw, 9rem) 0 4rem;
         text-align: center;
       }
 
-      .eyebrow {
-        margin: 0 0 1rem;
-        color: #a1a1aa;
-        font-size: 0.75rem;
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin-bottom: 2rem;
+        padding: 0.5rem 0.8rem;
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        background: rgb(18 16 25 / 70%);
+        color: var(--muted);
+        font-size: 0.76rem;
         font-weight: 650;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.05em;
         text-transform: uppercase;
+        backdrop-filter: blur(12px);
+      }
+
+      .status::before {
+        width: 0.48rem;
+        height: 0.48rem;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 1rem var(--accent);
+        content: "";
       }
 
       h1 {
         margin: 0;
-        font-size: clamp(4rem, 18vw, 8rem);
-        font-weight: 700;
-        letter-spacing: -0.08em;
-        line-height: 0.9;
       }
 
-      p {
-        max-width: 31rem;
-        margin: 1.75rem auto 0;
-        color: #a1a1aa;
-        font-size: clamp(1rem, 3vw, 1.15rem);
+      .hero-wordmark {
+        width: min(31rem, 80vw);
+        margin-inline: auto;
+        filter: drop-shadow(0 1.2rem 3rem rgb(113 80 184 / 16%));
+      }
+
+      .hero-kicker {
+        margin: 1.8rem 0 0;
+        color: var(--accent-bright);
+        font-size: clamp(0.78rem, 1.5vw, 0.92rem);
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .hero-copy {
+        max-width: 48rem;
+        margin: 1.2rem auto 0;
+        color: var(--muted);
+        font-size: clamp(1.12rem, 2.3vw, 1.42rem);
         line-height: 1.65;
       }
 
-      nav {
+      .hero-copy strong {
+        color: var(--text);
+        font-weight: 580;
+      }
+
+      .actions {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
-        gap: 1.5rem;
-        margin-top: 2rem;
+        gap: 0.8rem;
+        margin-top: 2.2rem;
       }
 
-      a {
-        color: #e4e4e7;
+      .button {
+        display: inline-flex;
+        min-height: 2.9rem;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        padding: 0.72rem 1.1rem;
+        border: 1px solid var(--line);
+        border-radius: 0.7rem;
+        background: var(--surface-raised);
+        color: var(--text);
         font-size: 0.9rem;
-        text-underline-offset: 0.3em;
-        transition: color 160ms ease;
+        font-weight: 700;
+        text-decoration: none;
+        transition:
+          border-color 160ms ease,
+          background 160ms ease,
+          transform 160ms ease;
       }
 
-      a:hover,
-      a:focus-visible {
-        color: #c4b5fd;
+      .button:hover {
+        border-color: var(--line-strong);
+        background: #1d1928;
+        transform: translateY(-1px);
+      }
+
+      .button-primary {
+        border-color: transparent;
+        background: var(--accent-deep);
+      }
+
+      .button-primary:hover {
+        border-color: transparent;
+        background: #8060c4;
+      }
+
+      .button svg {
+        width: 1rem;
+        height: 1rem;
+      }
+
+      .architecture-rail {
+        display: flex;
+        max-width: 60rem;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        margin: 3.5rem auto 0;
+        color: var(--quiet);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.02em;
+      }
+
+      .architecture-rail span {
+        white-space: nowrap;
+      }
+
+      .architecture-rail i {
+        height: 1px;
+        flex: 1;
+        background: linear-gradient(90deg, var(--line), var(--line-strong));
+      }
+
+      .desktop-frame {
+        position: relative;
+        margin: 1rem 0 clamp(6rem, 11vw, 9rem);
+        padding: clamp(0.38rem, 1vw, 0.65rem);
+        border: 1px solid var(--line-strong);
+        border-radius: clamp(0.85rem, 2vw, 1.3rem);
+        background: linear-gradient(145deg, rgb(255 255 255 / 8%), rgb(255 255 255 / 2%));
+        box-shadow:
+          0 2.5rem 7rem rgb(0 0 0 / 42%),
+          0 0 7rem rgb(113 80 184 / 10%);
+      }
+
+      .desktop-frame::before {
+        position: absolute;
+        inset: -20% 12% 35%;
+        z-index: -1;
+        border-radius: 50%;
+        background: rgb(113 80 184 / 17%);
+        filter: blur(5rem);
+        content: "";
+      }
+
+      .desktop-frame img {
+        width: 100%;
+        border-radius: clamp(0.55rem, 1.5vw, 0.9rem);
+        background: #111;
+      }
+
+      .desktop-frame figcaption {
+        position: absolute;
+        right: 1rem;
+        bottom: -2.1rem;
+        color: var(--quiet);
+        font-size: 0.72rem;
+      }
+
+      .intro {
+        display: grid;
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+        gap: clamp(2rem, 8vw, 7rem);
+        align-items: start;
+        padding-bottom: 4.5rem;
+      }
+
+      .section-label {
+        margin: 0 0 1rem;
+        color: var(--accent-bright);
+        font-size: 0.73rem;
+        font-weight: 750;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        max-width: 34rem;
+        margin: 0;
+        font-size: clamp(2rem, 5vw, 3.7rem);
+        font-weight: 650;
+        letter-spacing: -0.045em;
+        line-height: 1.07;
+      }
+
+      .intro-copy {
+        margin: 0.1rem 0 0;
+        color: var(--muted);
+        font-size: clamp(1rem, 1.7vw, 1.16rem);
+        line-height: 1.8;
+      }
+
+      .intro-copy strong {
+        color: var(--text);
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        padding-bottom: clamp(6rem, 10vw, 9rem);
+      }
+
+      .card {
+        min-height: 15rem;
+        padding: clamp(1.4rem, 3vw, 2rem);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: linear-gradient(150deg, rgb(24 21 33 / 90%), rgb(15 13 20 / 88%));
+      }
+
+      .card-number {
+        color: var(--accent);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.75rem;
+      }
+
+      .card h3 {
+        margin: 3rem 0 0.75rem;
+        font-size: 1.2rem;
+        letter-spacing: -0.02em;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.93rem;
+        line-height: 1.65;
+      }
+
+      .project-status {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 3rem;
+        align-items: center;
+        margin-bottom: 6rem;
+        padding: clamp(1.6rem, 4vw, 2.5rem);
+        border: 1px solid var(--line-strong);
+        border-radius: 1rem;
+        background:
+          linear-gradient(110deg, rgb(113 80 184 / 13%), transparent 55%),
+          var(--surface);
+      }
+
+      .project-status h2 {
+        font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+      }
+
+      .project-status p {
+        max-width: 43rem;
+        margin: 0.8rem 0 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .capabilities {
+        display: flex;
+        max-width: 24rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 0.55rem;
+      }
+
+      .capabilities span {
+        padding: 0.42rem 0.65rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: #c9c4d0;
+        font-size: 0.74rem;
+        white-space: nowrap;
+      }
+
+      footer {
+        display: flex;
+        min-height: 6rem;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        border-top: 1px solid var(--line);
+        color: var(--quiet);
+        font-size: 0.78rem;
+      }
+
+      footer a {
+        color: var(--muted);
+        text-underline-offset: 0.25em;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (max-width: 48rem) {
+        .container {
+          width: min(100% - 2rem, 72rem);
+        }
+
+        .site-header {
+          min-height: 4.5rem;
+        }
+
+        .site-nav a:first-child {
+          display: none;
+        }
+
+        .hero {
+          padding-top: 4.8rem;
+        }
+
+        .architecture-rail {
+          gap: 0.45rem;
+          overflow: hidden;
+          font-size: 0.62rem;
+        }
+
+        .architecture-rail span:nth-of-type(3),
+        .architecture-rail i:nth-of-type(2) {
+          display: none;
+        }
+
+        .intro,
+        .project-status {
+          grid-template-columns: 1fr;
+        }
+
+        .cards {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          min-height: 12rem;
+        }
+
+        .card h3 {
+          margin-top: 2rem;
+        }
+
+        .capabilities {
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 30rem) {
+        .site-nav {
+          gap: 1rem;
+        }
+
+        .architecture-rail span:nth-of-type(2),
+        .architecture-rail i:nth-of-type(1) {
+          display: none;
+        }
+
+        .desktop-frame figcaption {
+          display: none;
+        }
+
+        footer {
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .button,
+        .site-nav a {
+          transition: none;
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <p class="eyebrow">Something different is taking shape</p>
-      <h1>Denial</h1>
-      <p>
-        A Flutter-native Wayland compositor. The full website is being built;
-        the compositor is already alive.
-      </p>
-      <nav aria-label="Project links">
+    <header class="site-header container">
+      <a href="/" aria-label="Denial home">
+        <img class="site-logo" src="/assets/denial-dark.svg" alt="Denial">
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#architecture">Architecture</a>
         <a href="https://manual.denialwm.org/">Manual</a>
         <a href="https://github.com/denialwm/denial">GitHub</a>
       </nav>
+    </header>
+
+    <main>
+      <section class="hero container" aria-labelledby="hero-title">
+        <div class="status">Active development · Linux x86-64</div>
+        <h1 id="hero-title">
+          <span class="visually-hidden">Denial</span>
+          <img
+            class="hero-wordmark"
+            src="/assets/denial-dark.svg"
+            alt=""
+            width="484"
+            height="144"
+          >
+        </h1>
+        <p class="hero-kicker">A Flutter-native Wayland compositor</p>
+        <p class="hero-copy">
+          <strong>Origin does not have to dictate purpose.</strong>
+          Flutter was created for application interfaces. Here, it owns the
+          desktop scene itself.
+        </p>
+        <div class="actions">
+          <a class="button button-primary" href="https://manual.denialwm.org/">
+            Read the manual
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path
+                d="m7 4 6 6-6 6"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.7"
+              />
+            </svg>
+          </a>
+          <a class="button" href="https://github.com/denialwm/denial">
+            View source
+          </a>
+        </div>
+        <div class="architecture-rail" aria-label="Composition pipeline">
+          <span>Wayland clients</span>
+          <i aria-hidden="true"></i>
+          <span>Rust / Smithay</span>
+          <i aria-hidden="true"></i>
+          <span>external textures</span>
+          <i aria-hidden="true"></i>
+          <span>Flutter scene</span>
+        </div>
+      </section>
+
+      <figure class="desktop-frame container">
+        <img
+          src="/assets/desktop.webp"
+          alt="A development build of the Denial desktop, with a terminal and settings window composed over a blue and purple background"
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+        >
+        <figcaption>Current development desktop · interfaces may change</figcaption>
+      </figure>
+
+      <section class="intro container" id="architecture">
+        <div>
+          <p class="section-label">Flutter at the foundation</p>
+          <h2>The shell is part of the compositor.</h2>
+        </div>
+        <p class="intro-copy">
+          Flutter is not an overlay placed on another compositor.
+          <strong>Rust and Smithay own native protocol, input, and display
+          state.</strong> The embedded Flutter shell owns the visible desktop:
+          windows, system surfaces, motion, gestures, and interaction.
+        </p>
+      </section>
+
+      <section class="cards container" aria-label="Denial architecture">
+        <article class="card">
+          <span class="card-number">01 / Native core</span>
+          <h3>Wayland belongs to Rust</h3>
+          <p>
+            Smithay manages clients, buffers, input devices, focus, output
+            configuration, DRM/KMS presentation, and native lifetimes.
+          </p>
+        </article>
+        <article class="card">
+          <span class="card-number">02 / Embedded shell</span>
+          <h3>Flutter owns what you see</h3>
+          <p>
+            An AOT-compiled Dart shell runs inside the compositor process and
+            defines layout, interaction, animation, and desktop policy.
+          </p>
+        </article>
+        <article class="card">
+          <span class="card-number">03 / Shared scene</span>
+          <h3>Clients become textures</h3>
+          <p>
+            Wayland buffers enter Flutter as external textures, then the scene
+            is rendered into a GBM atlas and presented through KMS.
+          </p>
+        </article>
+      </section>
+
+      <section class="project-status container">
+        <div>
+          <p class="section-label">Alive, not finished</p>
+          <h2>A complete session under active construction.</h2>
+          <p>
+            Denial already runs as a Wayland session with Xwayland,
+            multi-output, native input, direct screenshots, and portal screen
+            sharing. APIs and bundle boundaries may still change.
+          </p>
+        </div>
+        <div class="capabilities" aria-label="Current capabilities">
+          <span>Xwayland</span>
+          <span>Multi-output</span>
+          <span>Native input</span>
+          <span>Screenshots</span>
+          <span>Portal sharing</span>
+        </div>
+      </section>
     </main>
+
+    <footer class="container">
+      <span>Denial is free software, licensed GPL-3.0-or-later.</span>
+      <span>
+        <a href="https://manual.denialwm.org/">Manual</a>
+        ·
+        <a href="https://github.com/denialwm/denial">Source</a>
+      </span>
+    </footer>
   </body>
 </html>
