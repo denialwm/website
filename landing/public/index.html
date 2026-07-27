@@ -180,6 +180,7 @@
       }
 
       .hero-copy strong {
+        display: block;
         color: var(--text);
         font-weight: 580;
       }
@@ -258,7 +259,7 @@
 
       .desktop-frame {
         position: relative;
-        margin: 1rem 0 clamp(6rem, 11vw, 9rem);
+        margin: 1rem auto clamp(6rem, 11vw, 9rem);
         padding: clamp(0.38rem, 1vw, 0.65rem);
         border: 1px solid var(--line-strong);
         border-radius: clamp(0.85rem, 2vw, 1.3rem);
@@ -280,6 +281,9 @@
 
       .desktop-frame img {
         width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        object-fit: contain;
         border-radius: clamp(0.55rem, 1.5vw, 0.9rem);
         background: #111;
       }
