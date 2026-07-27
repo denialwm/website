@@ -1,50 +1,152 @@
 ---
 title: Getting started
+weight: 10
 prev: /docs
-next: architecture
+next: using-denial
 ---
 
-Denial currently targets **Arch Linux on x86-64**. It already runs as a
-complete Wayland session with Xwayland, multi-output, native input, direct
-screenshots, and portal screen sharing.
+Denial currently supports **Arch Linux on x86-64**. The first-party package
+installs the compositor, its matching Flutter engine, the desktop shell,
+Xwayland support, a UWSM session, and portal configuration.
 
 > [!WARNING]
-> Denial is under active development. Expect interfaces and configuration to
-> evolve, and keep another desktop session available while experimenting.
+> Denial is still a public alpha. Keep another graphical session installed so
+> you have a known-good way to update or repair the system.
 
-## Install on Arch Linux
+## Install
 
-Signed first-party packages are published for Arch x86-64. Add the Denial
-repository by following the
-[current installation guide](https://github.com/denialwm/denial/blob/main/docs/packaging/arch/INSTALL.md),
-then install or update Denial with:
+The guided installer verifies Denial's full signing-key fingerprint, shows
+every planned change, and asks before using `sudo`:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/denialwm/denial/refs/heads/main/install.sh | sh
+```
+
+> [!TIP]
+> The installer checks the complete Denial release-key fingerprint:
+> `AE4108FA5E91E26BE0EE331E0F5B3AD16E023091`.
+
+{{% details title="Manual repository setup" closed="true" %}}
+
+If you do not want to use the installer, download and inspect the public key
+yourself:
+
+```sh
+key_file="$(mktemp)"
+curl -fsSL \
+  -o "$key_file" \
+  https://denialwm.github.io/denial/denial-repo-key.asc
+gpg --show-keys --with-fingerprint "$key_file"
+```
+
+Only after the displayed fingerprint exactly matches the value above, import
+and locally trust it:
+
+```sh
+sudo pacman-key --add "$key_file"
+sudo pacman-key --lsign-key AE4108FA5E91E26BE0EE331E0F5B3AD16E023091
+rm "$key_file"
+```
+
+Add the following section after the official repositories in
+`/etc/pacman.conf`:
+
+```ini
+[denial]
+SigLevel = Required TrustedOnly
+Server = https://denialwm.github.io/denial/$arch
+```
+
+{{% /details %}}
+
+Then update the system and install Denial:
 
 ```sh
 sudo pacman -Syu denial
 ```
 
-The repository signing key has fingerprint:
+Installing `denial` automatically selects the compatible
+`denial-flutter-engine` package.
 
-```text
-AE4108FA5E91E26BE0EE331E0F5B3AD16E023091
+## Check the installation
+
+Before logging out of your current desktop, run:
+
+```sh
+denial-session --check
 ```
 
-Always compare that value with the current project documentation before
-trusting the key.
+This checks the installed session and the graphics environment without
+starting another compositor.
 
-## Build from source
+## Start Denial
 
-The source tree contains two versioned parts: the Rust compositor in
-`compositor/` and the embedded Flutter shell bundle in `dart_shell/`.
-The project tool downloads the pinned dependencies, checks prerequisites,
-builds both parts, and runs their tests.
+Log out, select **Denial** in your display manager, and sign in. SDDM is
+supported, but any display manager that exposes the installed Wayland session
+entry can start it.
 
-See the [building guide](https://github.com/denialwm/denial/blob/main/docs/BUILDING.md)
-for host dependencies and the exact workflow.
+The standard display-manager session starts unlocked. This is intentional:
+the display manager has already authenticated you, so immediately showing
+Denial's lock screen would normally ask for the same password twice.
 
-## Find your way around
+### Autologin and direct startup
 
-- [`denialctl` reference](https://github.com/denialwm/denial/blob/main/docs/DENIALCTL.md)
-- [Flutter shell development](https://github.com/denialwm/denial/blob/main/docs/UI_DEVELOPMENT.md)
-- [Issue tracker](https://github.com/denialwm/denial/issues)
-- [Latest releases](https://github.com/denialwm/denial/releases)
+If a session manager starts Denial without authenticating the user first, use
+the startup lock:
+
+```sh
+uwsm start -e -D Denial -- /usr/bin/denial-session --start-locked
+```
+
+`--start-locked` closes Denial's native security gate before Flutter starts,
+so the first visible state is the PAM-backed lock screen. This is the
+appropriate form for a greetd `initial_session`, autologin, or another direct
+boot path. Do not add it to a normal authenticated display-manager entry
+unless the deliberate second password prompt is wanted.
+
+The supported session-launcher modes are:
+
+| Invocation | Result |
+| --- | --- |
+| `denial-session` | Start the packaged desktop after an authenticated display-manager login |
+| `denial-session --check` | Validate the installation and graphics prerequisites without starting a compositor |
+| `denial-session --start-locked` | Start with the native security gate and Flutter lock screen already locked |
+
+Other `deniald` command-line switches are intended for controlled development
+and diagnostics rather than persistent user configuration. Run
+`deniald --help` to inspect the options provided by the installed build.
+
+Open a terminal in Denial and verify the native control connection:
+
+```sh
+denialctl status
+denialctl outputs
+```
+
+The first command reports the compositor and Flutter shell state. The second
+lists connected outputs, modes, positions, scale, and power state.
+
+## Update or remove
+
+Denial follows the normal full-system Arch upgrade path:
+
+```sh
+sudo pacman -Syu
+```
+
+To remove the compositor and dependencies no longer required by other
+packages:
+
+```sh
+sudo pacman -Rns denial
+```
+
+If the optional live-development environment is installed, remove both
+packages together:
+
+```sh
+sudo pacman -Rns denial-ui-development denial
+```
+
+Removing the package does not delete user configuration or an editable
+`~/DenialUI` checkout.

@@ -32,6 +32,16 @@ menu:
       weight: 4
       params:
         icon: github
+    - name: Discord
+      url: "https://discord.gg/PQBChmDYy"
+      weight: 5
+      params:
+        icon: discord
+    - name: Reddit
+      url: "https://www.reddit.com/r/denialwm/"
+      weight: 6
+      params:
+        icon: reddit
 
 params:
   description: "Documentation for Denial, a Flutter-native Wayland compositor."
