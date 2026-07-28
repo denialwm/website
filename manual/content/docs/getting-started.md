@@ -19,7 +19,7 @@ The guided installer verifies Denial's full signing-key fingerprint, shows
 every planned change, and asks before using `sudo`:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/denialwm/denial/refs/heads/main/install.sh | sh
+curl -fsSL https://install.denialwm.org | sh
 ```
 
 > [!TIP]
