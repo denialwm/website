@@ -3872,7 +3872,7 @@
           return;
         }
 
-        installerSourceRequest = fetch("https://raw.githubusercontent.com/denialwm/denial/refs/heads/main/install.sh", {
+        installerSourceRequest = fetch("https://install.denialwm.org", {
           headers: { Accept: "text/plain" },
         })
           .then((response) => {
