@@ -82,6 +82,38 @@ stepping, or expression evaluation: suspending the shell isolate would also
 suspend the interactive desktop. Changes to native Rust code or the Flutter
 engine still require a normal build and session restart.
 
+## Profile the Flutter shell
+
+For representative performance measurements, build and activate the optimized
+AOT profile shell from a Denial checkout:
+
+```sh
+denial-ui prepare-profile /absolute/path/to/denial/dart_shell
+denialctl ui workspace /absolute/path/to/denial/dart_shell
+denialctl ui profile
+```
+
+This keeps optimized AOT application code while enabling Flutter's VM service,
+timeline events, CPU profiling, and DevTools. It is distinct from the JIT live
+editing mode above.
+
+Start browser DevTools with:
+
+```sh
+denial-ui attach-profile /absolute/path/to/denial/dart_shell
+```
+
+Keep that command running while profiling. Return to the packaged release
+shell afterward with:
+
+```sh
+denialctl ui restore
+```
+
+After installing or replacing `denial-ui-development`, restart the Denial
+session once before activating profile mode so the matching native engine is
+loaded cleanly.
+
 ## Runtime control
 
 Useful development commands are:
@@ -93,6 +125,7 @@ denialctl ui workspace /absolute/path/to/dart_shell
 denialctl ui live on
 denialctl ui reload
 denialctl ui restart
+denialctl ui profile
 denialctl ui restore
 ```
 
