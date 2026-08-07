@@ -1,3 +1,230 @@
+const translationCatalog = window.denialTranslations || {};
+const supportedLocales = new Set(["en", "zh-CN"]);
+let activeLocale = "en";
+
+const normalizeLocale = (locale) => {
+  const normalized = String(locale || "").toLowerCase();
+
+  if (["zh", "zh-cn", "zh-sg", "zh-hans"].includes(normalized)) {
+    return "zh-CN";
+  }
+
+  return "en";
+};
+
+const translation = (key, fallback) => {
+  const value = key.split(".").reduce(
+    (current, part) =>
+      current && Object.prototype.hasOwnProperty.call(current, part)
+        ? current[part]
+        : undefined,
+    translationCatalog[activeLocale],
+  );
+
+  return value === undefined ? fallback : value;
+};
+
+const formattedTranslation = (key, fallback, values = {}) => {
+  let result = translation(key, fallback);
+
+  Object.entries(values).forEach(([name, value]) => {
+    result = result.replaceAll(`{${name}}`, value);
+  });
+
+  return result;
+};
+
+const localizedTextElements = document.querySelectorAll("[data-i18n]");
+const localizedHtmlElements = document.querySelectorAll("[data-i18n-html]");
+const localizedAriaElements = document.querySelectorAll("[data-i18n-aria]");
+const localizedWordElements = document.querySelectorAll("[data-i18n-words]");
+const localizedGalleryItems = document.querySelectorAll("[data-i18n-gallery]");
+const languagePicker = document.querySelector("[data-language-picker]");
+const manualLinks = document.querySelectorAll("[data-manual-link]");
+const pageDescription = document.querySelector('meta[name="description"]');
+const openGraphTitle = document.querySelector('meta[property="og:title"]');
+const openGraphDescription = document.querySelector(
+  'meta[property="og:description"]',
+);
+const originalPageMetadata = {
+  title: document.title,
+  description: pageDescription?.content,
+  ogTitle: openGraphTitle?.content,
+  ogDescription: openGraphDescription?.content,
+};
+
+localizedTextElements.forEach((element) => {
+  element.i18nOriginalText = element.textContent.trim();
+});
+localizedHtmlElements.forEach((element) => {
+  element.i18nOriginalHtml = element.innerHTML;
+});
+localizedAriaElements.forEach((element) => {
+  element.i18nOriginalAria = element.getAttribute("aria-label");
+});
+localizedWordElements.forEach((element) => {
+  element.i18nOriginalWords = Array.from(
+    element.querySelectorAll(":scope > .word"),
+    (word) => word.textContent,
+  );
+});
+localizedGalleryItems.forEach((item) => {
+  item.i18nOriginalGallery = {
+    title: item.dataset.galleryTitle,
+    kind: item.dataset.galleryKind,
+    aria: item.getAttribute("aria-label"),
+  };
+});
+
+const applyLocale = (locale, { persist = false, updateUrl = false } = {}) => {
+  activeLocale = supportedLocales.has(locale) ? locale : "en";
+  document.documentElement.lang = activeLocale;
+  document.title = translation("meta.title", originalPageMetadata.title);
+
+  if (pageDescription) {
+    pageDescription.content = translation(
+      "meta.description",
+      originalPageMetadata.description,
+    );
+  }
+
+  if (openGraphTitle) {
+    openGraphTitle.content = translation(
+      "meta.title",
+      originalPageMetadata.ogTitle,
+    );
+  }
+
+  if (openGraphDescription) {
+    openGraphDescription.content = translation(
+      "meta.ogDescription",
+      originalPageMetadata.ogDescription,
+    );
+  }
+
+  localizedTextElements.forEach((element) => {
+    element.textContent = translation(
+      element.dataset.i18n,
+      element.i18nOriginalText,
+    );
+  });
+
+  localizedHtmlElements.forEach((element) => {
+    element.innerHTML = translation(
+      element.dataset.i18nHtml,
+      element.i18nOriginalHtml,
+    );
+  });
+
+  localizedAriaElements.forEach((element) => {
+    element.setAttribute(
+      "aria-label",
+      translation(element.dataset.i18nAria, element.i18nOriginalAria),
+    );
+  });
+
+  const activeGallerySubtitle = document.querySelector(
+    "[data-gallery-subtitle].is-active",
+  );
+  document.querySelectorAll("[data-gallery-subtitle]").forEach((subtitle) => {
+    subtitle.textContent =
+      subtitle === activeGallerySubtitle
+        ? translation(
+            "gallery.subtitle",
+            "Screenshots can’t capture how smooth Denial feels.",
+          )
+        : "";
+  });
+
+  localizedWordElements.forEach((element) => {
+    const words = translation(
+      element.dataset.i18nWords,
+      element.i18nOriginalWords,
+    );
+    const separator = activeLocale === "zh-CN" ? "" : " ";
+    const fragment = document.createDocumentFragment();
+
+    words.forEach((word, index) => {
+      if (index > 0) {
+        fragment.append(document.createTextNode(separator));
+      }
+
+      const wordElement = document.createElement("span");
+      wordElement.className = `word${
+        index === words.length - 1 ? " word--accent" : ""
+      }`;
+      wordElement.style.setProperty("--i", index);
+      wordElement.textContent = word;
+      fragment.append(wordElement);
+    });
+
+    element.replaceChildren(fragment);
+  });
+
+  localizedGalleryItems.forEach((item) => {
+    const key = item.dataset.i18nGallery;
+    const original = item.i18nOriginalGallery;
+    const title = translation(`${key}.title`, original.title);
+    const kind = translation(`${key}.kind`, original.kind);
+    item.dataset.galleryTitle = title;
+    item.dataset.galleryKind = kind;
+    item.setAttribute(
+      "aria-label",
+      formattedTranslation("gallery.open", original.aria, { title }),
+    );
+    item.querySelector(".gallery-item-title").textContent = title;
+    item.querySelector(".gallery-item-kind").textContent = kind;
+  });
+
+  manualLinks.forEach((link) => {
+    link.href =
+      activeLocale === "zh-CN"
+        ? "https://manual.denialwm.org/zh-cn/"
+        : "https://manual.denialwm.org/";
+  });
+
+  if (languagePicker) {
+    languagePicker.value = activeLocale;
+  }
+
+  if (persist) {
+    try {
+      window.localStorage.setItem("denial-language", activeLocale);
+    } catch {
+      // Language selection still works when storage is unavailable.
+    }
+  }
+
+  if (updateUrl) {
+    const url = new URL(window.location.href);
+
+    if (activeLocale === "en") {
+      url.searchParams.delete("lang");
+    } else {
+      url.searchParams.set("lang", activeLocale);
+    }
+
+    window.history.replaceState({}, "", url);
+  }
+};
+
+const requestedLocale = new URL(window.location.href).searchParams.get("lang");
+let storedLocale;
+
+try {
+  storedLocale = window.localStorage.getItem("denial-language");
+} catch {
+  // Fall back to the browser language when storage is unavailable.
+}
+
+applyLocale(
+  normalizeLocale(requestedLocale || storedLocale || navigator.language),
+);
+
+languagePicker?.addEventListener("change", (event) => {
+  applyLocale(event.target.value, { persist: true, updateUrl: true });
+});
+
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let scrollbarFadeTimer;
 
@@ -131,7 +358,10 @@ const loadInstallerSource = () => {
     .catch(() => {
       const error = document.createElement("span");
       error.className = "code-line installer-source-error";
-      error.textContent = "Could not load the installer. Please try again.";
+      error.textContent = translation(
+        "installer.loadError",
+        "Could not load the installer. Please try again.",
+      );
       installerSource.replaceChildren(error);
       installerSource.removeAttribute("aria-busy");
       installerSourceRequest = undefined;
@@ -189,14 +419,17 @@ document.querySelectorAll("[data-copy-target]").forEach((button) => {
 
       const label = button.querySelector(".copy-label");
       button.classList.add("is-copied");
-      label.textContent = "Copied";
+      label.textContent = translation("common.copied", "Copied");
       window.clearTimeout(button.copyResetTimer);
       button.copyResetTimer = window.setTimeout(() => {
         button.classList.remove("is-copied");
-        label.textContent = "Copy";
+        label.textContent = translation("common.copy", "Copy");
       }, 2000);
     } catch {
-      button.querySelector(".copy-label").textContent = "Try again";
+      button.querySelector(".copy-label").textContent = translation(
+        "common.tryAgain",
+        "Try again",
+      );
     }
   });
 });
@@ -208,7 +441,7 @@ const galleryNumberLabel = (number) => String(number).padStart(2, "0");
 const gallerySubtitleLines = Array.from(
   document.querySelectorAll("[data-gallery-subtitle]"),
 );
-const gallerySubtitles = [
+const originalGallerySubtitles = [
   "Screenshots can’t capture how smooth Denial feels.",
   "Smoothness doesn’t fit in a screenshot.",
   "Some things only make sense in motion.",
@@ -226,6 +459,10 @@ if (gallerySubtitleLines.length === 2 && !reducedMotion.matches) {
     const outgoingLine = gallerySubtitleLines[activeGallerySubtitle];
     activeGallerySubtitle = activeGallerySubtitle === 0 ? 1 : 0;
     const incomingLine = gallerySubtitleLines[activeGallerySubtitle];
+    const gallerySubtitles = translation(
+      "gallery.subtitles",
+      originalGallerySubtitles,
+    );
     gallerySubtitleIndex = (gallerySubtitleIndex + 1) % gallerySubtitles.length;
     incomingLine.textContent = gallerySubtitles[gallerySubtitleIndex];
     outgoingLine.classList.remove("is-active");
@@ -300,7 +537,11 @@ if (galleryDialog && galleryItems.length) {
   const updateGalleryVideoLabel = (video, title) => {
     video.setAttribute(
       "aria-label",
-      `${video.paused ? "Play" : "Pause"} ${title} video`,
+      formattedTranslation(
+        video.paused ? "gallery.playVideo" : "gallery.pauseVideo",
+        `${video.paused ? "Play" : "Pause"} ${title} video`,
+        { title },
+      ),
     );
   };
 

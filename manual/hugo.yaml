@@ -1,8 +1,22 @@
 baseURL: "https://manual.denialwm.org/"
 title: "Denial Manual"
 languageCode: "en-us"
+defaultContentLanguage: "en"
 enableRobotsTXT: true
 enableGitInfo: true
+
+languages:
+  en:
+    languageName: "English"
+    languageCode: "en-US"
+    weight: 1
+  zh-cn:
+    languageName: "简体中文"
+    languageCode: "zh-CN"
+    title: "Denial 手册"
+    weight: 2
+    params:
+      description: "Denial 的中文文档；Denial 是一款 Flutter 原生 Wayland 合成器。"
 
 module:
   imports:
@@ -18,26 +32,32 @@ markup:
 menu:
   main:
     - name: Website
+      identifier: website
       url: "https://denialwm.org/"
       weight: 1
     - name: Manual
+      identifier: manual
       pageRef: /docs
       weight: 2
     - name: Search
+      identifier: search
       weight: 3
       params:
         type: search
     - name: GitHub
+      identifier: github
       url: "https://github.com/denialwm/denial"
       weight: 4
       params:
         icon: github
     - name: Discord
+      identifier: discord
       url: "https://discord.gg/PQBChmDYy"
       weight: 5
       params:
         icon: discord
     - name: Reddit
+      identifier: reddit
       url: "https://www.reddit.com/r/denialwm/"
       weight: 6
       params:
@@ -52,7 +72,6 @@ params:
     logo:
       path: images/denial.svg
       dark: images/denial-dark.svg
-      link: /
       width: 116
       height: 35
 

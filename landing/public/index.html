@@ -17,6 +17,9 @@
     >
     <meta property="og:image" content="https://denialwm.org/assets/desktop.webp">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="alternate" hreflang="en" href="https://denialwm.org/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://denialwm.org/?lang=zh-CN">
+    <link rel="alternate" hreflang="x-default" href="https://denialwm.org/">
     <link rel="icon" href="/assets/denial-dark.svg" type="image/svg+xml">
     <title>Denial | Flutter-native Wayland compositor</title>
     <script>
@@ -50,7 +53,8 @@
         --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
         --section-gap: clamp(5.5rem, 11vw, 10rem);
         font-family:
-          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          Inter, "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei",
+          ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
           "Segoe UI", sans-serif;
         background: var(--bg);
         color: var(--text);
@@ -1643,6 +1647,58 @@
         text-underline-offset: 0.25em;
       }
 
+      .language-picker {
+        position: absolute;
+        top: 1rem;
+        right: max(1rem, calc((100vw - 85rem) / 2));
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.42rem 0.65rem;
+        border: 1px solid var(--glass-line);
+        border-radius: 999px;
+        background: rgb(11 9 16 / 76%);
+        box-shadow: var(--rim);
+        color: var(--muted);
+        backdrop-filter: blur(1rem);
+      }
+
+      .language-picker svg {
+        width: 0.9rem;
+        height: 0.9rem;
+        flex: 0 0 auto;
+      }
+
+      .language-picker:focus-within {
+        outline: 2px solid var(--accent-bright);
+        outline-offset: 4px;
+      }
+
+      .language-picker select {
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.76rem;
+      }
+
+      .language-picker option {
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      html[lang="zh-CN"] .hero-statement {
+        max-width: 11em;
+        letter-spacing: 0.015em;
+      }
+
+      html[lang="zh-CN"] h2 {
+        letter-spacing: 0;
+      }
+
 
       .visually-hidden {
         position: absolute;
@@ -1788,6 +1844,23 @@
     </style>
   </head>
   <body>
+    <label class="language-picker">
+      <span class="visually-hidden" data-i18n="language.label">Language</span>
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path
+          d="M10 2.25a7.75 7.75 0 1 0 0 15.5 7.75 7.75 0 0 0 0-15.5Zm0 0c1.7 1.75 2.58 4.34 2.58 7.75S11.7 16 10 17.75M10 2.25C8.3 4 7.42 6.59 7.42 10S8.3 16 10 17.75M2.25 10h15.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-width="1.25"
+        />
+      </svg>
+      <select data-language-picker aria-label="Language" data-i18n-aria="language.label">
+        <option value="en">English</option>
+        <option value="zh-CN">简体中文</option>
+      </select>
+    </label>
+
     <svg class="visually-hidden" aria-hidden="true" focusable="false">
       <defs>
         <path id="denial-word" d="M 385.758984 210.169688 C 425.752734 210.169688 449.124609 185.194688 449.124609 144.525937 C 449.124609 103.997813 425.668359 79.219688 387.080859 79.219688 L 343.402734 79.219688 L 343.402734 210.169688 L 385.758984 210.169688 z M 362.921484 193.210313 L 362.921484 96.179063 L 385.843359 96.179063 C 415.037109 96.179063 429.549609 114.179063 429.549609 144.525937 C 429.549609 175.013438 415.037109 193.210313 384.549609 193.210313 L 362.921484 193.210313 z M 506.344922 212.279063 C 527.354297 212.279063 543.891797 199.875938 547.323047 181.960313 L 529.463672 181.960313 C 526.819922 190.735313 518.748047 196.810313 506.626172 196.810313 C 490.369922 196.810313 481.032422 185.475938 480.413672 168.769688 L 548.729297 168.769688 L 548.729297 163.763438 C 548.729297 135.104062 531.657422 115.247813 505.388672 115.247813 C 480.076172 115.247813 462.132422 135.638438 462.132422 163.932187 C 462.132422 191.972813 478.838672 212.279063 506.344922 212.279063 z M 480.610547 154.707188 C 482.185547 139.941563 491.579297 130.716563 505.557422 130.716563 C 519.619922 130.716563 529.126172 139.941563 530.616797 154.707188 L 480.610547 154.707188 z M 583.249219 156.732188 C 583.249219 139.491563 593.008594 132.122813 605.664844 132.122813 C 618.489844 132.122813 625.971094 139.772813 625.971094 154.622813 L 625.971094 210.169688 L 644.505469 210.169688 L 644.505469 152.344688 C 644.505469 128.072812 630.021094 115.500938 610.952344 115.500938 C 598.717969 115.500938 589.239844 120.788438 582.911719 131.335313 L 582.911719 117.357188 L 564.714844 117.357188 L 564.714844 210.169688 L 583.249219 210.169688 L 583.249219 156.732188 z M 665.4375 210.169688 L 683.971875 210.169688 L 683.971875 117.357188 L 665.4375 117.357188 L 665.4375 210.169688 z M 674.6625 101.354063 C 681.24375 101.354063 686.446875 96.347813 686.446875 90.019688 C 686.446875 83.607188 681.24375 78.600938 674.6625 78.600938 C 668.08125 78.600938 662.9625 83.607188 662.9625 90.019688 C 662.9625 96.347813 668.08125 101.354063 674.6625 101.354063 z M 733.194141 211.660313 C 749.197266 211.660313 756.762891 204.460313 760.616016 196.979062 L 760.981641 196.979062 L 760.981641 210.169688 L 779.262891 210.169688 L 779.262891 146.522813 C 779.262891 127.650938 765.284766 115.500938 742.419141 115.500938 C 719.216016 115.500938 704.197266 127.988438 703.325391 145.650937 L 721.522266 145.650937 C 722.225391 137.129063 730.297266 130.716563 742.166016 130.716563 C 753.950391 130.716563 760.897266 137.213437 760.897266 146.185313 L 760.897266 146.972813 C 760.897266 153.750938 755.075391 153.554063 737.694141 155.663438 C 718.794141 157.885312 701.019141 162.441563 701.019141 183.619687 C 701.019141 202.182187 714.744141 211.660313 733.194141 211.660313 z M 736.991016 196.725938 C 726.162891 196.725938 719.497266 191.972813 719.497266 183.985313 C 719.497266 174.563438 728.637891 170.963437 738.734766 169.472813 C 748.578516 168.066563 758.422266 166.575938 760.981641 164.550938 L 760.981641 175.463437 C 760.981641 186.882188 753.331641 196.725938 736.991016 196.725938 z" />
@@ -1849,9 +1922,9 @@
               </span>
             </h1>
 
-            <p class="hero-kicker">A Flutter-native Wayland compositor</p>
+            <p class="hero-kicker" data-i18n="hero.kicker">A Flutter-native Wayland compositor</p>
 
-            <p class="hero-statement">
+            <p class="hero-statement" data-i18n-words="hero.statementWords">
               <span class="word" style="--i: 0">What</span>
               <span class="word" style="--i: 1">something</span>
               <span class="word" style="--i: 2">was</span>
@@ -1866,14 +1939,14 @@
               <span class="word word--accent" style="--i: 11">become.</span>
             </p>
 
-            <p class="hero-copy">
+            <p class="hero-copy" data-i18n="hero.copy">
               Flutter was made for application interfaces. Denial runs it inside
               the compositor, where it owns the desktop scene itself.
             </p>
 
             <div class="hero-actions">
               <a class="button button-primary" href="#install">
-                Install on Arch
+                <span data-i18n="hero.install">Install on Arch</span>
                 <svg class="button-arrow" viewBox="0 0 20 20" aria-hidden="true">
                   <path
                     d="m7 4 6 6-6 6"
@@ -1885,7 +1958,7 @@
                   />
                 </svg>
               </a>
-              <a class="button" href="https://manual.denialwm.org/">
+              <a class="button" href="https://manual.denialwm.org/" data-manual-link data-i18n="hero.manual">
                 Read the manual
               </a>
             </div>
@@ -1903,6 +1976,7 @@
                 width="1280"
                 height="720"
                 aria-label="A short preview of the Denial desktop"
+                data-i18n-aria="hero.previewLabel"
               >
                 <source src="/assets/hero-loop.mp4" type="video/mp4">
               </video>
@@ -1915,37 +1989,37 @@
         <div class="hero-strip-track">
           <div class="hero-strip-group">
             <span>Rust · Smithay</span>
-            <span>Embedded Flutter Engine</span>
-            <span>AOT Dart shell</span>
-            <span>DRM · KMS scanout</span>
-            <span>Shared GBM atlas</span>
-            <span>External textures</span>
+            <span data-i18n="strip.flutterEngine">Embedded Flutter Engine</span>
+            <span data-i18n="strip.dartShell">AOT Dart shell</span>
+            <span data-i18n="strip.scanout">DRM · KMS scanout</span>
+            <span data-i18n="strip.gbmAtlas">Shared GBM atlas</span>
+            <span data-i18n="strip.externalTextures">External textures</span>
             <span>Xwayland</span>
-            <span>Multi-output</span>
-            <span>Portal screen sharing</span>
-            <span>Live hot reload</span>
+            <span data-i18n="strip.multiOutput">Multi-output</span>
+            <span data-i18n="strip.screenSharing">Portal screen sharing</span>
+            <span data-i18n="strip.hotReload">Live hot reload</span>
           </div>
           <div class="hero-strip-group">
             <span>Rust · Smithay</span>
-            <span>Embedded Flutter Engine</span>
-            <span>AOT Dart shell</span>
-            <span>DRM · KMS scanout</span>
-            <span>Shared GBM atlas</span>
-            <span>External textures</span>
+            <span data-i18n="strip.flutterEngine">Embedded Flutter Engine</span>
+            <span data-i18n="strip.dartShell">AOT Dart shell</span>
+            <span data-i18n="strip.scanout">DRM · KMS scanout</span>
+            <span data-i18n="strip.gbmAtlas">Shared GBM atlas</span>
+            <span data-i18n="strip.externalTextures">External textures</span>
             <span>Xwayland</span>
-            <span>Multi-output</span>
-            <span>Portal screen sharing</span>
-            <span>Live hot reload</span>
+            <span data-i18n="strip.multiOutput">Multi-output</span>
+            <span data-i18n="strip.screenSharing">Portal screen sharing</span>
+            <span data-i18n="strip.hotReload">Live hot reload</span>
           </div>
         </div>
       </div>
 
       <section class="gallery container" aria-labelledby="gallery-title" data-reveal>
         <div class="gallery-heading">
-          <p class="section-label">Gallery</p>
-          <h2 id="gallery-title">Denial in motion.</h2>
+          <p class="section-label" data-i18n="gallery.label">Gallery</p>
+          <h2 id="gallery-title" data-i18n="gallery.heading">Denial in motion.</h2>
           <p class="gallery-subtitle">
-            <span class="gallery-subtitle-line is-active" data-gallery-subtitle>
+            <span class="gallery-subtitle-line is-active" data-gallery-subtitle data-i18n="gallery.subtitle">
               Screenshots can’t capture how smooth Denial feels.
             </span>
             <span class="gallery-subtitle-line" data-gallery-subtitle></span>
@@ -1964,6 +2038,7 @@
             data-gallery-poster="/assets/gallery-desktop-01.webp"
             data-gallery-title="Lockscreen overview"
             data-gallery-kind="Integrated lockscreen, no need for extra components (SUPER L)"
+            data-i18n-gallery="gallery.items.lockscreen"
           >
             <div class="gallery-media-frame">
               <video
@@ -1977,7 +2052,7 @@
                 data-gallery-video
               >
                 <source src="/assets/gallery-desktop-01.mp4" type="video/mp4">
-                Your browser does not support embedded video.
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
               </video>
             </div>
             <figcaption>
@@ -1999,6 +2074,7 @@
             data-gallery-poster="/assets/gallery-activity-overview.webp"
             data-gallery-title="Activity Overview"
             data-gallery-kind="Denial easily keeps everything under control (SUPER A)"
+            data-i18n-gallery="gallery.items.overview"
           >
             <div class="gallery-media-frame">
               <video
@@ -2015,7 +2091,7 @@
                   src="/assets/gallery-activity-overview.mp4"
                   type="video/mp4"
                 >
-                Your browser does not support embedded video.
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
               </video>
             </div>
             <figcaption>
@@ -2037,6 +2113,7 @@
             data-gallery-poster="/assets/gallery-customization.webp"
             data-gallery-title="Customization"
             data-gallery-kind="Customize everything: Denial was made for ricing"
+            data-i18n-gallery="gallery.items.customization"
           >
             <div class="gallery-media-frame">
               <video
@@ -2050,7 +2127,7 @@
                 data-gallery-video
               >
                 <source src="/assets/gallery-customization.mp4" type="video/mp4">
-                Your browser does not support embedded video.
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
               </video>
             </div>
             <figcaption>
@@ -2072,6 +2149,7 @@
             data-gallery-poster="/assets/gallery-app-switcher.webp"
             data-gallery-title="App Switcher"
             data-gallery-kind="Switching apps feels like magic (SUPER Tab)"
+            data-i18n-gallery="gallery.items.appSwitcher"
           >
             <div class="gallery-media-frame">
               <video
@@ -2085,7 +2163,7 @@
                 data-gallery-video
               >
                 <source src="/assets/gallery-app-switcher.mp4" type="video/mp4">
-                Your browser does not support embedded video.
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
               </video>
             </div>
             <figcaption>
@@ -2107,6 +2185,7 @@
             data-gallery-poster="/assets/gallery-animations.webp"
             data-gallery-title="Animations"
             data-gallery-kind="Flutter animations can be applied to everything"
+            data-i18n-gallery="gallery.items.animations"
           >
             <div class="gallery-media-frame">
               <video
@@ -2120,7 +2199,7 @@
                 data-gallery-video
               >
                 <source src="/assets/gallery-animations.mp4" type="video/mp4">
-                Your browser does not support embedded video.
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
               </video>
             </div>
             <figcaption>
@@ -2142,6 +2221,7 @@
             data-gallery-poster="/assets/gallery-2026-08-03.webp"
             data-gallery-title="Flutter DevTools"
             data-gallery-kind="Flutter DevTools remain fully supported in Denial"
+            data-i18n-gallery="gallery.items.devtools"
           >
             <div class="gallery-media-frame">
               <video
@@ -2155,7 +2235,7 @@
                 data-gallery-video
               >
                 <source src="/assets/gallery-2026-08-03.mp4" type="video/mp4">
-                Your browser does not support embedded video.
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
               </video>
             </div>
             <figcaption>
@@ -2167,7 +2247,7 @@
           </figure>
         </div>
 
-        <p class="gallery-closer" data-reveal>
+        <p class="gallery-closer" data-reveal data-i18n="gallery.closer">
           Denial uses Flutter’s Impeller instead of Skia, taking desktop
           rendering to the next level.
         </p>
@@ -2188,6 +2268,7 @@
               class="gallery-dialog-close"
               type="button"
               aria-label="Close gallery"
+              data-i18n-aria="gallery.close"
               data-gallery-close
             >
               <svg viewBox="0 0 20 20" aria-hidden="true">
@@ -2209,11 +2290,12 @@
               <span data-gallery-dialog-current>01</span> /
               <span data-gallery-dialog-total>06</span>
             </p>
-            <nav class="gallery-dialog-navigation" aria-label="Gallery navigation">
+            <nav class="gallery-dialog-navigation" aria-label="Gallery navigation" data-i18n-aria="gallery.navigation">
               <button
                 class="gallery-control"
                 type="button"
                 aria-label="Previous gallery item"
+                data-i18n-aria="gallery.previous"
                 data-gallery-dialog-previous
               >
                 <svg viewBox="0 0 20 20" aria-hidden="true">
@@ -2231,6 +2313,7 @@
                 class="gallery-control"
                 type="button"
                 aria-label="Next gallery item"
+                data-i18n-aria="gallery.next"
                 data-gallery-dialog-next
               >
                 <svg viewBox="0 0 20 20" aria-hidden="true">
@@ -2255,15 +2338,15 @@
         data-reveal
       >
         <div>
-          <p class="section-label">Community</p>
-          <h2 id="community-title">Follow the work. Join the conversation.</h2>
-          <p class="community-text">
+          <p class="section-label" data-i18n="community.label">Community</p>
+          <h2 id="community-title" data-i18n="community.heading">Follow the work. Join the conversation.</h2>
+          <p class="community-text" data-i18n="community.copy">
             Denial is built in public. Follow development on GitHub or talk
             with Denial users on Discord.
           </p>
         </div>
 
-        <nav class="community-links" aria-label="Denial community links">
+        <nav class="community-links" aria-label="Denial community links" data-i18n-aria="community.navigation">
           <a class="community-link" href="https://github.com/denialwm/denial">
             <span class="community-name">
               <svg class="community-icon" aria-hidden="true">
@@ -2271,7 +2354,7 @@
               </svg>
               <strong>GitHub</strong>
             </span>
-            <span class="community-description">Source, issues, and releases</span>
+            <span class="community-description" data-i18n="community.github">Source, issues, and releases</span>
             <span class="community-arrow" aria-hidden="true">↗</span>
           </a>
           <a class="community-link" href="https://discord.gg/PQBChmDYy">
@@ -2281,7 +2364,7 @@
               </svg>
               <strong>Discord</strong>
             </span>
-            <span class="community-description">Chat with Denial users</span>
+            <span class="community-description" data-i18n="community.discord">Chat with Denial users</span>
             <span class="community-arrow" aria-hidden="true">↗</span>
           </a>
         </nav>
@@ -2290,8 +2373,8 @@
       <section class="install container" id="install" aria-labelledby="install-title">
         <div class="install-heading" data-reveal>
           <div>
-            <p class="section-label">Install · Arch Linux x86-64</p>
-            <h2 id="install-title">
+            <p class="section-label" data-i18n="install.label">Install · Arch Linux x86-64</p>
+            <h2 id="install-title" data-i18n="install.heading">
               Install Denial in three steps.
             </h2>
           </div>
@@ -2333,8 +2416,8 @@
           <li class="install-step">
             <span class="install-step-number" aria-hidden="true"></span>
             <div class="install-step-copy">
-              <h3>Set up the Denial repository</h3>
-              <p>
+              <h3 data-i18n="install.repository.title">Set up the Denial repository</h3>
+              <p data-i18n-html="install.repository.copy">
                 Verifies the release-key fingerprint, adds the signed
                 repository, and shows the full plan before touching
                 <strong>sudo</strong>.
@@ -2344,6 +2427,7 @@
                   class="install-source-button"
                   type="button"
                   data-installer-dialog-open
+                  data-i18n="install.repository.source"
                 >
                   Read the installer source
                 </button>
@@ -2354,13 +2438,14 @@
               <div class="code-panel-header">
                 <span class="code-panel-identity">
                   <span class="code-panel-icon" aria-hidden="true">$</span>
-                  <span class="code-panel-title">shell · repository setup</span>
+                  <span class="code-panel-title" data-i18n="install.repository.panel">shell · repository setup</span>
                 </span>
                 <button
                   class="copy-button"
                   type="button"
                   data-copy-target="repository-setup-command"
                   aria-label="Copy repository setup command"
+                  data-i18n-aria="install.repository.copyLabel"
                 >
                   <svg class="copy-icon" aria-hidden="true">
                     <use href="#copy-symbol"></use>
@@ -2368,7 +2453,7 @@
                   <svg class="check-icon" aria-hidden="true">
                     <use href="#check-symbol"></use>
                   </svg>
-                  <span class="copy-label" aria-live="polite">Copy</span>
+                  <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
                 </button>
               </div>
               <pre><code id="repository-setup-command"><span class="code-line"><span class="syntax-command">curl</span> <span class="syntax-option">-fsSL</span> <span class="syntax-url">https://install.denialwm.org</span> <span class="syntax-operator">|</span> <span class="syntax-command">sh</span></span></code></pre>
@@ -2378,20 +2463,21 @@
           <li class="install-step">
             <span class="install-step-number" aria-hidden="true"></span>
             <div class="install-step-copy">
-              <h3>Install Denial</h3>
+              <h3 data-i18n="install.package.title">Install Denial</h3>
             </div>
 
             <div class="code-panel code-panel--compact">
               <div class="code-panel-header">
                 <span class="code-panel-identity">
                   <span class="code-panel-icon" aria-hidden="true">$</span>
-                  <span class="code-panel-title">shell · install Denial</span>
+                  <span class="code-panel-title" data-i18n="install.package.panel">shell · install Denial</span>
                 </span>
                 <button
                   class="copy-button"
                   type="button"
                   data-copy-target="denial-install-command"
                   aria-label="Copy Denial installation command"
+                  data-i18n-aria="install.package.copyLabel"
                 >
                   <svg class="copy-icon" aria-hidden="true">
                     <use href="#copy-symbol"></use>
@@ -2399,7 +2485,7 @@
                   <svg class="check-icon" aria-hidden="true">
                     <use href="#check-symbol"></use>
                   </svg>
-                  <span class="copy-label" aria-live="polite">Copy</span>
+                  <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
                 </button>
               </div>
               <pre><code id="denial-install-command"><span class="code-line"><span class="syntax-command">sudo pacman</span> <span class="syntax-option">-Syu</span> <span class="syntax-package">denial</span></span></code></pre>
@@ -2409,19 +2495,19 @@
           <li class="install-step">
             <span class="install-step-number" aria-hidden="true"></span>
             <div class="install-step-copy">
-              <h3>Enjoy Denial</h3>
-              <p>
+              <h3 data-i18n="install.session.title">Enjoy Denial</h3>
+              <p data-i18n-html="install.session.copy">
                 Log out, choose <strong>Denial</strong> from your display
                 manager’s session menu, and sign in.
               </p>
             </div>
 
             <div class="install-session" aria-hidden="true">
-              <p>Session</p>
+              <p data-i18n="install.session.menu">Session</p>
               <ul>
                 <li>Hyprland</li>
                 <li class="is-chosen">Denial</li>
-                <li>Plasma (Wayland)</li>
+                <li data-i18n="install.session.plasma">Plasma (Wayland)</li>
               </ul>
             </div>
           </li>
@@ -2437,14 +2523,15 @@
       <div class="installer-dialog-frame">
         <div class="installer-dialog-header">
           <div>
-            <p class="installer-dialog-label">Source / install.sh</p>
-            <h2 id="installer-dialog-title">Repository setup installer</h2>
+            <p class="installer-dialog-label" data-i18n="installer.sourceLabel">Source / install.sh</p>
+            <h2 id="installer-dialog-title" data-i18n="installer.title">Repository setup installer</h2>
           </div>
           <button
             class="installer-dialog-close"
             type="button"
             data-installer-dialog-close
             aria-label="Close installer source"
+            data-i18n-aria="installer.close"
           >
             <svg viewBox="0 0 16 16" aria-hidden="true">
               <path
@@ -2469,6 +2556,7 @@
               type="button"
               data-copy-target="installer-source"
               aria-label="Copy installer source"
+              data-i18n-aria="installer.copyLabel"
               disabled
             >
               <svg class="copy-icon" aria-hidden="true">
@@ -2477,10 +2565,10 @@
               <svg class="check-icon" aria-hidden="true">
                 <use href="#check-symbol"></use>
               </svg>
-              <span class="copy-label" aria-live="polite">Copy</span>
+              <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
             </button>
           </div>
-          <pre><code id="installer-source" aria-busy="true"><span class="code-line">Loading installer…</span></code></pre>
+          <pre><code id="installer-source" aria-busy="true"><span class="code-line" data-i18n="installer.loading">Loading installer…</span></code></pre>
         </div>
       </div>
     </dialog>
@@ -2492,14 +2580,14 @@
             <use class="mark-word" href="#denial-word" />
             <use class="mark-caret" href="#denial-caret" />
           </svg>
-          <p>
+          <p data-i18n="footer.tagline">
             What something was made for should never dictate what it can become.
           </p>
         </div>
 
         <div class="footer-groups">
-          <nav class="footer-group footer-community" aria-label="Community">
-            <p class="footer-group-title">Community</p>
+          <nav class="footer-group footer-community" aria-label="Community" data-i18n-aria="community.label">
+            <p class="footer-group-title" data-i18n="community.label">Community</p>
             <ul>
               <li>
                 <a href="https://github.com/denialwm/denial">
@@ -2534,13 +2622,14 @@
       </div>
 
       <div class="footer-bottom container">
-        <span>
+        <span data-i18n-html="footer.license">
           Denial is free and open-source software, licensed under
           <a href="https://github.com/denialwm/denial/blob/main/LICENSE">
             GPL-3.0-or-later</a>.
         </span>
       </div>
     </footer>
+    <script src="/i18n/zh-CN.js"></script>
     <script src="/script.js"></script>
   </body>
 </html>

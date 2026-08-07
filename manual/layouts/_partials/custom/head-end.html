@@ -1,0 +1,9 @@
+{{- if eq site.Language.Lang "zh-cn" -}}
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document
+        .querySelectorAll('a[href="https://denialwm.org/"]')
+        .forEach((link) => link.setAttribute("href", "https://denialwm.org/?lang=zh-CN"));
+    });
+  </script>
+{{- end -}}
