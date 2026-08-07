@@ -46,6 +46,38 @@ Presentation is tied to the real output frame cycle. Capture requests and
 continuous recording therefore advance with the selected output instead of
 spinning the event loop.
 
+### Logical and physical scale
+
+Desktop, output, window, and structured cursor coordinates remain logical.
+The shared atlas is allocated at physical resolution using the largest active
+output scale, and Flutter receives that same value as its device-pixel ratio.
+The shell therefore lays out one logical desktop while rasterizing it sharply
+at the atlas resolution; Denial does not scale up Flutter's finished image.
+
+Native Wayland surfaces receive the exact preferred scale of the output that
+currently owns them. Xwayland instead uses the integer ceiling of the largest
+output scale as one session-wide scale, with matching DPI hints, because a
+single X server cannot independently scale windows for different outputs.
+
+## Impeller at the compositor boundary
+
+Impeller GLES is Denial's default Flutter renderer. This required more than
+enabling Flutter's application-level Impeller switch: Denial renders into a
+rotating pool of compositor-owned GBM framebuffers, not a window supplied by
+another desktop. The locked Denial Flutter fork integrates Impeller directly
+with that atlas path.
+
+The integration presents the exact FBO selected by the Rust host, safely
+completes frames when no atlas target is available, preserves partial damage
+across rotating buffers, and keeps imported Wayland textures alive through the
+native GPU fence. Packed depth/stencil storage and backdrop-filter behavior are
+also handled for the compositor-owned targets.
+
+The result is one Impeller-rendered scene that proceeds directly from Flutter
+to the KMS scanout atlas. Skia/Ganesh remains compiled into the same pinned
+engine generation as a compatibility fallback; it does not require a separate
+engine package.
+
 ## Native-shell protocol
 
 The compositor and shell communicate through a bounded, versioned FlatBuffers

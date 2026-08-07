@@ -23,6 +23,12 @@ notifications, lock screen, and settings.
 The launcher and dashboard begin at the left side of the desktop by default.
 Their edge, size, position, and close delay can be changed in Settings.
 
+> [!NOTE]
+> Managed X11/Xwayland windows currently always use Denial's frame, rounded
+> corners, and shadow, even when an application asks to omit them. This avoids
+> a known Impeller blur and shadow corruption path when an X11 window is
+> minimized. Popup-like and override-redirect X11 surfaces remain undecorated.
+
 ## Global shortcuts
 
 Native shortcuts are handled before an application receives the key or mouse

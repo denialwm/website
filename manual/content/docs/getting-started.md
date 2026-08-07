@@ -85,6 +85,11 @@ Log out, select **Denial** in your display manager, and sign in. SDDM is
 supported, but any display manager that exposes the installed Wayland session
 entry can start it.
 
+The desktop renders with Denial's compositor-integrated Impeller GLES backend
+by default. Skia/Ganesh remains available as a driver-compatibility fallback;
+see [Renderer fallback](/docs/configuration/#renderer-fallback) if the first
+session has rendering corruption or fails to present.
+
 The standard display-manager session starts unlocked. This is intentional:
 the display manager has already authenticated you, so immediately showing
 Denial's lock screen would normally ask for the same password twice.
