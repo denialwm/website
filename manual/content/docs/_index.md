@@ -3,14 +3,15 @@ title: Manual
 next: getting-started
 ---
 
-Denial is a Flutter-native Wayland compositor for Arch Linux. Its reference
+Denial is a Flutter-native Wayland compositor for supported x86-64 and ARM64
+Linux systems. Its reference
 desktop is rendered by a directly embedded, compositor-integrated Flutter
 Impeller pipeline—not by a Flutter window running inside somebody else's
 compositor. This manual covers installation, everyday use, configuration,
 system integration, and development.
 
 > [!WARNING]
-> Denial is a public alpha. Keep another desktop session available while
+> Denial is a public beta. Keep another desktop session available while
 > evaluating it, and expect configuration and internal interfaces to evolve.
 
 ## Start here

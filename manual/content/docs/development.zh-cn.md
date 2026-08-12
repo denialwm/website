@@ -9,7 +9,12 @@ prev: architecture
 
 ## 从源码构建
 
-在 x86-64 Arch 开发主机上，先为固定版本的工具链和 Rust 依赖执行一次引导：
+Denial 支持从源码构建 x86-64 和 ARM64 版本。下方命令和输出路径描述的是当前在 Arch
+开发主机上的一键式 x86-64 参考构建。ARM64 使用相同的固定版本 Denial、Flutter 和
+Skia 源码，并搭配架构匹配的 Flutter 引擎与桌面外壳 bundle；目前尚未发布官方 ARM64
+软件包。
+
+先为固定版本的工具链和 Rust 依赖执行一次引导：
 
 ```sh
 tools/denial-pc bootstrap
@@ -23,7 +28,7 @@ tools/denial-pc build
 tools/denial-pc test
 ```
 
-主要输出如下：
+主要的 x86-64 参考输出如下：
 
 | 构件 | 位置 |
 | --- | --- |

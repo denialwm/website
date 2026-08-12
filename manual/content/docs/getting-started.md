@@ -5,18 +5,34 @@ prev: /docs
 next: using-denial
 ---
 
-Denial currently supports **Arch Linux on x86-64**. The first-party package
-installs the compositor, its matching Flutter engine, the desktop shell,
-Xwayland support, a UWSM session, and portal configuration.
+Denial publishes first-party **x86-64** packages for:
+
+- Arch Linux and compatible distributions such as CachyOS;
+- Debian 13 (trixie);
+- Ubuntu 24.04 LTS (noble); and
+- Fedora 44.
+
+| Architecture | Working | Binaries available |
+| --- | :---: | :---: |
+| x86-64 | ✅ | ✅ |
+| ARM64 (AArch64) | ✅ | ❌ |
+
+ARM64 is fully supported, but first-party ARM64 binaries are not published
+yet. Build Denial from source on ARM64 instead of using the repository setup
+below.
+
+The native package installs the compositor, its matching Flutter engine, the
+desktop shell, Xwayland support, a UWSM session, and portal configuration.
 
 > [!WARNING]
-> Denial is still a public alpha. Keep another graphical session installed so
+> Denial is now a public beta. Keep another graphical session installed so
 > you have a known-good way to update or repair the system.
 
 ## Install
 
-The guided installer verifies Denial's full signing-key fingerprint, shows
-every planned change, and asks before using `sudo`:
+The guided installer detects the supported distribution, verifies Denial's
+full signing-key fingerprint, shows every planned change, and asks before
+using `sudo`:
 
 ```sh
 curl -fsSL https://install.denialwm.org | sh
@@ -24,28 +40,73 @@ curl -fsSL https://install.denialwm.org | sh
 
 > [!TIP]
 > The installer checks the complete Denial release-key fingerprint:
-> `AE4108FA5E91E26BE0EE331E0F5B3AD16E023091`.
+> `AE4108FA5E91E26BE0EE331E0F5B3AD16E023091`. It configures the repository
+> but deliberately installs no packages.
+
+After setup, install Denial explicitly with the native package manager:
+
+{{< tabs >}}
+
+  {{< tab name="Arch / CachyOS" >}}
+  ```sh
+  sudo pacman -Syu denial
+  ```
+  {{< /tab >}}
+
+  {{< tab name="Debian / Ubuntu" >}}
+  ```sh
+  sudo apt update && sudo apt install denial
+  ```
+  {{< /tab >}}
+
+  {{< tab name="Fedora" >}}
+  ```sh
+  sudo dnf install denial
+  ```
+  {{< /tab >}}
+
+{{< /tabs >}}
+
+Installing `denial` automatically selects the compatible
+`denial-flutter-engine` package.
 
 {{% details title="Manual repository setup" closed="true" %}}
 
 If you do not want to use the installer, download and inspect the public key
-yourself:
+yourself. Require the complete fingerprint—not a short key ID—before changing
+the package manager:
 
 ```sh
-key_file="$(mktemp)"
-curl -fsSL \
-  -o "$key_file" \
+key_fingerprint='AE4108FA5E91E26BE0EE331E0F5B3AD16E023091'
+key_tmp="$(mktemp -d)"
+trap 'rm -rf -- "$key_tmp"' EXIT
+
+curl \
+  --proto '=https' \
+  --tlsv1.2 \
+  --fail \
+  --silent \
+  --show-error \
+  --location \
+  --output "$key_tmp/denial-repo-key.asc" \
   https://denialwm.github.io/denial/denial-repo-key.asc
-gpg --show-keys --with-fingerprint "$key_file"
+
+downloaded_fingerprint="$(
+  gpg --batch --show-keys --with-colons --fingerprint \
+    "$key_tmp/denial-repo-key.asc" \
+    | awk -F: '$1 == "fpr" { print toupper($10); exit }'
+)"
+test "$downloaded_fingerprint" = "$key_fingerprint"
+gpg --show-keys --with-fingerprint "$key_tmp/denial-repo-key.asc"
 ```
 
-Only after the displayed fingerprint exactly matches the value above, import
-and locally trust it:
+### Arch Linux and CachyOS
+
+Only after the fingerprint check passes, import and locally trust the key:
 
 ```sh
-sudo pacman-key --add "$key_file"
-sudo pacman-key --lsign-key AE4108FA5E91E26BE0EE331E0F5B3AD16E023091
-rm "$key_file"
+sudo pacman-key --add "$key_tmp/denial-repo-key.asc"
+sudo pacman-key --lsign-key "$key_fingerprint"
 ```
 
 Add the following section after the official repositories in
@@ -57,16 +118,76 @@ SigLevel = Required TrustedOnly
 Server = https://denialwm.github.io/denial/$arch
 ```
 
-{{% /details %}}
+`Required TrustedOnly` makes Pacman require a trusted signature for both the
+repository database and every package.
 
-Then update the system and install Denial:
+### Debian 13
+
+Install the verified key as a repository-scoped APT keyring:
 
 ```sh
-sudo pacman -Syu denial
+sudo install -d -m 0755 /etc/apt/keyrings
+sudo install -m 0644 \
+  "$key_tmp/denial-repo-key.asc" \
+  /etc/apt/keyrings/denial.asc
 ```
 
-Installing `denial` automatically selects the compatible
-`denial-flutter-engine` package.
+Create `/etc/apt/sources.list.d/denial.sources` with:
+
+```text
+Types: deb
+URIs: https://denialwm.github.io/denial/apt
+Suites: trixie
+Components: main
+Architectures: amd64
+Signed-By: /etc/apt/keyrings/denial.asc
+```
+
+### Ubuntu 24.04 LTS
+
+Install the key in `/etc/apt/keyrings/denial.asc` as above, then create
+`/etc/apt/sources.list.d/denial.sources` with:
+
+```text
+Types: deb
+URIs: https://denialwm.github.io/denial/apt
+Suites: noble
+Components: main
+Architectures: amd64
+Signed-By: /etc/apt/keyrings/denial.asc
+```
+
+`Signed-By` limits trust in this key to the Denial repository. APT verifies
+the signed `InRelease` metadata before accepting its package checksums.
+
+### Fedora 44
+
+Install and import the verified key:
+
+```sh
+sudo install -D -m 0644 \
+  "$key_tmp/denial-repo-key.asc" \
+  /etc/pki/rpm-gpg/RPM-GPG-KEY-denial
+sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-denial
+```
+
+Create `/etc/yum.repos.d/denial.repo` with:
+
+```ini
+[denial]
+name=Denial public beta
+baseurl=https://denialwm.github.io/denial/rpm/fedora/$releasever/$basearch
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-denial
+skip_if_unavailable=0
+```
+
+`repo_gpgcheck=1` authenticates repository metadata, while `gpgcheck=1`
+requires the embedded signature on each RPM.
+
+{{% /details %}}
 
 ## Check the installation
 
@@ -133,25 +254,32 @@ lists connected outputs, modes, positions, scale, and power state.
 
 ## Update or remove
 
-Denial follows the normal full-system Arch upgrade path:
+Use the normal native update path:
 
 ```sh
+# Arch Linux or CachyOS
 sudo pacman -Syu
+
+# Debian 13 or Ubuntu 24.04
+sudo apt update && sudo apt upgrade
+
+# Fedora 44
+sudo dnf upgrade
 ```
 
-To remove the compositor and dependencies no longer required by other
-packages:
+Remove Denial with the matching package manager:
 
 ```sh
+# Arch Linux or CachyOS
 sudo pacman -Rns denial
+
+# Debian 13 or Ubuntu 24.04
+sudo apt remove denial
+
+# Fedora 44
+sudo dnf remove denial
 ```
 
-If the optional live-development environment is installed, remove both
-packages together:
-
-```sh
-sudo pacman -Rns denial-ui-development denial
-```
-
-Removing the package does not delete user configuration or an editable
-`~/DenialUI` checkout.
+The optional `denial-ui-development` package is currently published only for
+Arch-family systems. Removing a package does not remove the repository
+configuration, user configuration, or an editable `~/DenialUI` checkout.

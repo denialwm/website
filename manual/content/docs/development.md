@@ -9,8 +9,13 @@ shell in `dart_shell/`. They are built and versioned together.
 
 ## Build from source
 
-On an x86-64 Arch development host, bootstrap the pinned toolchain and Rust
-dependencies once:
+Denial supports source builds on x86-64 and ARM64. The commands and output
+paths below describe the current turnkey x86-64 reference build on an Arch
+development host. ARM64 uses the same locked Denial, Flutter, and Skia sources
+with an architecture-matched Flutter engine and shell bundle; first-party
+ARM64 packages are not published yet.
+
+Bootstrap the pinned toolchain and Rust dependencies once:
 
 ```sh
 tools/denial-pc bootstrap
@@ -24,7 +29,7 @@ tools/denial-pc build
 tools/denial-pc test
 ```
 
-The main outputs are:
+The main x86-64 reference outputs are:
 
 | Artifact | Location |
 | --- | --- |

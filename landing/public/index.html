@@ -1000,7 +1000,7 @@
 
       .install-steps {
         display: grid;
-        max-width: 62rem;
+        max-width: 72rem;
         counter-reset: install-step;
         gap: 0;
         margin: 0;
@@ -1101,8 +1101,15 @@
       }
 
       .install-step > .code-panel,
+      .install-step > .install-package-options,
       .install-step > .install-session {
         grid-column: 2;
+      }
+
+      .install-package-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+        gap: 0.8rem;
       }
 
       .install-step h3 {
@@ -1946,7 +1953,7 @@
 
             <div class="hero-actions">
               <a class="button button-primary" href="#install">
-                <span data-i18n="hero.install">Install on Arch</span>
+                <span data-i18n="hero.install">Install Denial</span>
                 <svg class="button-arrow" viewBox="0 0 20 20" aria-hidden="true">
                   <path
                     d="m7 4 6 6-6 6"
@@ -2373,7 +2380,7 @@
       <section class="install container" id="install" aria-labelledby="install-title">
         <div class="install-heading" data-reveal>
           <div>
-            <p class="section-label" data-i18n="install.label">Install · Arch Linux x86-64</p>
+            <p class="section-label" data-i18n="install.label">Package install · Linux x86-64</p>
             <h2 id="install-title" data-i18n="install.heading">
               Install Denial in three steps.
             </h2>
@@ -2464,31 +2471,76 @@
             <span class="install-step-number" aria-hidden="true"></span>
             <div class="install-step-copy">
               <h3 data-i18n="install.package.title">Install Denial</h3>
+              <p data-i18n="install.package.copy">
+                First-party repositories currently ship x86-64 packages. ARM64
+                is fully supported from source, but binaries are not published
+                yet. The matching Flutter engine is installed automatically.
+              </p>
             </div>
 
-            <div class="code-panel code-panel--compact">
-              <div class="code-panel-header">
-                <span class="code-panel-identity">
-                  <span class="code-panel-icon" aria-hidden="true">$</span>
-                  <span class="code-panel-title" data-i18n="install.package.panel">shell · install Denial</span>
-                </span>
-                <button
-                  class="copy-button"
-                  type="button"
-                  data-copy-target="denial-install-command"
-                  aria-label="Copy Denial installation command"
-                  data-i18n-aria="install.package.copyLabel"
-                >
-                  <svg class="copy-icon" aria-hidden="true">
-                    <use href="#copy-symbol"></use>
-                  </svg>
-                  <svg class="check-icon" aria-hidden="true">
-                    <use href="#check-symbol"></use>
-                  </svg>
-                  <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
-                </button>
+            <div class="install-package-options">
+              <div class="code-panel code-panel--compact">
+                <div class="code-panel-header">
+                  <span class="code-panel-identity">
+                    <span class="code-panel-icon" aria-hidden="true">$</span>
+                    <span class="code-panel-title" data-i18n="install.package.panelArch">Arch / CachyOS</span>
+                  </span>
+                  <button
+                    class="copy-button"
+                    type="button"
+                    data-copy-target="denial-install-arch"
+                    aria-label="Copy Arch installation command"
+                    data-i18n-aria="install.package.copyLabelArch"
+                  >
+                    <svg class="copy-icon" aria-hidden="true"><use href="#copy-symbol"></use></svg>
+                    <svg class="check-icon" aria-hidden="true"><use href="#check-symbol"></use></svg>
+                    <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
+                  </button>
+                </div>
+                <pre><code id="denial-install-arch"><span class="code-line"><span class="syntax-command">sudo pacman</span> <span class="syntax-option">-Syu</span> <span class="syntax-package">denial</span></span></code></pre>
               </div>
-              <pre><code id="denial-install-command"><span class="code-line"><span class="syntax-command">sudo pacman</span> <span class="syntax-option">-Syu</span> <span class="syntax-package">denial</span></span></code></pre>
+
+              <div class="code-panel code-panel--compact">
+                <div class="code-panel-header">
+                  <span class="code-panel-identity">
+                    <span class="code-panel-icon" aria-hidden="true">$</span>
+                    <span class="code-panel-title" data-i18n="install.package.panelApt">Debian / Ubuntu</span>
+                  </span>
+                  <button
+                    class="copy-button"
+                    type="button"
+                    data-copy-target="denial-install-apt"
+                    aria-label="Copy Debian or Ubuntu installation command"
+                    data-i18n-aria="install.package.copyLabelApt"
+                  >
+                    <svg class="copy-icon" aria-hidden="true"><use href="#copy-symbol"></use></svg>
+                    <svg class="check-icon" aria-hidden="true"><use href="#check-symbol"></use></svg>
+                    <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
+                  </button>
+                </div>
+                <pre><code id="denial-install-apt"><span class="code-line"><span class="syntax-command">sudo apt</span> <span class="syntax-package">update</span> <span class="syntax-operator">&amp;&amp;</span> <span class="syntax-command">sudo apt</span> <span class="syntax-package">install denial</span></span></code></pre>
+              </div>
+
+              <div class="code-panel code-panel--compact">
+                <div class="code-panel-header">
+                  <span class="code-panel-identity">
+                    <span class="code-panel-icon" aria-hidden="true">$</span>
+                    <span class="code-panel-title" data-i18n="install.package.panelFedora">Fedora</span>
+                  </span>
+                  <button
+                    class="copy-button"
+                    type="button"
+                    data-copy-target="denial-install-fedora"
+                    aria-label="Copy Fedora installation command"
+                    data-i18n-aria="install.package.copyLabelFedora"
+                  >
+                    <svg class="copy-icon" aria-hidden="true"><use href="#copy-symbol"></use></svg>
+                    <svg class="check-icon" aria-hidden="true"><use href="#check-symbol"></use></svg>
+                    <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
+                  </button>
+                </div>
+                <pre><code id="denial-install-fedora"><span class="code-line"><span class="syntax-command">sudo dnf</span> <span class="syntax-package">install denial</span></span></code></pre>
+              </div>
             </div>
           </li>
 

@@ -5,17 +5,32 @@ prev: /docs
 next: using-denial
 ---
 
-Denial 目前支持 **x86-64 架构的 Arch Linux**。官方软件包会安装合成器、与之匹配的
-Flutter 引擎、桌面外壳、Xwayland 支持、UWSM 会话和 Portal 配置。
+Denial 为以下系统发布官方 **x86-64** 软件包：
+
+- Arch Linux 及 CachyOS 等兼容发行版；
+- Debian 13（trixie）；
+- Ubuntu 24.04 LTS（noble）；
+- Fedora 44。
+
+| 架构 | 可正常运行 | 提供二进制软件包 |
+| --- | :---: | :---: |
+| x86-64 | ✅ | ✅ |
+| ARM64（AArch64） | ✅ | ❌ |
+
+ARM64 已得到完整支持，但尚未发布官方 ARM64 二进制软件包。ARM64 用户应从源代码构建
+Denial，而不是使用下方的软件仓库配置流程。
+
+原生软件包会安装合成器、与之匹配的 Flutter 引擎、桌面外壳、Xwayland 支持、UWSM
+会话和 Portal 配置。
 
 > [!WARNING]
-> Denial 仍处于公开 Alpha 阶段。请保留另一个图形会话，以便在出现问题时仍能更新或
+> Denial 现处于公开 Beta 阶段。请保留另一个图形会话，以便在出现问题时仍能更新或
 > 修复系统。
 
 ## 安装
 
-引导式安装程序会验证 Denial 签名密钥的完整指纹、显示所有计划执行的更改，并在使用
-`sudo` 前征求确认：
+引导式安装程序会检测受支持的发行版、验证 Denial 签名密钥的完整指纹、显示所有计划
+执行的更改，并在使用 `sudo` 前征求确认：
 
 ```sh
 curl -fsSL https://install.denialwm.org | sh
@@ -23,26 +38,70 @@ curl -fsSL https://install.denialwm.org | sh
 
 > [!TIP]
 > 安装程序会核对完整的 Denial 发布密钥指纹：
-> `AE4108FA5E91E26BE0EE331E0F5B3AD16E023091`。
+> `AE4108FA5E91E26BE0EE331E0F5B3AD16E023091`。它只配置软件仓库，不会安装任何软件包。
+
+配置完成后，用当前发行版的原生软件包管理器显式安装 Denial：
+
+{{< tabs >}}
+
+  {{< tab name="Arch / CachyOS" >}}
+  ```sh
+  sudo pacman -Syu denial
+  ```
+  {{< /tab >}}
+
+  {{< tab name="Debian / Ubuntu" >}}
+  ```sh
+  sudo apt update && sudo apt install denial
+  ```
+  {{< /tab >}}
+
+  {{< tab name="Fedora" >}}
+  ```sh
+  sudo dnf install denial
+  ```
+  {{< /tab >}}
+
+{{< /tabs >}}
+
+安装 `denial` 时会自动选择兼容的 `denial-flutter-engine` 软件包。
 
 {{% details title="手动配置软件仓库" closed="true" %}}
 
-如果不想使用安装程序，请自行下载并检查公钥：
+如果不想使用安装程序，请自行下载并检查公钥。修改软件包管理器前，必须核对完整指纹，
+不能只核对短密钥 ID：
 
 ```sh
-key_file="$(mktemp)"
-curl -fsSL \
-  -o "$key_file" \
+key_fingerprint='AE4108FA5E91E26BE0EE331E0F5B3AD16E023091'
+key_tmp="$(mktemp -d)"
+trap 'rm -rf -- "$key_tmp"' EXIT
+
+curl \
+  --proto '=https' \
+  --tlsv1.2 \
+  --fail \
+  --silent \
+  --show-error \
+  --location \
+  --output "$key_tmp/denial-repo-key.asc" \
   https://denialwm.github.io/denial/denial-repo-key.asc
-gpg --show-keys --with-fingerprint "$key_file"
+
+downloaded_fingerprint="$(
+  gpg --batch --show-keys --with-colons --fingerprint \
+    "$key_tmp/denial-repo-key.asc" \
+    | awk -F: '$1 == "fpr" { print toupper($10); exit }'
+)"
+test "$downloaded_fingerprint" = "$key_fingerprint"
+gpg --show-keys --with-fingerprint "$key_tmp/denial-repo-key.asc"
 ```
 
-只有当显示的指纹与上面的值完全一致时，才导入密钥并在本地信任它：
+### Arch Linux 与 CachyOS
+
+只有指纹检查通过后，才导入密钥并在本地信任它：
 
 ```sh
-sudo pacman-key --add "$key_file"
-sudo pacman-key --lsign-key AE4108FA5E91E26BE0EE331E0F5B3AD16E023091
-rm "$key_file"
+sudo pacman-key --add "$key_tmp/denial-repo-key.asc"
+sudo pacman-key --lsign-key "$key_fingerprint"
 ```
 
 在 `/etc/pacman.conf` 的官方软件仓库之后添加以下部分：
@@ -53,15 +112,74 @@ SigLevel = Required TrustedOnly
 Server = https://denialwm.github.io/denial/$arch
 ```
 
-{{% /details %}}
+`Required TrustedOnly` 会要求 Pacman 验证软件仓库数据库和每个软件包的可信签名。
 
-然后更新系统并安装 Denial：
+### Debian 13
+
+将已验证的密钥安装为仅供此软件仓库使用的 APT 密钥环：
 
 ```sh
-sudo pacman -Syu denial
+sudo install -d -m 0755 /etc/apt/keyrings
+sudo install -m 0644 \
+  "$key_tmp/denial-repo-key.asc" \
+  /etc/apt/keyrings/denial.asc
 ```
 
-安装 `denial` 时会自动选择兼容的 `denial-flutter-engine` 软件包。
+创建 `/etc/apt/sources.list.d/denial.sources`：
+
+```text
+Types: deb
+URIs: https://denialwm.github.io/denial/apt
+Suites: trixie
+Components: main
+Architectures: amd64
+Signed-By: /etc/apt/keyrings/denial.asc
+```
+
+### Ubuntu 24.04 LTS
+
+按上面的方式将密钥安装到 `/etc/apt/keyrings/denial.asc`，然后创建
+`/etc/apt/sources.list.d/denial.sources`：
+
+```text
+Types: deb
+URIs: https://denialwm.github.io/denial/apt
+Suites: noble
+Components: main
+Architectures: amd64
+Signed-By: /etc/apt/keyrings/denial.asc
+```
+
+`Signed-By` 将该密钥的信任范围限制在 Denial 软件仓库。APT 会先验证已签名的
+`InRelease` 元数据，再接受其中的软件包校验和。
+
+### Fedora 44
+
+安装并导入已验证的密钥：
+
+```sh
+sudo install -D -m 0644 \
+  "$key_tmp/denial-repo-key.asc" \
+  /etc/pki/rpm-gpg/RPM-GPG-KEY-denial
+sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-denial
+```
+
+创建 `/etc/yum.repos.d/denial.repo`：
+
+```ini
+[denial]
+name=Denial public beta
+baseurl=https://denialwm.github.io/denial/rpm/fedora/$releasever/$basearch
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-denial
+skip_if_unavailable=0
+```
+
+`repo_gpgcheck=1` 会验证软件仓库元数据，`gpgcheck=1` 会验证每个 RPM 内嵌的签名。
+
+{{% /details %}}
 
 ## 检查安装
 
@@ -120,22 +238,31 @@ denialctl outputs
 
 ## 更新或卸载
 
-Denial 遵循 Arch 的常规完整系统升级流程：
+使用当前发行版的常规更新流程：
 
 ```sh
+# Arch Linux 或 CachyOS
 sudo pacman -Syu
+
+# Debian 13 或 Ubuntu 24.04
+sudo apt update && sudo apt upgrade
+
+# Fedora 44
+sudo dnf upgrade
 ```
 
-要卸载合成器及不再被其他软件包需要的依赖，请运行：
+使用对应的软件包管理器卸载 Denial：
 
 ```sh
+# Arch Linux 或 CachyOS
 sudo pacman -Rns denial
+
+# Debian 13 或 Ubuntu 24.04
+sudo apt remove denial
+
+# Fedora 44
+sudo dnf remove denial
 ```
 
-如果安装了可选的实时开发环境，请同时卸载两个软件包：
-
-```sh
-sudo pacman -Rns denial-ui-development denial
-```
-
-卸载软件包不会删除用户配置或可编辑的 `~/DenialUI` 检出目录。
+可选的 `denial-ui-development` 软件包目前只面向 Arch 系发行版。卸载 Denial 不会删除
+软件仓库配置、用户配置或可编辑的 `~/DenialUI` 检出目录。

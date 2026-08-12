@@ -3,12 +3,12 @@ title: 手册
 next: getting-started
 ---
 
-Denial 是一款面向 Arch Linux 的 Flutter 原生 Wayland 合成器。它的参考桌面由直接嵌入、
+Denial 是一款面向受支持 x86-64 和 ARM64 Linux 系统的 Flutter 原生 Wayland 合成器。它的参考桌面由直接嵌入、
 与合成器集成的 Flutter Impeller 管线渲染，而不是在其他合成器中运行的 Flutter 窗口。
 本手册涵盖安装、日常使用、配置、系统集成和开发。
 
 > [!WARNING]
-> Denial 目前仍处于公开 Alpha 阶段。评估时请保留另一个可用的桌面会话，并做好配置和
+> Denial 目前处于公开 Beta 阶段。评估时请保留另一个可用的桌面会话，并做好配置和
 > 内部接口继续演变的准备。
 
 ## 从这里开始

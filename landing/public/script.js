@@ -283,7 +283,7 @@ const shellKeywords = new Set([
   "then",
 ]);
 const shellTokenPattern =
-  /"(?:[^"\\]|\\.)*"|'[^']*'|\$[A-Za-z_][A-Za-z0-9_]*|--?[A-Za-z][A-Za-z0-9-]*|\b(?:case|command|do|done|else|esac|exit|fi|for|grep|if|in|pacman-key|printf|return|sudo|tee|then|uname)\b/g;
+  /"(?:[^"\\]|\\.)*"|'[^']*'|\$[A-Za-z_][A-Za-z0-9_]*|--?[A-Za-z][A-Za-z0-9-]*|\b(?:apt|case|command|curl|dnf|do|done|else|esac|exit|fi|for|gpg|grep|if|in|install|pacman-key|printf|return|rpmkeys|sudo|tee|then|uname)\b/g;
 let installerSourceRequest;
 
 const shellTokenClass = (token) => {

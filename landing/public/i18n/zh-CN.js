@@ -15,7 +15,7 @@ window.denialTranslations = {
       statementWords: ["事物", "最初", "为何", "而生，", "绝不应", "限制", "它最终", "能成为", "什么。"],
       copy:
         "Flutter 为应用界面而生。Denial 将它运行在合成器内部，让 Flutter 掌控整个桌面场景。",
-      install: "在 Arch 上安装",
+      install: "安装 Denial",
       manual: "阅读手册",
       previewLabel: "Denial 桌面的简短预览",
     },
@@ -86,7 +86,7 @@ window.denialTranslations = {
       discord: "与 Denial 用户交流",
     },
     install: {
-      label: "安装 · Arch Linux x86-64",
+      label: "软件包安装 · Linux x86-64",
       heading: "三步安装 Denial。",
       repository: {
         title: "配置 Denial 软件仓库",
@@ -98,8 +98,13 @@ window.denialTranslations = {
       },
       package: {
         title: "安装 Denial",
-        panel: "shell · 安装 Denial",
-        copyLabel: "复制 Denial 安装命令",
+        copy: "官方软件仓库目前提供 x86-64 软件包。ARM64 已得到完整支持，但尚未发布二进制软件包。匹配的 Flutter 引擎会自动安装。",
+        panelArch: "Arch / CachyOS",
+        panelApt: "Debian / Ubuntu",
+        panelFedora: "Fedora",
+        copyLabelArch: "复制 Arch 安装命令",
+        copyLabelApt: "复制 Debian 或 Ubuntu 安装命令",
+        copyLabelFedora: "复制 Fedora 安装命令",
       },
       session: {
         title: "开始使用 Denial",
