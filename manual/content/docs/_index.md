@@ -14,6 +14,17 @@ system integration, and development.
 > Denial is a public beta. Keep another desktop session available while
 > evaluating it, and expect configuration and internal interfaces to evolve.
 
+<div class="manual-support">
+  <p>Independently developed and always free and open source.</p>
+  <div class="support-actions">
+    <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
+    <a class="support-button" href="https://ko-fi.com/E5P523D5FN" target="_blank" rel="noopener noreferrer" title="Support Denial on Ko-fi">
+      <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true">
+      <span>Ko-fi</span>
+    </a>
+  </div>
+</div>
+
 ## Start here
 
 {{< cards >}}

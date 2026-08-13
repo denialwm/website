@@ -11,6 +11,17 @@ Denial 是一款面向受支持 x86-64 和 ARM64 Linux 系统的 Flutter 原生 
 > Denial 目前处于公开 Beta 阶段。评估时请保留另一个可用的桌面会话，并做好配置和
 > 内部接口继续演变的准备。
 
+<div class="manual-support">
+  <p>独立开发，并将始终保持自由开源。</p>
+  <div class="support-actions">
+    <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
+    <a class="support-button" href="https://ko-fi.com/E5P523D5FN" target="_blank" rel="noopener noreferrer" title="在 Ko-fi 上支持 Denial">
+      <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true">
+      <span>Ko-fi</span>
+    </a>
+  </div>
+</div>
+
 ## 从这里开始
 
 {{< cards >}}

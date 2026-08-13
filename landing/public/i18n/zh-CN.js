@@ -84,6 +84,7 @@ window.denialTranslations = {
       navigation: "Denial 社区链接",
       github: "源代码、议题和版本发布",
       discord: "与 Denial 用户交流",
+      sponsor: "独立开发，并将始终保持自由开源。",
     },
     install: {
       label: "软件包安装 · Linux x86-64",

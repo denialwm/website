@@ -44,22 +44,35 @@ menu:
       weight: 3
       params:
         type: search
+    - name: Support
+      identifier: support
+      weight: 4
+    - name: GitHub Sponsors
+      identifier: github-sponsors
+      parent: support
+      url: "https://github.com/sponsors/doctorlogix"
+      weight: 1
+    - name: Ko-fi
+      identifier: ko-fi
+      parent: support
+      url: "https://ko-fi.com/E5P523D5FN"
+      weight: 2
     - name: GitHub
       identifier: github
       url: "https://github.com/denialwm/denial"
-      weight: 4
+      weight: 5
       params:
         icon: github
     - name: Discord
       identifier: discord
       url: "https://discord.gg/PQBChmDYy"
-      weight: 5
+      weight: 6
       params:
         icon: discord
     - name: Reddit
       identifier: reddit
       url: "https://www.reddit.com/r/denialwm/"
-      weight: 6
+      weight: 7
       params:
         icon: reddit
 

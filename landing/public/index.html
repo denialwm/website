@@ -918,6 +918,65 @@
         text-wrap: pretty;
       }
 
+      .community-support {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.75rem 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .community-support p {
+        max-width: 30ch;
+        margin: 0;
+        color: var(--quiet);
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+
+      .community-support iframe {
+        display: block;
+        flex: 0 0 auto;
+      }
+
+      .support-button {
+        display: inline-flex;
+        width: 114px;
+        height: 32px;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        border: 1px solid #3d444d;
+        border-radius: 6px;
+        background: #212830;
+        color: #f0f6fc;
+        box-shadow: none;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
+        text-decoration: none;
+        transition:
+          background 80ms cubic-bezier(0.33, 1, 0.68, 1),
+          border-color 80ms cubic-bezier(0.33, 1, 0.68, 1);
+      }
+
+      .support-button:hover {
+        border-color: #3d444d;
+        background: #262c36;
+      }
+
+      .support-button:active {
+        border-color: #3d444d;
+        background: #2a313c;
+      }
+
+      .support-button img {
+        width: 20px;
+        height: 14px;
+        object-fit: contain;
+      }
+
       .community-links {
         border-top: 1px solid var(--line);
       }
@@ -2351,6 +2410,14 @@
             Denial is built in public. Follow development on GitHub or talk
             with Denial users on Discord.
           </p>
+          <div class="community-support">
+            <p data-i18n="community.sponsor">Independently developed and always free and open source.</p>
+            <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
+            <a class="support-button" href="https://ko-fi.com/E5P523D5FN" target="_blank" rel="noopener noreferrer" title="Support Denial on Ko-fi">
+              <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true">
+              <span>Ko-fi</span>
+            </a>
+          </div>
         </div>
 
         <nav class="community-links" aria-label="Denial community links" data-i18n-aria="community.navigation">
