@@ -65,7 +65,7 @@ menu:
         icon: github
     - name: Discord
       identifier: discord
-      url: "https://discord.gg/PQBChmDYy"
+      url: "https://discord.gg/vy5t8aCxj"
       weight: 6
       params:
         icon: discord
