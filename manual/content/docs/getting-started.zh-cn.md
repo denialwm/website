@@ -7,10 +7,14 @@ next: using-denial
 
 Denial 为以下系统发布官方 **x86-64** 软件包：
 
-- Arch Linux 及 CachyOS 等兼容发行版；
+- Arch Linux、CachyOS 和 Omarchy 4.0；
 - Debian 13（trixie）；
 - Ubuntu 24.04 LTS（noble）；
 - Fedora 44。
+
+Alpine Linux 3.24 也已受支持，其签名 APK 文件附在每个 GitHub Release 中。NixOS 26.05
+和 Void Linux 已通过运行时验证，但目前尚无官方软件包。Debian Forky/Sid 可尽力使用
+Debian 13 的 `trixie` 仓库；该滚动版本尚未完成完整验证矩阵。
 
 | 架构 | 可正常运行 | 提供二进制软件包 |
 | --- | :---: | :---: |
@@ -20,20 +24,23 @@ Denial 为以下系统发布官方 **x86-64** 软件包：
 ARM64 已得到完整支持，但尚未发布官方 ARM64 二进制软件包。ARM64 用户应从源代码构建
 Denial，而不是使用下方的软件仓库配置流程。
 
-原生软件包会安装合成器、与之匹配的 Flutter 引擎、桌面外壳、Xwayland 支持、UWSM
-会话和 Portal 配置。
+原生软件包会安装合成器、匹配的 Flutter 引擎、嵌入式桌面外壳、独立 Settings 应用、
+Xwayland 支持、会话集成以及桌面 Portal。
 
-> [!WARNING]
-> Denial 现处于公开 Beta 阶段。请保留另一个图形会话，以便在出现问题时仍能更新或
-> 修复系统。
+## 要求
+
+会话需要兼容 logind 的 seat/会话服务和用户 D-Bus。图形路径需要原子 KMS、GBM/EGL、
+硬件 OpenGL ES 3.0 或更高版本，以及渲染器和每个活动主平面都能共享的 XRGB8888
+格式/modifier。较旧 GPU 和简单虚拟机显示设备可能无法满足这些要求。注销前运行
+`denial-session --check` 可查看可用设备与各项前置条件。
 
 ## 安装
 
-引导式安装程序会检测受支持的发行版、验证 Denial 签名密钥的完整指纹、显示所有计划
-执行的更改，并在使用 `sudo` 前征求确认：
+对于 Arch、CachyOS、Omarchy、Debian、Ubuntu 和 Fedora，引导式安装程序会检测发行版、
+验证 Denial 签名密钥的完整指纹、显示所有计划执行的更改，并在使用 `sudo` 前征求确认：
 
 ```sh
-curl -fsSL https://install.denialwm.org | sh
+sh -c 'if ! command -v curl >/dev/null 2>&1; then echo "Error: curl is not available." >&2; exit 1; fi; curl -fsSL https://install.denialwm.org | sh'
 ```
 
 > [!TIP]
@@ -44,7 +51,7 @@ curl -fsSL https://install.denialwm.org | sh
 
 {{< tabs >}}
 
-  {{< tab name="Arch / CachyOS" >}}
+  {{< tab name="Arch / CachyOS / Omarchy" >}}
   ```sh
   sudo pacman -Syu denial
   ```
@@ -65,6 +72,40 @@ curl -fsSL https://install.denialwm.org | sh
 {{< /tabs >}}
 
 安装 `denial` 时会自动选择兼容的 `denial-flutter-engine` 软件包。
+
+### Alpine Linux 3.24
+
+Alpine 目前使用签名的直接下载文件，而不是软件仓库。将 `X.Y.Z` 替换为发布版本，使用
+同一个固定的发布密钥验证两个 APK，然后安装已验证的本地文件：
+
+```sh
+version=X.Y.Z
+release="https://github.com/denialwm/denial/releases/download/v$version"
+
+doas apk add gnupg
+curl -fLO https://denialwm.github.io/denial/denial-repo-key.asc
+curl -fLO "$release/denial-flutter-engine-$version-r1.apk"
+curl -fLO "$release/denial-flutter-engine-$version-r1.apk.sig"
+curl -fLO "$release/denial-$version-r1.apk"
+curl -fLO "$release/denial-$version-r1.apk.sig"
+
+fingerprint="$(
+  gpg --show-keys --with-colons denial-repo-key.asc \
+    | awk -F: '$1 == "fpr" { print $10; exit }'
+)"
+test "$fingerprint" = AE4108FA5E91E26BE0EE331E0F5B3AD16E023091
+gpg --import denial-repo-key.asc
+gpg --verify "denial-flutter-engine-$version-r1.apk.sig" \
+  "denial-flutter-engine-$version-r1.apk"
+gpg --verify "denial-$version-r1.apk.sig" \
+  "denial-$version-r1.apk"
+doas apk add --allow-untrusted \
+  "./denial-flutter-engine-$version-r1.apk" \
+  "./denial-$version-r1.apk"
+```
+
+这里的 `--allow-untrusted` 只跳过 APK 原生的 RSA 仓库格式；前面的 OpenPGP 检查已经验证
+了实际下载的文件。
 
 {{% details title="手动配置软件仓库" closed="true" %}}
 
@@ -95,7 +136,7 @@ test "$downloaded_fingerprint" = "$key_fingerprint"
 gpg --show-keys --with-fingerprint "$key_tmp/denial-repo-key.asc"
 ```
 
-### Arch Linux 与 CachyOS
+### Arch Linux、CachyOS 和 Omarchy
 
 只有指纹检查通过后，才导入密钥并在本地信任它：
 
@@ -189,7 +230,8 @@ skip_if_unavailable=0
 denial-session --check
 ```
 
-它会检查已安装的会话和图形环境，但不会启动另一个合成器。
+它会检查已安装的会话、Bundle、输出配置、DRM 与渲染设备选择、Qt Portal 主题以及
+Xwayland，但不会启动另一个合成器。
 
 ## 启动 Denial
 
@@ -208,11 +250,18 @@ Wayland 会话条目的显示管理器也都可以启动它。
 如果会话管理器在未先验证用户身份的情况下启动 Denial，请启用启动锁定：
 
 ```sh
-uwsm start -e -D Denial -- /usr/bin/denial-session --start-locked
+/usr/bin/denial-session --start-locked
 ```
 
 `--start-locked` 会在 Flutter 启动前关闭 Denial 的原生安全门，因此第一个可见状态就是
-由 PAM 支持的锁屏。这适用于 greetd 的 `initial_session`、自动登录或其他直接启动路径。
+由 PAM 支持的锁屏。这适用于自动登录或其他直接启动路径。例如，greetd 可以使用：
+
+```toml
+[initial_session]
+command = "/usr/bin/denial-session --start-locked"
+user = "alice"
+```
+
 除非确实希望再次输入密码，否则不要将它添加到普通、已经验证身份的显示管理器条目中。
 
 支持的会话启动模式如下：
@@ -234,14 +283,14 @@ denialctl outputs
 ```
 
 第一条命令报告合成器和 Flutter 桌面外壳的状态；第二条列出已连接输出的模式、位置、
-缩放和电源状态。
+缩放、电源状态和配置序列号。
 
 ## 更新或卸载
 
 使用当前发行版的常规更新流程：
 
 ```sh
-# Arch Linux 或 CachyOS
+# Arch Linux、CachyOS 或 Omarchy
 sudo pacman -Syu
 
 # Debian 13 或 Ubuntu 24.04
@@ -249,12 +298,14 @@ sudo apt update && sudo apt upgrade
 
 # Fedora 44
 sudo dnf upgrade
+
+# Alpine Linux 3.24：重复上面的签名直接下载流程
 ```
 
 使用对应的软件包管理器卸载 Denial：
 
 ```sh
-# Arch Linux 或 CachyOS
+# Arch Linux、CachyOS 或 Omarchy
 sudo pacman -Rns denial
 
 # Debian 13 或 Ubuntu 24.04
@@ -262,6 +313,9 @@ sudo apt remove denial
 
 # Fedora 44
 sudo dnf remove denial
+
+# Alpine Linux 3.24
+doas apk del denial
 ```
 
 可选的 `denial-ui-development` 软件包目前只面向 Arch 系发行版。卸载 Denial 不会删除

@@ -5,14 +5,13 @@ window.denialTranslations = {
       description:
         "Denial 是一款 Flutter 原生 Wayland 合成器。Flutter 直接掌控桌面场景：包括桌面外壳、动画效果以及 Wayland 应用的合成。",
       ogDescription:
-        "事物最初为何而生，绝不应限制它最终能成为什么。一款以 Flutter 为根基的 Wayland 合成器。",
+        "Denial 是一款 Flutter 原生 Wayland 合成器，将 Flutter 直接嵌入桌面渲染管线。",
     },
     language: {
       label: "语言",
     },
     hero: {
       kicker: "Flutter 原生 Wayland 合成器",
-      statementWords: ["事物", "最初", "为何", "而生，", "绝不应", "限制", "它最终", "能成为", "什么。"],
       copy:
         "Flutter 为应用界面而生。Denial 将它运行在合成器内部，让 Flutter 掌控整个桌面场景。",
       install: "安装 Denial",
@@ -23,7 +22,7 @@ window.denialTranslations = {
       flutterEngine: "嵌入式 Flutter 引擎",
       dartShell: "AOT Dart 桌面外壳",
       scanout: "DRM · KMS 扫描输出",
-      gbmAtlas: "共享 GBM 图集",
+      outputPools: "按输出帧缓冲池",
       externalTextures: "外部纹理",
       multiOutput: "多显示器",
       screenSharing: "Portal 屏幕共享",
@@ -84,7 +83,13 @@ window.denialTranslations = {
       navigation: "Denial 社区链接",
       github: "源代码、议题和版本发布",
       discord: "与 Denial 用户交流",
-      sponsor: "独立开发，并将始终保持自由开源。",
+      sponsorEyebrow: "支持独立开发",
+      sponsorTitle: "帮助 Denial 成为它能够成为的样子。",
+      sponsorCopy:
+        "<span>如果 Denial 对你有所帮助，我会由衷感谢你的支持。</span><span>你的支持让我能投入更多专注的时间继续开发、打磨，并让它始终对所有人自由开放。</span>",
+      sponsorCta: "直接支持 Denial",
+      sponsorAlternative: "也可以通过其他平台：",
+      supportLink: "支持 Denial",
     },
     install: {
       label: "软件包安装 · Linux x86-64",
@@ -100,7 +105,7 @@ window.denialTranslations = {
       package: {
         title: "安装 Denial",
         copy: "官方软件仓库目前提供 x86-64 软件包。ARM64 已得到完整支持，但尚未发布二进制软件包。匹配的 Flutter 引擎会自动安装。",
-        panelArch: "Arch / CachyOS",
+        panelArch: "Arch / CachyOS / Omarchy",
         panelApt: "Debian / Ubuntu",
         panelFedora: "Fedora",
         copyLabelArch: "复制 Arch 安装命令",
@@ -129,7 +134,7 @@ window.denialTranslations = {
       tryAgain: "重试",
     },
     footer: {
-      tagline: "事物最初为何而生，绝不应限制它最终能成为什么。",
+      tagline: "从合成器底层开始，原生拥抱 Flutter。",
       license:
         "Denial 是自由开源软件，采用 <a href=\"https://github.com/denialwm/denial/blob/main/LICENSE\">GPL-3.0-or-later</a> 许可证。",
     },

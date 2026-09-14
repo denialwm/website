@@ -6,99 +6,158 @@ next: development
 ---
 
 Flutter is not a client window or an overlay in Denial. The engine is embedded
-through its native Embedder API, and the Dart shell runs inside `deniald`.
-Rust and Flutter cooperate on one desktop scene while keeping native resources
-on the Rust side.
+through its native Embedder API, and the AOT-compiled Dart shell runs inside
+`deniald`. Rust and Flutter cooperate on one logical desktop scene while
+native resources remain on the Rust side.
 
-## Responsibilities
+## Runtime boundaries
 
-Rust and Smithay own:
+Rust, Smithay, and the in-tree Volition presenter own:
 
-- the Wayland display, protocols, Xwayland, and client buffers;
-- input devices, focus, grabs, and native shortcuts;
-- DRM devices, output validation, KMS presentation, and page flips;
-- file descriptors and native Wayland, EGL, GBM, and KMS lifetimes.
+- the Wayland display, protocol state, Xwayland, and client buffers;
+- input devices, focus, grabs, native shortcuts, text input, and tablet events;
+- display validation, DRM devices, GBM/EGL resources, atomic KMS presentation,
+  and page flips;
+- persistent settings, display/session authority, native audio and brightness
+  controls, and native resource lifetimes.
 
-Flutter owns:
+The embedded Dart shell owns:
 
 - window layout and visible desktop policy;
-- the launcher, dashboard, overview, bar, settings, and lock screen;
-- animation, gesture behavior, and shell hit regions;
-- the composition of application textures into the desktop.
+- the launcher, dashboard, overview, bar, shade, notifications, and lock
+  screen;
+- animation, gesture behaviour, and shell interaction regions;
+- desktop service clients for networking, Bluetooth, media, battery, and power
+  profiles;
+- composition of application textures and shell UI into the desktop scene.
 
-This division lets the shell change quickly without moving unsafe handles or
-privileged display operations into Dart.
+`denial-settings` is a separate Flutter Wayland application. It communicates
+with `deniald` over the versioned control socket, so its rendering work is
+isolated from the embedded shell and the compositor remains authoritative for
+validation and persistence. `denial-portal` exposes the committed colour
+scheme and accent through the standard desktop Settings portal.
 
 ## Frame path
 
-Wayland client buffers are imported as external textures. Flutter composes
-those textures with the shell UI into a desktop-wide XRGB8888 GBM atlas. Each
-physical output scans its assigned rectangle from that atlas through KMS.
+Wayland client buffers stay native and are imported as Flutter external
+textures. Dart builds one logical scene spanning every output. Denial's
+Flutter fork projects the relevant part of that retained scene into a
+compositor-owned framebuffer from each physical output's own pool:
 
 ```text
-Wayland clients ──> Rust / Smithay ──> external textures ──> Flutter scene
-      input  <──── native routing  <──── shell hit regions <──────┘
-
-Displays <────────────── DRM / KMS <────────────── shared GBM atlas
+Wayland clients ──> Rust / Smithay ──> external textures ──> logical Flutter scene
+      input  <──── native routing  <──── shell hit regions <───────────┘
+                                                                    │
+Display A <── Volition / atomic KMS <── native fence <── output A pool
+Display B <── Volition / atomic KMS <── native fence <── output B pool
 ```
 
-Presentation is tied to the real output frame cycle. Capture requests and
-continuous recording therefore advance with the selected output instead of
-spinning the event loop.
+There is no shared scanout atlas in the normal Flutter path. Each output has a
+rotating three-buffer pool at that connector's physical mode size. The
+embedder's `FlutterCompositor` backing-store callbacks lend an authorized
+framebuffer to Flutter and return the completed buffer, damage, and native GPU
+fence to Rust. A buffer cannot be rendered into while KMS still owns it.
 
-### Logical and physical scale
+Denial assembles the current output buffers into a temporary desktop atlas
+when a screenshot or whole-desktop screencopy needs one unified image. That
+capture representation is not used for normal scanout.
 
-Desktop, output, window, and structured cursor coordinates remain logical.
-The shared atlas is allocated at physical resolution using the largest active
-output scale, and Flutter receives that same value as its device-pixel ratio.
-The shell therefore lays out one logical desktop while rasterizing it sharply
-at the atlas resolution; Denial does not scale up Flutter's finished image.
+## Independent output clocks
 
-Native Wayland surfaces receive the exact preferred scale of the output that
-currently owns them. Xwayland instead uses the integer ceiling of the largest
-output scale as one session-wide scale, with matching DPI hints, because a
-single X server cannot independently scale windows for different outputs.
+KMS page flips are the frame clocks. Each output can request and present a
+successor on its own refresh timeline; a slow or exhausted pool applies
+backpressure to that output instead of inventing a global raster lock.
+External-texture changes are tracked by output membership, and Flutter only
+renders outputs authorized for the current transaction.
+
+Hotplug does not define the lifetime of the Wayland session. If every output
+disconnects, clients and compositor state remain alive; reconnecting an output
+rebuilds the display path and makes the session visible again.
+
+Partial damage is preserved separately for each rotating buffer. Wayland
+frame callbacks and presentation feedback follow the output that actually
+displayed the surface. Screen capture also advances from the selected output's
+real frame cycle rather than spinning the event loop.
+
+## Logical coordinates and scaling
+
+Desktop, output, window, input, and structured cursor coordinates stay
+logical. Flutter receives one logical desktop at the largest active output
+scale, while each output projection maps its logical rectangle into that
+connector's native pixel size and transform. Lower-scale outputs are sampled
+into their own physical targets; Denial does not upscale a finished
+desktop-wide scanout image.
+
+Native Wayland surfaces receive the exact preferred fractional scale for the
+output that owns them. Xwayland uses one session-wide scale based on the
+largest active output because one X server cannot independently scale windows
+per monitor. Exact fractional scaling is the default; setting
+`DENIAL_XWAYLAND_SCALE_MODE=integer` rounds that session scale upward for
+applications that behave better with the compatibility mode.
+
+Cursor size is defined in physical pixels. Client-provided Wayland and X11
+cursor surfaces, output transforms, fractional scaling, and cursor frame
+callbacks are translated at the native boundary before Flutter paints the
+software cursor.
 
 ## Impeller at the compositor boundary
 
-Impeller GLES is Denial's default Flutter renderer. This required more than
-enabling Flutter's application-level Impeller switch: Denial renders into a
-rotating pool of compositor-owned GBM framebuffers, not a window supplied by
-another desktop. The locked Denial Flutter fork integrates Impeller directly
-with that atlas path.
+Impeller GLES is Denial's default Flutter renderer. The locked Flutter and
+Skia forks integrate Impeller with compositor-owned output backing stores
+rather than a window supplied by another desktop. They handle exact FBO
+selection, frames with no available target, existing-buffer damage, external
+texture lifetime, native fences, packed depth/stencil storage, and desktop
+backdrop effects.
 
-The integration presents the exact FBO selected by the Rust host, safely
-completes frames when no atlas target is available, preserves partial damage
-across rotating buffers, and keeps imported Wayland textures alive through the
-native GPU fence. Packed depth/stencil storage and backdrop-filter behavior are
-also handled for the compositor-owned targets.
-
-The result is one Impeller-rendered scene that proceeds directly from Flutter
-to the KMS scanout atlas. Skia/Ganesh remains compiled into the same pinned
-engine generation as a compatibility fallback; it does not require a separate
+Skia/Ganesh remains compiled into the same pinned engine generation as a
+compatibility fallback. Select it with the packaged
+`DENIAL_FLUTTER_RENDERER=skia` session override; it does not require another
 engine package.
 
-## Native-shell protocol
+## Input and surface ownership
 
-The compositor and shell communicate through a bounded, versioned FlatBuffers
-protocol. Dart receives immutable metadata and numeric resource identities; it
-does not own file descriptors or native handles and does not start helper
-processes.
+Physical events enter through Smithay's libinput backend. Rust first resolves
+native shortcuts, pointer constraints, focus, move/resize grabs, and the
+Wayland surface tree. Dart publishes bounded shell hit regions and window
+content rectangles, allowing native routing to decide whether an event belongs
+to shell UI or an application without transferring native handles.
 
-Flutter publishes interaction regions back to Rust. Native input routing can
-then decide whether an event belongs to the shell, a Wayland surface, a move
-or resize grab, or a compositor shortcut.
+The protocol covers relative and absolute pointer input, touch, keyboard and
+text-input state, the built-in keyboard and external input-method path, client
+cursor surfaces, output membership, surface transforms, alpha modifiers, and
+tablet-v2 data. Direct-touch window gestures are recognized at the native
+surface boundary, so they continue to work even when an application does not
+understand Denial shell gestures.
 
-External tools use a separate versioned Unix control socket. The compositor
-validates each request and queues accepted work onto its event loop.
+## Protocols and trust
 
-## Bundle compatibility
+The compositor and embedded shell communicate through a bounded, versioned
+FlatBuffers protocol. Dart receives immutable metadata and numeric resource
+identities; it does not own file descriptors, Wayland objects, EGL images, or
+KMS buffers, and embedded Dart never starts helper processes. Flutter
+publishes validated actions and interaction geometry back to Rust.
 
-`denial`, its Flutter engine, and its compiled shell are a tested generation.
-The Arch package requires the exact compatible engine package. A replacement
-shell must speak the matching native protocol and should be treated as trusted
-session code.
+External clients use a separate versioned Unix control socket. The compositor
+validates requests, checks document revisions to prevent lost settings
+updates, and queues accepted work on its event loop. Live display changes are
+native transactions: the previous DRM and Flutter state remains available for
+the ten-second confirmation rollback.
 
-The current atlas implementation rejects a desktop axis larger than 16,384
-pixels or a buffer pool larger than 1 GiB. Unsupported layouts fail explicitly
-instead of being silently cropped.
+## Bundle compatibility and custom shells
+
+`deniald`, its Flutter engine, and its compiled shell are one tested
+generation. A replacement bundle must match the native protocol and engine
+ABI. Custom shells should import the supported
+`package:denial_dart_shell/denial.dart` boundary and start with
+`runDenialShell`; code outside the package should not import `lib/src`.
+
+An alternative shell supplies its mobile and desktop feature scenes while
+Denial retains lifecycle, theme, localization, secure lock, input publication,
+cursor, software keyboard, screenshot selection, and overlay ordering. It is
+still trusted session code with access to every native capability exposed to
+the official shell. Keep `denialctl ui restore` available while developing
+one.
+
+Each physical scanout target is limited to 16,384 pixels on either axis, and
+the aggregate allocation for all active output pools is limited to 1 GiB.
+Unsupported modes fail explicitly instead of being silently cropped.
