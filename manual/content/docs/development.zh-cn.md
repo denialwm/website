@@ -4,8 +4,13 @@ weight: 80
 prev: architecture
 ---
 
-源码树包含 `compositor/` 中的 Rust 合成器和 `dart_shell/` 中的 Flutter 桌面外壳。二者
-一起构建并使用同一个版本。
+源码树包含三个运行时组件：
+
+- `compositor/` 中的 Rust 合成器、控制客户端与 Portal；
+- `dart_shell/` 中的嵌入式 Flutter 桌面外壳；
+- `settings_app/` 中的独立 Flutter Settings 应用。
+
+三者一起构建并使用同一个版本。
 
 ## 从源码构建
 
@@ -20,7 +25,7 @@ Skia 源码，并搭配架构匹配的 Flutter 引擎与桌面外壳 bundle；�
 tools/denial-pc bootstrap
 ```
 
-然后检查主机、构建两个组件并运行各自的测试套件：
+然后检查主机、构建全部三个组件并运行测试套件：
 
 ```sh
 tools/denial-pc doctor
@@ -34,10 +39,25 @@ tools/denial-pc test
 | --- | --- |
 | 合成器 | `$XDG_CACHE_HOME/denial/pc-build/rust/release/deniald` |
 | 原生控制客户端 | `$XDG_CACHE_HOME/denial/pc-build/rust/release/denialctl` |
+| Denial Portal | `$XDG_CACHE_HOME/denial/pc-build/rust/release/denial-portal` |
 | Flutter 发布 bundle | `dart_shell/build/linux/x64/release/bundle` |
+| Settings 发布 bundle | `settings_app/build/linux/x64/release/bundle` |
 
 引导过程需要网络。后续构建会复用固定版本的缓存。请运行 `tools/denial-pc doctor`，不要
 猜测缺少的是哪一个 Smithay、DRM、GBM、EGL、libinput、udev 或 Xwayland 开发依赖。
+
+可以只构建 Settings 客户端，或运行与锁定版本匹配的 Flutter 测试；后续参数会转发给
+`flutter test`：
+
+```sh
+tools/denial-pc settings
+tools/denial-pc flutter-test
+tools/denial-pc flutter-test test/settings/settings_application_test.dart
+```
+
+当前耦合世代为 Flutter 3.44.7 与 Dart 3.12.2。精确的 Flutter、Skia、引擎与 ABI
+修订版记录在 `prebuilt/flutter-engine/SOURCE_LOCK.json`；请勿混用其他世代或架构的
+bundle 与引擎构件。
 
 ## 测试本地会话
 
@@ -133,6 +153,32 @@ denialctl ui restore
 ```
 
 它会在不结束 Wayland 会话的情况下恢复打包的优化桌面外壳。
+
+## 构建自定义桌面外壳
+
+公共框架入口如下：
+
+```dart
+import 'package:denial_dart_shell/denial.dart';
+import 'package:flutter/widgets.dart';
+
+void main() {
+  runDenialShell(
+    shell: const DenialShell(
+      mobile: DenialShellScene(content: MyMobileShell()),
+      desktop: DenialShellScene(content: MyDesktopShell()),
+    ),
+  );
+}
+```
+
+`runDenialShell` 会初始化原生桥接、生命周期、本地化、主题、安全锁屏、输入发布、光标、
+软键盘、截图选择及覆盖层顺序。自定义桌面外壳提供功能场景，并可使用导出的桌面外壳
+模型、操作、表面宿主、窗口构建器和可选本地应用。软件包外部代码不要导入 `lib/src`；
+只有 `package:denial_dart_shell/denial.dart` 是受支持的框架边界。
+
+经过检查的 `dart_shell/example/custom_shell.dart` 入口是最小完整示例。使用上文相同的
+`denialctl ui workspace` 及 profile/实时命令准备并激活其工作区。
 
 > [!CAUTION]
 > 自定义 Flutter 桌面外壳是受信任的会话代码。它可以观察合成器状态，并调用官方桌面

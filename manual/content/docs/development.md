@@ -4,8 +4,13 @@ weight: 80
 prev: architecture
 ---
 
-The source tree contains a Rust compositor in `compositor/` and a Flutter
-shell in `dart_shell/`. They are built and versioned together.
+The source tree contains three runtime components:
+
+- the Rust compositor, control client, and portal in `compositor/`;
+- the embedded Flutter shell in `dart_shell/`;
+- the standalone Flutter Settings application in `settings_app/`.
+
+They are built and versioned together.
 
 ## Build from source
 
@@ -21,7 +26,7 @@ Bootstrap the pinned toolchain and Rust dependencies once:
 tools/denial-pc bootstrap
 ```
 
-Then inspect the host, build both components, and run their test suites:
+Then inspect the host, build all three components, and run their test suites:
 
 ```sh
 tools/denial-pc doctor
@@ -35,11 +40,27 @@ The main x86-64 reference outputs are:
 | --- | --- |
 | Compositor | `$XDG_CACHE_HOME/denial/pc-build/rust/release/deniald` |
 | Native control client | `$XDG_CACHE_HOME/denial/pc-build/rust/release/denialctl` |
+| Denial portal | `$XDG_CACHE_HOME/denial/pc-build/rust/release/denial-portal` |
 | Flutter release bundle | `dart_shell/build/linux/x64/release/bundle` |
+| Settings release bundle | `settings_app/build/linux/x64/release/bundle` |
 
 The bootstrap is networked. Later builds reuse the pinned cache. Run
 `tools/denial-pc doctor` rather than guessing which Smithay, DRM, GBM, EGL,
 libinput, udev, or Xwayland development dependency is missing.
+
+Build only the Settings client, or run the lock-matched Flutter tests with
+arguments forwarded to `flutter test`:
+
+```sh
+tools/denial-pc settings
+tools/denial-pc flutter-test
+tools/denial-pc flutter-test test/settings/settings_application_test.dart
+```
+
+The current coupled generation is Flutter 3.44.7 and Dart 3.12.2. The exact
+Flutter, Skia, engine, and ABI revisions are recorded in
+`prebuilt/flutter-engine/SOURCE_LOCK.json`; do not mix bundles or engine
+artifacts from another generation or architecture.
 
 ## Test a local session
 
@@ -145,6 +166,36 @@ denialctl ui restore
 ```
 
 It returns to the packaged optimized shell without ending the Wayland session.
+
+## Build a custom shell
+
+The public framework entry point is:
+
+```dart
+import 'package:denial_dart_shell/denial.dart';
+import 'package:flutter/widgets.dart';
+
+void main() {
+  runDenialShell(
+    shell: const DenialShell(
+      mobile: DenialShellScene(content: MyMobileShell()),
+      desktop: DenialShellScene(content: MyDesktopShell()),
+    ),
+  );
+}
+```
+
+`runDenialShell` initializes the native bridge, lifecycle, localization,
+theme, secure lock, input publication, cursor, software keyboard, screenshot
+selection, and overlay ordering. A custom shell supplies feature scenes and
+may use the exported shell models, actions, surface hosts, window builders,
+and optional local applications. Do not import `lib/src` from code outside
+the package; only `package:denial_dart_shell/denial.dart` is the supported
+framework boundary.
+
+The checked `dart_shell/example/custom_shell.dart` entry point is the
+smallest complete example. Prepare and activate its workspace with the same
+`denialctl ui workspace` and profile/live commands described above.
 
 > [!CAUTION]
 > A custom Flutter shell is trusted session code. It can observe compositor

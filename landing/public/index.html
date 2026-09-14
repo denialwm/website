@@ -13,7 +13,7 @@
     <meta property="og:title" content="Denial | Flutter-native Wayland compositor">
     <meta
       property="og:description"
-      content="What something was made for should never dictate what it can become. A Wayland compositor with Flutter at its foundation."
+      content="Denial is a Flutter-native Wayland compositor with Flutter embedded directly into the desktop rendering pipeline."
     >
     <meta property="og:image" content="https://denialwm.org/assets/desktop.webp">
     <meta name="twitter:card" content="summary_large_image">
@@ -919,23 +919,136 @@
       }
 
       .community-support {
+        position: relative;
+        isolation: isolate;
+        max-width: 38rem;
+        overflow: hidden;
+        margin-top: 1.75rem;
+        padding: 1.35rem;
+        border: 1px solid #5d467f;
+        border-radius: 1.25rem;
+        outline: 1px solid #2b2239;
+        outline-offset: 4px;
+        background: #121018;
+        box-shadow: 7px 7px 0 #21192d;
+      }
+
+      .community-support::before {
+        position: absolute;
+        top: -3.8rem;
+        right: -2.4rem;
+        width: 8rem;
+        height: 8rem;
+        border: 1px solid #6e5594;
+        border-radius: 1.4rem;
+        content: "";
+        pointer-events: none;
+        transform: rotate(18deg);
+        animation: support-orbit 18s linear infinite;
+      }
+
+      .community-support::after {
+        position: absolute;
+        top: 1rem;
+        right: 1.2rem;
+        color: var(--accent-bright);
+        content: "✦";
+        font-size: 1.2rem;
+        animation: support-sparkle 3.2s steps(2, end) infinite;
+      }
+
+      .support-eyebrow {
+        margin: 0;
+        color: var(--accent-bright);
+        font-size: 0.68rem;
+        font-weight: 750;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .community-support h3 {
+        margin: 0.45rem 0 0;
+        font-size: clamp(1.25rem, 2.3vw, 1.7rem);
+        font-weight: 570;
+        letter-spacing: -0.025em;
+        line-height: 1.15;
+      }
+
+      .support-copy {
+        margin: 0.7rem 0 0;
+        color: var(--muted);
+        font-size: 0.84rem;
+        line-height: 1.65;
+      }
+
+      .support-copy span {
+        display: block;
+      }
+
+      .support-row {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        gap: 0.75rem 1rem;
-        margin-top: 1.5rem;
+        gap: 0.9rem 1rem;
+        margin-top: 1.15rem;
       }
 
-      .community-support p {
-        max-width: 30ch;
-        margin: 0;
+      .support-primary {
+        display: inline-flex;
+        min-height: 2.9rem;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid #bca5e7;
+        border-radius: 0.8rem;
+        background: #7958bd;
+        box-shadow: 4px 4px 0 #3e2b64;
+        color: #fff;
+        font-size: 0.82rem;
+        font-weight: 750;
+        text-decoration: none;
+        transition:
+          transform 260ms var(--ease),
+          box-shadow 260ms var(--ease),
+          background 260ms ease;
+      }
+
+      .support-primary:hover {
+        background: #8c69cf;
+        box-shadow: 6px 6px 0 #3e2b64;
+        transform: translate(-2px, -2px);
+      }
+
+      .support-primary:active {
+        transform: translateY(0);
+      }
+
+      .support-primary span:first-child {
+        font-size: 0.95rem;
+        line-height: 1;
+      }
+
+      .support-secondary {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 0.65rem;
+        margin-left: auto;
+      }
+
+      .support-secondary > span {
+        margin-right: 0.1rem;
         color: var(--quiet);
-        font-size: 0.78rem;
-        line-height: 1.5;
+        font-size: 0.69rem;
+        text-align: right;
       }
 
       .community-support iframe {
         display: block;
+        width: 114px;
+        height: 32px;
         flex: 0 0 auto;
       }
 
@@ -975,6 +1088,24 @@
         width: 20px;
         height: 14px;
         object-fit: contain;
+      }
+
+      @keyframes support-orbit {
+        from {
+          transform: rotate(18deg);
+        }
+        to {
+          transform: rotate(378deg);
+        }
+      }
+
+      @keyframes support-sparkle {
+        0%, 100% {
+          transform: rotate(-8deg);
+        }
+        50% {
+          transform: rotate(8deg);
+        }
       }
 
       .community-links {
@@ -1035,6 +1166,17 @@
       @media (min-width: 48rem) {
         .community {
           grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.8fr);
+        }
+      }
+
+      @media (min-width: 64rem) {
+        .community-support {
+          max-width: 44rem;
+        }
+
+        .community-support h3,
+        .support-copy span {
+          white-space: nowrap;
         }
       }
 
@@ -1861,6 +2003,7 @@
         .gallery-dialog-slide,
         .gallery-subtitle-line,
         .copy-button,
+        .support-primary,
         .install-step-number,
         .install-step::after,
         .install-source-button::after,
@@ -1883,6 +2026,11 @@
         .hero-actions,
         .hero-strip,
         .hero-strip-track {
+          animation: none;
+        }
+
+        .community-support::before,
+        .community-support::after {
           animation: none;
         }
 
@@ -1990,21 +2138,6 @@
 
             <p class="hero-kicker" data-i18n="hero.kicker">A Flutter-native Wayland compositor</p>
 
-            <p class="hero-statement" data-i18n-words="hero.statementWords">
-              <span class="word" style="--i: 0">What</span>
-              <span class="word" style="--i: 1">something</span>
-              <span class="word" style="--i: 2">was</span>
-              <span class="word" style="--i: 3">made</span>
-              <span class="word" style="--i: 4">for</span>
-              <span class="word" style="--i: 5">should</span>
-              <span class="word" style="--i: 6">never</span>
-              <span class="word" style="--i: 7">dictate</span>
-              <span class="word" style="--i: 8">what</span>
-              <span class="word" style="--i: 9">it</span>
-              <span class="word" style="--i: 10">can</span>
-              <span class="word word--accent" style="--i: 11">become.</span>
-            </p>
-
             <p class="hero-copy" data-i18n="hero.copy">
               Flutter was made for application interfaces. Denial runs it inside
               the compositor, where it owns the desktop scene itself.
@@ -2058,7 +2191,7 @@
             <span data-i18n="strip.flutterEngine">Embedded Flutter Engine</span>
             <span data-i18n="strip.dartShell">AOT Dart shell</span>
             <span data-i18n="strip.scanout">DRM · KMS scanout</span>
-            <span data-i18n="strip.gbmAtlas">Shared GBM atlas</span>
+            <span data-i18n="strip.outputPools">Per-output framebuffer pools</span>
             <span data-i18n="strip.externalTextures">External textures</span>
             <span>Xwayland</span>
             <span data-i18n="strip.multiOutput">Multi-output</span>
@@ -2070,7 +2203,7 @@
             <span data-i18n="strip.flutterEngine">Embedded Flutter Engine</span>
             <span data-i18n="strip.dartShell">AOT Dart shell</span>
             <span data-i18n="strip.scanout">DRM · KMS scanout</span>
-            <span data-i18n="strip.gbmAtlas">Shared GBM atlas</span>
+            <span data-i18n="strip.outputPools">Per-output framebuffer pools</span>
             <span data-i18n="strip.externalTextures">External textures</span>
             <span>Xwayland</span>
             <span data-i18n="strip.multiOutput">Multi-output</span>
@@ -2314,7 +2447,7 @@
         </div>
 
         <p class="gallery-closer" data-reveal data-i18n="gallery.closer">
-          Denial uses Flutter’s Impeller instead of Skia, taking desktop
+          Denial uses the Flutter Impeller renderer instead of Skia, taking desktop
           rendering to the next level.
         </p>
       </section>
@@ -2411,12 +2544,33 @@
             with Denial users on Discord.
           </p>
           <div class="community-support">
-            <p data-i18n="community.sponsor">Independently developed and always free and open source.</p>
-            <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
-            <a class="support-button" href="https://ko-fi.com/E5P523D5FN" target="_blank" rel="noopener noreferrer" title="Support Denial on Ko-fi">
-              <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true">
-              <span>Ko-fi</span>
-            </a>
+            <p class="support-eyebrow" data-i18n="community.sponsorEyebrow">Support independent development</p>
+            <h3 data-i18n="community.sponsorTitle">Help Denial become what it can be.</h3>
+            <p class="support-copy" data-i18n-html="community.sponsorCopy">
+              <span>If Denial matters to you, I would genuinely appreciate your support.</span>
+              <span>Your support gives me more focused time to build, polish, and keep it free for everyone.</span>
+            </p>
+            <div class="support-row">
+              <a
+                class="support-primary"
+                href="http://sponsor.denialwm.org/en"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-sponsor-link
+              >
+                <span aria-hidden="true">✦</span>
+                <span data-i18n="community.sponsorCta">Support Denial directly</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+              <div class="support-secondary">
+                <span data-i18n="community.sponsorAlternative">Or use another platform:</span>
+                <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
+                <a class="support-button" href="https://ko-fi.com/E5P523D5FN" target="_blank" rel="noopener noreferrer" title="Support Denial on Ko-fi">
+                  <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true">
+                  <span>Ko-fi</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -2550,7 +2704,7 @@
                 <div class="code-panel-header">
                   <span class="code-panel-identity">
                     <span class="code-panel-icon" aria-hidden="true">$</span>
-                    <span class="code-panel-title" data-i18n="install.package.panelArch">Arch / CachyOS</span>
+                    <span class="code-panel-title" data-i18n="install.package.panelArch">Arch / CachyOS / Omarchy</span>
                   </span>
                   <button
                     class="copy-button"
@@ -2700,7 +2854,7 @@
             <use class="mark-caret" href="#denial-caret" />
           </svg>
           <p data-i18n="footer.tagline">
-            What something was made for should never dictate what it can become.
+            Flutter-native from the compositor up.
           </p>
         </div>
 
@@ -2708,6 +2862,12 @@
           <nav class="footer-group footer-community" aria-label="Community" data-i18n-aria="community.label">
             <p class="footer-group-title" data-i18n="community.label">Community</p>
             <ul>
+              <li>
+                <a href="http://sponsor.denialwm.org/en" target="_blank" rel="noopener noreferrer" data-sponsor-link>
+                  <span aria-hidden="true">✦</span>
+                  <span data-i18n="community.supportLink">Support Denial</span>
+                </a>
+              </li>
               <li>
                 <a href="https://github.com/denialwm/denial">
                   <svg viewBox="0 0 24 24" aria-hidden="true">

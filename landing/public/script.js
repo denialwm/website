@@ -41,6 +41,7 @@ const localizedWordElements = document.querySelectorAll("[data-i18n-words]");
 const localizedGalleryItems = document.querySelectorAll("[data-i18n-gallery]");
 const languagePicker = document.querySelector("[data-language-picker]");
 const manualLinks = document.querySelectorAll("[data-manual-link]");
+const sponsorLinks = document.querySelectorAll("[data-sponsor-link]");
 const pageDescription = document.querySelector('meta[name="description"]');
 const openGraphTitle = document.querySelector('meta[property="og:title"]');
 const openGraphDescription = document.querySelector(
@@ -181,6 +182,13 @@ const applyLocale = (locale, { persist = false, updateUrl = false } = {}) => {
       activeLocale === "zh-CN"
         ? "https://manual.denialwm.org/zh-cn/"
         : "https://manual.denialwm.org/";
+  });
+
+  sponsorLinks.forEach((link) => {
+    link.href =
+      activeLocale === "zh-CN"
+        ? "http://sponsor.denialwm.org/cn"
+        : "http://sponsor.denialwm.org/en";
   });
 
   if (languagePicker) {

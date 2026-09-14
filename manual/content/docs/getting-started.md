@@ -7,10 +7,16 @@ next: using-denial
 
 Denial publishes first-party **x86-64** packages for:
 
-- Arch Linux and compatible distributions such as CachyOS;
+- Arch Linux, CachyOS, and Omarchy 4.0;
 - Debian 13 (trixie);
 - Ubuntu 24.04 LTS (noble); and
 - Fedora 44.
+
+Alpine Linux 3.24 is also supported through signed APK files attached to each
+GitHub release. NixOS 26.05 and Void Linux have completed runtime validation,
+but do not yet have first-party packages. Debian Forky/Sid may use the Debian
+13 `trixie` repository on a best-effort basis; that rolling target has not
+completed the validation matrix.
 
 | Architecture | Working | Binaries available |
 | --- | :---: | :---: |
@@ -22,20 +28,26 @@ yet. Build Denial from source on ARM64 instead of using the repository setup
 below.
 
 The native package installs the compositor, its matching Flutter engine, the
-desktop shell, Xwayland support, a UWSM session, and portal configuration.
+embedded shell, the standalone Settings application, Xwayland support,
+session integration, and desktop portals.
 
-> [!WARNING]
-> Denial is now a public beta. Keep another graphical session installed so
-> you have a known-good way to update or repair the system.
+## Requirements
+
+A session needs a logind-compatible seat/session service and a user D-Bus.
+The graphics path requires atomic KMS, GBM/EGL, hardware OpenGL ES 3.0 or
+newer, and an XRGB8888 format/modifier that the renderer and every active
+primary plane can share. Older GPUs and simple virtual-machine display devices
+may not meet those requirements. `denial-session --check` reports the
+available devices and prerequisites before you log out.
 
 ## Install
 
-The guided installer detects the supported distribution, verifies Denial's
-full signing-key fingerprint, shows every planned change, and asks before
-using `sudo`:
+For Arch, CachyOS, Omarchy, Debian, Ubuntu, and Fedora, the guided installer
+detects the distribution, verifies Denial's full signing-key fingerprint,
+shows every planned change, and asks before using `sudo`:
 
 ```sh
-curl -fsSL https://install.denialwm.org | sh
+sh -c 'if ! command -v curl >/dev/null 2>&1; then echo "Error: curl is not available." >&2; exit 1; fi; curl -fsSL https://install.denialwm.org | sh'
 ```
 
 > [!TIP]
@@ -47,7 +59,7 @@ After setup, install Denial explicitly with the native package manager:
 
 {{< tabs >}}
 
-  {{< tab name="Arch / CachyOS" >}}
+  {{< tab name="Arch / CachyOS / Omarchy" >}}
   ```sh
   sudo pacman -Syu denial
   ```
@@ -70,11 +82,46 @@ After setup, install Denial explicitly with the native package manager:
 Installing `denial` automatically selects the compatible
 `denial-flutter-engine` package.
 
+### Alpine Linux 3.24
+
+Alpine currently uses signed direct downloads rather than a package
+repository. Replace `X.Y.Z` with a release version, verify both APKs with the
+same pinned release key, then install the verified local files:
+
+```sh
+version=X.Y.Z
+release="https://github.com/denialwm/denial/releases/download/v$version"
+
+doas apk add gnupg
+curl -fLO https://denialwm.github.io/denial/denial-repo-key.asc
+curl -fLO "$release/denial-flutter-engine-$version-r1.apk"
+curl -fLO "$release/denial-flutter-engine-$version-r1.apk.sig"
+curl -fLO "$release/denial-$version-r1.apk"
+curl -fLO "$release/denial-$version-r1.apk.sig"
+
+fingerprint="$(
+  gpg --show-keys --with-colons denial-repo-key.asc \
+    | awk -F: '$1 == "fpr" { print $10; exit }'
+)"
+test "$fingerprint" = AE4108FA5E91E26BE0EE331E0F5B3AD16E023091
+gpg --import denial-repo-key.asc
+gpg --verify "denial-flutter-engine-$version-r1.apk.sig" \
+  "denial-flutter-engine-$version-r1.apk"
+gpg --verify "denial-$version-r1.apk.sig" \
+  "denial-$version-r1.apk"
+doas apk add --allow-untrusted \
+  "./denial-flutter-engine-$version-r1.apk" \
+  "./denial-$version-r1.apk"
+```
+
+Here, `--allow-untrusted` only bypasses APK's native RSA repository format;
+the preceding OpenPGP checks authenticate the exact downloaded files.
+
 {{% details title="Manual repository setup" closed="true" %}}
 
 If you do not want to use the installer, download and inspect the public key
-yourself. Require the complete fingerprint—not a short key ID—before changing
-the package manager:
+yourself. Require the complete fingerprint instead of a short key ID before
+changing the package manager:
 
 ```sh
 key_fingerprint='AE4108FA5E91E26BE0EE331E0F5B3AD16E023091'
@@ -100,7 +147,7 @@ test "$downloaded_fingerprint" = "$key_fingerprint"
 gpg --show-keys --with-fingerprint "$key_tmp/denial-repo-key.asc"
 ```
 
-### Arch Linux and CachyOS
+### Arch Linux, CachyOS, and Omarchy
 
 Only after the fingerprint check passes, import and locally trust the key:
 
@@ -197,8 +244,9 @@ Before logging out of your current desktop, run:
 denial-session --check
 ```
 
-This checks the installed session and the graphics environment without
-starting another compositor.
+This checks the installed session, bundle, output configuration, DRM and
+render-device selection, Qt portal theme, and Xwayland without starting
+another compositor.
 
 ## Start Denial
 
@@ -221,14 +269,22 @@ If a session manager starts Denial without authenticating the user first, use
 the startup lock:
 
 ```sh
-uwsm start -e -D Denial -- /usr/bin/denial-session --start-locked
+/usr/bin/denial-session --start-locked
 ```
 
 `--start-locked` closes Denial's native security gate before Flutter starts,
 so the first visible state is the PAM-backed lock screen. This is the
-appropriate form for a greetd `initial_session`, autologin, or another direct
-boot path. Do not add it to a normal authenticated display-manager entry
-unless the deliberate second password prompt is wanted.
+appropriate form for autologin or another direct boot path. For example,
+greetd can use:
+
+```toml
+[initial_session]
+command = "/usr/bin/denial-session --start-locked"
+user = "alice"
+```
+
+Do not add it to a normal authenticated display-manager entry unless the
+deliberate second password prompt is wanted.
 
 The supported session-launcher modes are:
 
@@ -250,14 +306,15 @@ denialctl outputs
 ```
 
 The first command reports the compositor and Flutter shell state. The second
-lists connected outputs, modes, positions, scale, and power state.
+lists connected outputs, modes, positions, scale, power state, and the
+configuration serial.
 
 ## Update or remove
 
 Use the normal native update path:
 
 ```sh
-# Arch Linux or CachyOS
+# Arch Linux, CachyOS, or Omarchy
 sudo pacman -Syu
 
 # Debian 13 or Ubuntu 24.04
@@ -265,12 +322,14 @@ sudo apt update && sudo apt upgrade
 
 # Fedora 44
 sudo dnf upgrade
+
+# Alpine Linux 3.24: repeat the signed direct-download procedure above
 ```
 
 Remove Denial with the matching package manager:
 
 ```sh
-# Arch Linux or CachyOS
+# Arch Linux, CachyOS, or Omarchy
 sudo pacman -Rns denial
 
 # Debian 13 or Ubuntu 24.04
@@ -278,6 +337,9 @@ sudo apt remove denial
 
 # Fedora 44
 sudo dnf remove denial
+
+# Alpine Linux 3.24
+doas apk del denial
 ```
 
 The optional `denial-ui-development` package is currently published only for

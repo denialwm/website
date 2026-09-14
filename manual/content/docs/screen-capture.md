@@ -5,10 +5,27 @@ prev: system-services
 next: control-and-recovery
 ---
 
-Denial implements version 3 of the wlr screencopy protocol. Native Wayland
-capture tools can read an entire output or an explicit rectangular region,
-and desktop portals turn the same frames into PipeWire streams for
-applications.
+Denial has a built-in region screenshot flow and implements version 3 of the
+wlr screencopy protocol for external tools. Desktop portals turn screencopy
+frames into PipeWire streams for browsers and sandboxed applications.
+
+## Built-in screenshots
+
+Press `Super+Shift+S` to freeze the current desktop. The output under the
+pointer supplies the capture frame clock; drag over the area to capture
+anywhere on the desktop, or cancel with `Escape` or the right mouse button.
+
+Denial writes a uniquely named PNG to:
+
+1. the directory in `DENIAL_SCREENSHOT_DIR`, when set; or
+2. `~/Pictures/Screenshots` by default.
+
+The PNG is also placed on the clipboard, ready to paste into applications
+that accept images. The selection canvas deliberately hides the software
+cursor. On the mobile shell, the Screenshot quick setting captures the full
+desktop without opening the region selector.
+
+The shortcut can be changed or disabled in **Settings → Shortcuts**.
 
 ## Screenshots with grim
 
@@ -76,8 +93,8 @@ the stream.
 - `slurp` requires layer-shell, which Denial does not currently advertise.
   Interactive `slurp` region selection is therefore unavailable; explicit
   coordinates still work.
-- Portal-based interactive screenshot regions and color picking are not yet
+- Portal-based interactive screenshot regions and colour picking are not yet
   available for the same reason.
-- The Flutter shell draws a software cursor into the desktop atlas, so
-  captured frames currently contain the cursor even when the client does not
-  request one.
+- Direct screencopy clients can receive the Flutter-owned software cursor even
+  when they do not request one. Denial's built-in screenshot flow explicitly
+  hides it before capturing.

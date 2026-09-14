@@ -4,24 +4,27 @@ next: getting-started
 ---
 
 Denial is a Flutter-native Wayland compositor for supported x86-64 and ARM64
-Linux systems. Its reference
-desktop is rendered by a directly embedded, compositor-integrated Flutter
-Impeller pipeline—not by a Flutter window running inside somebody else's
-compositor. This manual covers installation, everyday use, configuration,
-system integration, and development.
-
-> [!WARNING]
-> Denial is a public beta. Keep another desktop session available while
-> evaluating it, and expect configuration and internal interfaces to evolve.
+Linux systems. Its reference desktop is rendered by a directly embedded,
+compositor-integrated Flutter Impeller pipeline. It is not a Flutter window
+running inside somebody else's compositor. This manual covers installation,
+everyday use, configuration, system integration, and development.
 
 <div class="manual-support">
-  <p>Independently developed and always free and open source.</p>
-  <div class="support-actions">
-    <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
-    <a class="support-button" href="https://ko-fi.com/E5P523D5FN" target="_blank" rel="noopener noreferrer" title="Support Denial on Ko-fi">
-      <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true">
-      <span>Ko-fi</span>
-    </a>
+  <div class="support-message">
+    <span class="support-eyebrow">Support independent development</span>
+    <strong>Help Denial become what it can be.</strong>
+    <p><span>If Denial matters to you, I would genuinely appreciate your support.</span><span>Your support gives me more focused time to build, polish, and keep it free for everyone.</span></p>
+  </div>
+  <div class="support-row">
+    <a class="support-primary" href="http://sponsor.denialwm.org/en" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✦</span> Support Denial directly <span aria-hidden="true">↗</span></a>
+    <div class="support-actions">
+      <span>Or use another platform:</span>
+      <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
+      <a class="support-button" href="https://ko-fi.com/E5P523D5FN" target="_blank" rel="noopener noreferrer" title="Support Denial on Ko-fi">
+        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true">
+        <span>Ko-fi</span>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -35,15 +38,15 @@ system integration, and development.
 ## Desktop and system
 
 {{< cards >}}
-  {{< card link="/docs/configuration/" title="Settings and displays" subtitle="Configure the shell, outputs, system bar, animation, and power behavior." icon="adjustments" >}}
-  {{< card link="/docs/system-services/" title="System services" subtitle="Audio, networking, Bluetooth, media, power, and hardware integration." icon="puzzle" >}}
-  {{< card link="/docs/screen-capture/" title="Screenshots and sharing" subtitle="Use direct capture tools and desktop portals." icon="camera" >}}
+  {{< card link="/docs/configuration/" title="Settings and displays" subtitle="Use the standalone Settings app for the shell, displays, input, appearance, and power." icon="adjustments" >}}
+  {{< card link="/docs/system-services/" title="System services" subtitle="Audio, Wi-Fi, cellular, Bluetooth, authentication, power, and hardware integration." icon="puzzle" >}}
+  {{< card link="/docs/screen-capture/" title="Screenshots and sharing" subtitle="Use built-in capture, direct tools, and desktop portals." icon="camera" >}}
 {{< /cards >}}
 
 ## Maintain and understand
 
 {{< cards >}}
   {{< card link="/docs/control-and-recovery/" title="Control and recovery" subtitle="Inspect a running session and recover from a broken shell or display setup." icon="terminal" >}}
-  {{< card link="/docs/architecture/" title="Architecture" subtitle="Understand the boundary between Rust, Smithay, and the embedded Flutter shell." icon="cube" >}}
-  {{< card link="/docs/development/" title="Development" subtitle="Build, test, and live-edit the Flutter desktop." icon="code" >}}
+  {{< card link="/docs/architecture/" title="Architecture" subtitle="Follow the embedded Flutter scene into independent per-output KMS pools." icon="cube" >}}
+  {{< card link="/docs/development/" title="Development" subtitle="Build all runtime parts, live-edit the desktop, or create a custom shell." icon="code" >}}
 {{< /cards >}}

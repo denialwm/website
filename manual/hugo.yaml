@@ -10,6 +10,52 @@ languages:
     languageName: "English"
     languageCode: "en-US"
     weight: 1
+    menus:
+      main:
+        - name: Website
+          identifier: website
+          url: "https://denialwm.org/"
+          weight: 1
+        - name: Manual
+          identifier: manual
+          pageRef: /docs
+          weight: 2
+        - name: Search
+          identifier: search
+          weight: 3
+          params:
+            type: search
+        - name: Support
+          identifier: support
+          weight: 4
+        - name: GitHub Sponsors
+          identifier: github-sponsors
+          parent: support
+          url: "https://github.com/sponsors/doctorlogix"
+          weight: 1
+        - name: Ko-fi
+          identifier: ko-fi
+          parent: support
+          url: "https://ko-fi.com/E5P523D5FN"
+          weight: 2
+        - name: GitHub
+          identifier: github
+          url: "https://github.com/denialwm/denial"
+          weight: 5
+          params:
+            icon: github
+        - name: Discord
+          identifier: discord
+          url: "https://discord.gg/PQBChmDYy"
+          weight: 6
+          params:
+            icon: discord
+        - name: Reddit
+          identifier: reddit
+          url: "https://www.reddit.com/r/denialwm/"
+          weight: 7
+          params:
+            icon: reddit
   zh-cn:
     languageName: "简体中文"
     languageCode: "zh-CN"
@@ -17,6 +63,52 @@ languages:
     weight: 2
     params:
       description: "Denial 的中文文档；Denial 是一款 Flutter 原生 Wayland 合成器。"
+    menus:
+      main:
+        - name: Website
+          identifier: website
+          url: "https://denialwm.org/?lang=zh-CN"
+          weight: 1
+        - name: Manual
+          identifier: manual
+          pageRef: /docs
+          weight: 2
+        - name: Search
+          identifier: search
+          weight: 3
+          params:
+            type: search
+        - name: Support
+          identifier: support
+          weight: 4
+        - name: Support
+          identifier: direct-support
+          parent: support
+          url: "http://sponsor.denialwm.org/cn"
+          weight: 1
+        - name: GitHub Sponsors
+          identifier: github-sponsors
+          parent: support
+          url: "https://github.com/sponsors/doctorlogix"
+          weight: 2
+        - name: GitHub
+          identifier: github
+          url: "https://github.com/denialwm/denial"
+          weight: 5
+          params:
+            icon: github
+        - name: Discord
+          identifier: discord
+          url: "https://discord.gg/PQBChmDYy"
+          weight: 6
+          params:
+            icon: discord
+        - name: Reddit
+          identifier: reddit
+          url: "https://www.reddit.com/r/denialwm/"
+          weight: 7
+          params:
+            icon: reddit
 
 module:
   imports:
@@ -28,53 +120,6 @@ markup:
       unsafe: true
   highlight:
     noClasses: false
-
-menu:
-  main:
-    - name: Website
-      identifier: website
-      url: "https://denialwm.org/"
-      weight: 1
-    - name: Manual
-      identifier: manual
-      pageRef: /docs
-      weight: 2
-    - name: Search
-      identifier: search
-      weight: 3
-      params:
-        type: search
-    - name: Support
-      identifier: support
-      weight: 4
-    - name: GitHub Sponsors
-      identifier: github-sponsors
-      parent: support
-      url: "https://github.com/sponsors/doctorlogix"
-      weight: 1
-    - name: Ko-fi
-      identifier: ko-fi
-      parent: support
-      url: "https://ko-fi.com/E5P523D5FN"
-      weight: 2
-    - name: GitHub
-      identifier: github
-      url: "https://github.com/denialwm/denial"
-      weight: 5
-      params:
-        icon: github
-    - name: Discord
-      identifier: discord
-      url: "https://discord.gg/PQBChmDYy"
-      weight: 6
-      params:
-        icon: discord
-    - name: Reddit
-      identifier: reddit
-      url: "https://www.reddit.com/r/denialwm/"
-      weight: 7
-      params:
-        icon: reddit
 
 params:
   description: "Documentation for Denial, a Flutter-native Wayland compositor."
