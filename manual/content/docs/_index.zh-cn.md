@@ -15,7 +15,7 @@ Denial 是一款面向受支持 x86-64 和 ARM64 Linux 系统的 Flutter 原生 
     <p><span>如果 Denial 对你有所帮助，我会由衷感谢你的支持。</span><span>你的支持让我能投入更多专注的时间继续开发、打磨，并让它始终对所有人自由开放。</span></p>
   </div>
   <div class="support-row">
-    <a class="support-primary" href="http://sponsor.denialwm.org/cn" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✦</span> 直接支持 Denial <span aria-hidden="true">↗</span></a>
+    <a class="support-primary" href="https://sponsor.denialwm.org/cn" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✦</span> 支持 Denial 与 Droidloom <span aria-hidden="true">↗</span></a>
     <div class="support-actions">
       <span>也可以通过其他平台：</span>
       <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
@@ -32,6 +32,8 @@ Denial 是一款面向受支持 x86-64 和 ARM64 Linux 系统的 Flutter 原生 
 {{< cards >}}
   {{< card link="getting-started/" title="入门" subtitle="安装 Denial、运行预检并启动第一个会话。" icon="play" >}}
   {{< card link="using-denial/" title="使用 Denial" subtitle="了解桌面、窗口控制、键盘快捷键和内置工具。" icon="desktop-computer" >}}
+  {{< card link="mobile-and-tablets/" title="手机与平板" subtitle="触控手势、移动桌面外壳，以及它可以使用的系统服务。" icon="device-mobile" >}}
+  {{< card link="droidloom/" title="Droidloom" subtitle="把 Android 应用作为 Linux Wayland 窗口运行。早期预览，并链接到安装指南。" icon="collection" >}}
 {{< /cards >}}
 
 ## 桌面与系统

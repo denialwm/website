@@ -2,7 +2,7 @@
 title: Using Denial
 weight: 20
 prev: getting-started
-next: configuration
+next: mobile-and-tablets
 ---
 
 Denial's reference desktop is the Flutter shell embedded in the compositor.

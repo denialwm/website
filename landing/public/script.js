@@ -179,10 +179,11 @@ const applyLocale = (locale, { persist = false, updateUrl = false } = {}) => {
   });
 
   manualLinks.forEach((link) => {
+    const path = (link.dataset.manualPath || "").replace(/^\//, "");
     link.href =
       activeLocale === "zh-CN"
-        ? "https://manual.denialwm.org/zh-cn/"
-        : "https://manual.denialwm.org/";
+        ? `https://manual.denialwm.org/zh-cn/${path}`
+        : `https://manual.denialwm.org/${path}`;
   });
 
   discordLinks.forEach((link) => {
@@ -195,8 +196,8 @@ const applyLocale = (locale, { persist = false, updateUrl = false } = {}) => {
   sponsorLinks.forEach((link) => {
     link.href =
       activeLocale === "zh-CN"
-        ? "http://sponsor.denialwm.org/cn"
-        : "http://sponsor.denialwm.org/en";
+        ? "https://sponsor.denialwm.org/cn"
+        : "https://sponsor.denialwm.org/en";
   });
 
   if (languagePicker) {
@@ -875,3 +876,58 @@ if (idleRegions.length && "IntersectionObserver" in window) {
 
   idleRegions.forEach((region) => idleObserver.observe(region));
 }
+
+const installTabButtons = Array.from(
+  document.querySelectorAll("[data-install-tab]"),
+);
+const installPanels = Array.from(
+  document.querySelectorAll("[data-install-panel]"),
+);
+
+const selectInstallTab = (id) => {
+  const selectedTab = installTabButtons.find(
+    (tab) => tab.dataset.installTab === id,
+  );
+
+  if (!selectedTab) {
+    return;
+  }
+
+  installTabButtons.forEach((tab) => {
+    const isSelected = tab === selectedTab;
+    tab.setAttribute("aria-selected", isSelected ? "true" : "false");
+    tab.tabIndex = isSelected ? 0 : -1;
+  });
+
+  installPanels.forEach((panel) => {
+    panel.hidden = panel.dataset.installPanel !== id;
+  });
+};
+
+installTabButtons.forEach((tab, index) => {
+  tab.addEventListener("click", () => {
+    selectInstallTab(tab.dataset.installTab);
+  });
+
+  tab.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") {
+      return;
+    }
+
+    event.preventDefault();
+    const direction = event.key === "ArrowRight" ? 1 : -1;
+    const next =
+      installTabButtons[
+        (index + direction + installTabButtons.length) %
+          installTabButtons.length
+      ];
+    next.focus();
+    selectInstallTab(next.dataset.installTab);
+  });
+});
+
+document.querySelectorAll("[data-install-jump]").forEach((link) => {
+  link.addEventListener("click", () => {
+    selectInstallTab(link.dataset.installJump);
+  });
+});

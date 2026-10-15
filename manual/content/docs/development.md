@@ -2,6 +2,7 @@
 title: Development
 weight: 80
 prev: architecture
+next: droidloom
 ---
 
 The source tree contains three runtime components:

@@ -1,7 +1,7 @@
 ---
 title: Settings and displays
 weight: 30
-prev: using-denial
+prev: mobile-and-tablets
 next: system-services
 ---
 

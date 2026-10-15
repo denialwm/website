@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="Denial is a Flutter-native Wayland compositor. Flutter owns the desktop scene itself: the shell, its motion, and the composition of Wayland applications."
+      content="Linux running on Android devices. Denial is the touch-first Wayland shell, and Droidloom runs Android apps and games as native windows on top."
     >
     <meta name="theme-color" content="#0b0910">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://denialwm.org/">
-    <meta property="og:title" content="Denial | Flutter-native Wayland compositor">
+    <meta property="og:title" content="Denial | Linux on Android devices">
     <meta
       property="og:description"
-      content="Denial is a Flutter-native Wayland compositor with Flutter embedded directly into the desktop rendering pipeline."
+      content="Linux on Android devices, with Denial as a touch-first Wayland shell and Droidloom running Android apps and games as native windows."
     >
-    <meta property="og:image" content="https://denialwm.org/assets/desktop.webp">
+    <meta property="og:image" content="https://denialwm.org/assets/desktop-glass-dashboard.webp">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="alternate" hreflang="en" href="https://denialwm.org/">
     <link rel="alternate" hreflang="zh-Hans" href="https://denialwm.org/?lang=zh-CN">
     <link rel="alternate" hreflang="x-default" href="https://denialwm.org/">
     <link rel="icon" href="/assets/denial-dark.svg" type="image/svg+xml">
-    <title>Denial | Flutter-native Wayland compositor</title>
+    <title>Denial | Linux on Android devices</title>
     <script>
       document.documentElement.classList.add("has-js");
     </script>
@@ -615,6 +615,309 @@
       .has-js [data-reveal].is-revealed {
         opacity: 1;
         transform: none;
+      }
+
+      /* ─────────────────────────────────────────────────────────
+         Stack, devices, sponsor
+         ───────────────────────────────────────────────────────── */
+      .hero-headline {
+        max-width: 11em;
+        margin: clamp(1.5rem, 3vw, 2.1rem) 0 0;
+        font-size: clamp(1.85rem, 3.6vw, 2.65rem);
+        font-weight: 300;
+        letter-spacing: -0.032em;
+        line-height: 1.12;
+        text-wrap: balance;
+        animation: fade-rise 800ms var(--ease) 1.05s both;
+      }
+
+      .device-placeholders {
+        display: grid;
+        grid-template-columns: minmax(8rem, 0.42fr) minmax(0, 1fr);
+        gap: 0.85rem;
+        align-items: end;
+      }
+
+      .device-placeholder {
+        display: grid;
+        align-content: end;
+        gap: 0.35rem;
+        min-height: 16rem;
+        margin: 0;
+        padding: 1.1rem;
+        border: 1px dashed rgb(190 166 234 / 48%);
+        border-radius: 1.35rem;
+        background:
+          linear-gradient(180deg, rgb(156 121 219 / 10%), rgb(255 255 255 / 2%)),
+          #0d0b14;
+        box-shadow: 0 2rem 5rem rgb(0 0 0 / 35%);
+      }
+
+      .device-placeholder--phone {
+        min-height: 24rem;
+        border-radius: 1.8rem;
+      }
+
+      .placeholder-kicker {
+        margin: 0;
+        color: var(--accent-bright);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.66rem;
+        font-weight: 650;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .placeholder-title,
+      .placeholder-note,
+      .placeholder-caption {
+        margin: 0;
+      }
+
+      .placeholder-title {
+        color: var(--text);
+        font-size: 1.05rem;
+        font-weight: 450;
+      }
+
+      .placeholder-note,
+      .placeholder-caption {
+        color: var(--quiet);
+        font-size: 0.82rem;
+        line-height: 1.55;
+      }
+
+      .placeholder-caption {
+        margin-top: 0.85rem;
+      }
+
+      .stack,
+      .devices,
+      .sponsor,
+      .commercial {
+        padding-bottom: var(--section-gap);
+      }
+
+      .section-intro {
+        max-width: 40rem;
+        margin: 1rem 0 0;
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.7;
+      }
+
+      .stack-grid,
+      .tier-grid {
+        display: grid;
+        gap: 0.9rem;
+        margin-top: clamp(1.75rem, 4vw, 2.6rem);
+      }
+
+      @media (min-width: 52rem) {
+        .stack-grid,
+        .tier-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .stack-card,
+      .tier-card,
+      .commercial-panel,
+      .install-panel-note {
+        display: grid;
+        align-content: start;
+        gap: 0.7rem;
+        padding: 1.25rem;
+        border: 1px solid var(--glass-line);
+        border-radius: var(--r-lg);
+        background: var(--glass);
+        box-shadow: var(--rim);
+      }
+
+      .stack-index {
+        margin: 0;
+        color: var(--accent-bright);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+      }
+
+      .stack-card h3,
+      .tier-card h3,
+      .install-panel-note h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 450;
+        letter-spacing: -0.02em;
+      }
+
+      .commercial-panel h2 {
+        max-width: 16ch;
+        margin: 0;
+        font-size: clamp(1.8rem, 4vw, 2.7rem);
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        text-shadow: none;
+      }
+
+      .stack-card p,
+      .tier-card p,
+      .install-panel-note p,
+      .commercial-panel p,
+      .devices-note {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.65;
+      }
+
+      .text-link {
+        color: var(--accent-bright);
+        font-size: 0.86rem;
+        text-underline-offset: 0.22em;
+      }
+
+      .stack-note {
+        margin: 1.25rem 0 0;
+        color: var(--quiet);
+        font-size: 0.84rem;
+        line-height: 1.6;
+      }
+
+      .device-table-wrap {
+        margin-top: clamp(1.5rem, 3vw, 2.2rem);
+        overflow-x: auto;
+      }
+
+      .device-table {
+        width: 100%;
+        min-width: 28rem;
+        border-collapse: collapse;
+      }
+
+      .device-table th,
+      .device-table td {
+        padding: 0.95rem 0.75rem 0.95rem 0;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .device-table thead th {
+        color: var(--quiet);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.66rem;
+        font-weight: 650;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .device-table tbody th {
+        font-weight: 550;
+      }
+
+      .devices-note {
+        max-width: 42rem;
+        margin-top: 1.1rem;
+      }
+
+      .devices-request {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.85rem 1.1rem;
+        margin-top: 1.4rem;
+      }
+
+      .tier-card--focus {
+        border-color: rgb(190 166 234 / 34%);
+        background:
+          linear-gradient(180deg, rgb(156 121 219 / 16%), rgb(255 255 255 / 3%)),
+          #14111b;
+      }
+
+      .tier-card .button,
+      .install-panel-note .button,
+      .commercial-panel .button {
+        justify-self: start;
+        margin-top: 0.35rem;
+      }
+
+      .sponsor-platforms {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.85rem 1rem;
+        margin-top: 1.4rem;
+      }
+
+      .sponsor-platforms > span {
+        color: var(--quiet);
+        font-size: 0.8rem;
+      }
+
+      .desktop-copy,
+      .desktop-note {
+        max-width: 44rem;
+        margin: 1rem 0 0;
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.7;
+      }
+
+      .desktop-note {
+        color: var(--quiet);
+        font-size: 0.84rem;
+      }
+
+      .desktop-feature {
+        margin: 0 0 clamp(1.5rem, 3vw, 2.2rem);
+      }
+
+      .install-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin-bottom: clamp(1.75rem, 4vw, 2.6rem);
+      }
+
+      .install-tab {
+        min-height: 2.7rem;
+        padding: 0.55rem 1rem;
+        border: 1px solid var(--glass-line);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-size: 0.86rem;
+        cursor: pointer;
+      }
+
+      .install-tab[aria-selected="true"] {
+        border-color: rgb(190 166 234 / 34%);
+        background: var(--accent-deep);
+        color: var(--text);
+      }
+
+      .install-tab:hover {
+        border-color: var(--glass-line-lit);
+        color: var(--text);
+      }
+
+      .install-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem 1.2rem;
+        align-items: center;
+      }
+
+      html[lang="zh-CN"] .hero-headline {
+        max-width: 12em;
+        letter-spacing: 0.015em;
       }
 
       /* ─────────────────────────────────────────────────────────
@@ -1936,6 +2239,14 @@
           width: 100%;
         }
 
+        .device-placeholders {
+          grid-template-columns: 1fr;
+        }
+
+        .device-placeholder--phone {
+          min-height: 16rem;
+        }
+
         .install-step {
           column-gap: 1rem;
           row-gap: 0.85rem;
@@ -2016,6 +2327,7 @@
           transition: none;
         }
 
+        .hero-headline,
         .hero-mark-art,
         .stage-shot,
         .hero-mark .mark-caret,
@@ -2136,16 +2448,18 @@
               </span>
             </h1>
 
-            <p class="hero-kicker" data-i18n="hero.kicker">A Flutter-native Wayland compositor</p>
+            <p class="hero-kicker" data-i18n="hero.kicker">Denial and Droidloom</p>
+
+            <p class="hero-headline" data-i18n="hero.headline">Linux on Android devices.</p>
 
             <p class="hero-copy" data-i18n="hero.copy">
-              Flutter was made for application interfaces. Denial runs it inside
-              the compositor, where it owns the desktop scene itself.
+              Denial is the touch-first Wayland shell. Droidloom runs Android
+              apps and games as native windows on top.
             </p>
 
             <div class="hero-actions">
-              <a class="button button-primary" href="#install">
-                <span data-i18n="hero.install">Install Denial</span>
+              <a class="button button-primary" href="#devices">
+                <span data-i18n="hero.devices">Supported devices</span>
                 <svg class="button-arrow" viewBox="0 0 20 20" aria-hidden="true">
                   <path
                     d="m7 4 6 6-6 6"
@@ -2157,29 +2471,35 @@
                   />
                 </svg>
               </a>
-              <a class="button" href="https://manual.denialwm.org/" data-manual-link data-i18n="hero.manual">
-                Read the manual
+              <a class="button" href="#early-access" data-i18n="hero.earlyAccess">
+                Early access
+              </a>
+              <a class="button" href="#install" data-install-jump="desktop" data-i18n="hero.installDesktop">
+                Install on desktop
               </a>
             </div>
           </div>
 
           <figure class="stage-shot">
-            <div class="shot-frame">
-              <video
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="auto"
-                poster="/assets/hero-loop.webp"
-                width="1280"
-                height="720"
-                aria-label="A short preview of the Denial desktop"
-                data-i18n-aria="hero.previewLabel"
-              >
-                <source src="/assets/hero-loop.mp4" type="video/mp4">
-              </video>
+            <div class="device-placeholders">
+              <div class="device-placeholder device-placeholder--phone">
+                <p class="placeholder-kicker" data-i18n="hero.placeholderKicker">Placeholder</p>
+                <p class="placeholder-title" data-i18n="hero.phonePlaceholder">Phone video</p>
+                <p class="placeholder-note" data-i18n="hero.placeholderNote">
+                  Not recorded yet. No device footage is shown here.
+                </p>
+              </div>
+              <div class="device-placeholder device-placeholder--tablet">
+                <p class="placeholder-kicker" data-i18n="hero.placeholderKicker">Placeholder</p>
+                <p class="placeholder-title" data-i18n="hero.tabletPlaceholder">Tablet video</p>
+                <p class="placeholder-note" data-i18n="hero.placeholderNote">
+                  Not recorded yet. No device footage is shown here.
+                </p>
+              </div>
             </div>
+            <figcaption class="placeholder-caption" data-i18n="hero.placeholderCaption">
+              Placeholder. Phone and tablet videos have not been recorded yet.
+            </figcaption>
           </figure>
         </div>
       </section>
@@ -2187,36 +2507,203 @@
       <div class="strip-band" data-idle aria-hidden="true">
         <div class="hero-strip-track">
           <div class="hero-strip-group">
-            <span>Rust · Smithay</span>
-            <span data-i18n="strip.flutterEngine">Embedded Flutter Engine</span>
-            <span data-i18n="strip.dartShell">AOT Dart shell</span>
-            <span data-i18n="strip.scanout">DRM · KMS scanout</span>
-            <span data-i18n="strip.outputPools">Per-output framebuffer pools</span>
-            <span data-i18n="strip.externalTextures">External textures</span>
+            <span data-i18n="strip.linux">Linux on Android devices</span>
+            <span data-i18n="strip.touchShell">Touch-first Wayland shell</span>
+            <span data-i18n="strip.gestures">Gestures</span>
+            <span data-i18n="strip.keyboard">Software keyboard</span>
+            <span data-i18n="strip.glass">Glass</span>
+            <span data-i18n="strip.sameCode">Same codebase as the desktop</span>
+            <span data-i18n="strip.androidWindows">Android apps as windows</span>
+            <span data-i18n="strip.gpu">GPU accelerated</span>
+            <span data-i18n="strip.layouts">Stacking · tiling · scrolling</span>
             <span>Xwayland</span>
-            <span data-i18n="strip.multiOutput">Multi-output</span>
-            <span data-i18n="strip.screenSharing">Portal screen sharing</span>
-            <span data-i18n="strip.hotReload">Live hot reload</span>
+            <span data-i18n="strip.screenSharing">Screen sharing</span>
           </div>
           <div class="hero-strip-group">
-            <span>Rust · Smithay</span>
-            <span data-i18n="strip.flutterEngine">Embedded Flutter Engine</span>
-            <span data-i18n="strip.dartShell">AOT Dart shell</span>
-            <span data-i18n="strip.scanout">DRM · KMS scanout</span>
-            <span data-i18n="strip.outputPools">Per-output framebuffer pools</span>
-            <span data-i18n="strip.externalTextures">External textures</span>
+            <span data-i18n="strip.linux">Linux on Android devices</span>
+            <span data-i18n="strip.touchShell">Touch-first Wayland shell</span>
+            <span data-i18n="strip.gestures">Gestures</span>
+            <span data-i18n="strip.keyboard">Software keyboard</span>
+            <span data-i18n="strip.glass">Glass</span>
+            <span data-i18n="strip.sameCode">Same codebase as the desktop</span>
+            <span data-i18n="strip.androidWindows">Android apps as windows</span>
+            <span data-i18n="strip.gpu">GPU accelerated</span>
+            <span data-i18n="strip.layouts">Stacking · tiling · scrolling</span>
             <span>Xwayland</span>
-            <span data-i18n="strip.multiOutput">Multi-output</span>
-            <span data-i18n="strip.screenSharing">Portal screen sharing</span>
-            <span data-i18n="strip.hotReload">Live hot reload</span>
+            <span data-i18n="strip.screenSharing">Screen sharing</span>
           </div>
         </div>
       </div>
 
-      <section class="gallery container" aria-labelledby="gallery-title" data-reveal>
+      <section class="stack container" id="stack" aria-labelledby="stack-title" data-reveal>
+        <p class="section-label" data-i18n="stack.label">The stack</p>
+        <h2 id="stack-title" data-i18n="stack.heading">Linux, Denial, and Droidloom.</h2>
+        <div class="stack-grid">
+          <article class="stack-card">
+            <p class="stack-index">01</p>
+            <h3 data-i18n="stack.linux.title">Linux</h3>
+            <p data-i18n="stack.linux.copy">
+              The base system on supported Android phones and tablets. Denial
+              and Droidloom run in a Linux Wayland session on that device.
+            </p>
+          </article>
+          <article class="stack-card">
+            <p class="stack-index">02</p>
+            <h3>Denial</h3>
+            <p data-i18n="stack.denial.copy">
+              A touch-first Wayland shell: gestures, a software keyboard, and
+              glass. It is the same codebase as the desktop compositor.
+            </p>
+            <a
+              class="text-link"
+              href="https://manual.denialwm.org/docs/mobile-and-tablets/"
+              data-manual-link
+              data-manual-path="docs/mobile-and-tablets/"
+              data-i18n="stack.denial.link"
+            >Mobile and tablets in the manual</a>
+          </article>
+          <article class="stack-card">
+            <p class="stack-index">03</p>
+            <h3>Droidloom</h3>
+            <p data-i18n="stack.droidloom.copy">
+              Android apps and games as native Wayland windows. GPU
+              accelerated, with no closed-source libraries. Arknights: Endfield
+              runs through Droidloom.
+            </p>
+            <a class="text-link" href="https://github.com/denialwm/droidloom" data-i18n="stack.droidloom.link">
+              Droidloom on GitHub
+            </a>
+          </article>
+        </div>
+        <p class="stack-note" data-i18n="stack.note">
+          Public device images are not available yet. The desktop compositor
+          can be installed today.
+        </p>
+      </section>
+
+      <section class="devices container" id="devices" aria-labelledby="devices-title" data-reveal>
+        <p class="section-label" data-i18n="devices.label">Devices</p>
+        <h2 id="devices-title" data-i18n="devices.heading">Supported devices.</h2>
+        <p class="section-intro" data-i18n="devices.intro">
+          Owner-confirmed status for the devices running this stack today.
+        </p>
+        <div class="device-table-wrap">
+          <table class="device-table">
+            <caption class="visually-hidden" data-i18n="devices.caption">Supported Android devices</caption>
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="devices.col.device">Device</th>
+                <th scope="col" data-i18n="devices.col.status">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">OnePlus Pad 4</th>
+                <td data-i18n="devices.pad4">Full features</td>
+              </tr>
+              <tr>
+                <th scope="row">Moto Edge 70</th>
+                <td data-i18n="devices.partial">Works. No camera or mobile network.</td>
+              </tr>
+              <tr>
+                <th scope="row">OnePlus 12R</th>
+                <td data-i18n="devices.partial">Works. No camera or mobile network.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="devices-note" data-i18n="devices.fingerprint">
+          On all of these devices, the under-display fingerprint sensor works
+          through Denial's custom Wayland protocols.
+        </p>
+        <p class="devices-request">
+          <a
+            class="button button-primary"
+            data-discord-link
+            href="https://discord.gg/vy5t8aCxj"
+            data-i18n="devices.request"
+          >Request your device</a>
+          <a class="text-link" href="https://github.com/denialwm/denial/issues" data-i18n="devices.requestGithub">
+            or open a GitHub issue
+          </a>
+        </p>
+      </section>
+
+      <section class="sponsor container" id="early-access" aria-labelledby="sponsor-title" data-reveal>
+        <p class="section-label" data-i18n="sponsor.label">Sponsor</p>
+        <h2 id="sponsor-title" data-i18n="sponsor.heading">Support the work. Join early access.</h2>
+        <p class="section-intro" data-i18n="sponsor.intro">
+          One sponsor page covers Denial and Droidloom.
+        </p>
+        <div class="tier-grid">
+          <article class="tier-card">
+            <h3 data-i18n="sponsor.supporter.title">Supporter</h3>
+            <p data-i18n="sponsor.supporter.copy">
+              Fund ongoing work on Denial and Droidloom.
+            </p>
+            <a
+              class="button"
+              href="https://sponsor.denialwm.org/en"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-sponsor-link
+              data-i18n="sponsor.supporter.cta"
+            >Become a supporter</a>
+          </article>
+          <article class="tier-card tier-card--focus">
+            <h3 data-i18n="sponsor.early.title">Early access</h3>
+            <p data-i18n="sponsor.early.copy">
+              Device images and Droidloom builds before public release.
+            </p>
+            <a
+              class="button button-primary"
+              href="https://sponsor.denialwm.org/en"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-sponsor-link
+              data-i18n="sponsor.early.cta"
+            >Get early access</a>
+          </article>
+          <article class="tier-card">
+            <h3 data-i18n="sponsor.device.title">Device sponsor</h3>
+            <p data-i18n="sponsor.device.copy">
+              Fund a port. Sponsors are credited on the device page.
+            </p>
+            <a
+              class="button"
+              href="https://sponsor.denialwm.org/en"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-sponsor-link
+              data-i18n="sponsor.device.cta"
+            >Sponsor a device</a>
+          </article>
+        </div>
+        <div class="sponsor-platforms">
+          <span data-i18n="sponsor.alternative">Or use another platform:</span>
+          <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
+          <a class="support-button" href="https://ko-fi.com/E5P523D5FN" target="_blank" rel="noopener noreferrer" aria-label="Support Denial and Droidloom on Ko-fi" data-i18n-aria="sponsor.kofi">
+            <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true">
+            <span>Ko-fi</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="gallery container" id="desktop" aria-labelledby="gallery-title" data-reveal>
         <div class="gallery-heading">
-          <p class="section-label" data-i18n="gallery.label">Gallery</p>
-          <h2 id="gallery-title" data-i18n="gallery.heading">Denial in motion.</h2>
+          <p class="section-label" data-i18n="desktop.label">Desktop</p>
+          <h2 id="gallery-title" data-i18n="desktop.heading">The desktop compositor.</h2>
+          <p class="desktop-copy" data-i18n="desktop.copy">
+            Denial is still the Flutter-native Wayland compositor for the desk:
+            stacking, tiling, and scrolling layouts, live shell editing and hot
+            reload, Xwayland, and screen sharing. First-party packages cover
+            Arch, Fedora, and Debian. NixOS has a source flake and module. Void
+            has been tested from source.
+          </p>
+          <p class="desktop-note" data-i18n="desktop.hotReloadNote">
+            The optional UI development package is paused for the current
+            Flutter engine generation. Source tooling remains available.
+          </p>
           <p class="gallery-subtitle">
             <span class="gallery-subtitle-line is-active" data-gallery-subtitle data-i18n="gallery.subtitle">
               Screenshots can’t capture how smooth Denial feels.
@@ -2225,7 +2712,116 @@
           </p>
         </div>
 
+        <figure class="desktop-feature">
+          <div class="gallery-media-frame">
+            <video
+              class="gallery-media gallery-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster="/assets/hero-loop.webp"
+              width="1280"
+              height="720"
+              aria-label="A short preview of the Denial desktop"
+              data-i18n-aria="hero.previewLabel"
+              data-gallery-video
+            >
+              <source src="/assets/hero-loop.mp4" type="video/mp4">
+              <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
+            </video>
+          </div>
+        </figure>
+
         <div class="gallery-grid">
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Glass dashboard"
+            data-gallery-item
+            data-gallery-type="image"
+            data-gallery-src="/assets/desktop-glass-dashboard.webp"
+            data-gallery-title="Glass dashboard"
+            data-gallery-kind="Translucent dashboard and terminal visualizers"
+            data-i18n-gallery="gallery.items.glassDashboard"
+          >
+            <div class="gallery-media-frame">
+              <img
+                class="gallery-media"
+                src="/assets/desktop-glass-dashboard.webp"
+                alt=""
+                width="1600"
+                height="901"
+              >
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Glass dashboard</h3>
+              <p class="gallery-item-kind">
+                Translucent dashboard and terminal visualizers
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Another mood"
+            data-gallery-item
+            data-gallery-type="image"
+            data-gallery-src="/assets/desktop-purple.webp"
+            data-gallery-title="Another mood"
+            data-gallery-kind="Purple wallpaper, btop, launcher, and an audio visualizer"
+            data-i18n-gallery="gallery.items.desktopPurple"
+          >
+            <div class="gallery-media-frame">
+              <img
+                class="gallery-media"
+                src="/assets/desktop-purple.webp"
+                alt=""
+                width="1600"
+                height="902"
+              >
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Another mood</h3>
+              <p class="gallery-item-kind">
+                Purple wallpaper, btop, launcher, and an audio visualizer
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Launcher, up close"
+            data-gallery-item
+            data-gallery-type="image"
+            data-gallery-src="/assets/desktop-glass-launcher.webp"
+            data-gallery-title="Launcher, up close"
+            data-gallery-kind="Glass application launcher over the desktop wallpaper"
+            data-i18n-gallery="gallery.items.glassLauncher"
+          >
+            <div class="gallery-media-frame">
+              <img
+                class="gallery-media"
+                src="/assets/desktop-glass-launcher.webp"
+                alt=""
+                width="1600"
+                height="756"
+              >
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Launcher, up close</h3>
+              <p class="gallery-item-kind">
+                Glass application launcher over the desktop wallpaper
+              </p>
+            </figcaption>
+          </figure>
+
           <figure
             class="gallery-card"
             role="button"
@@ -2531,82 +3127,74 @@
         </div>
       </dialog>
 
-      <section
-        class="community container"
-        aria-labelledby="community-title"
-        data-reveal
-      >
-        <div>
-          <p class="section-label" data-i18n="community.label">Community</p>
-          <h2 id="community-title" data-i18n="community.heading">Follow the work. Join the conversation.</h2>
-          <p class="community-text" data-i18n="community.copy">
-            Denial is built in public. Follow development on GitHub or talk
-            with Denial users on Discord.
-          </p>
-          <div class="community-support">
-            <p class="support-eyebrow" data-i18n="community.sponsorEyebrow">Support independent development</p>
-            <h3 data-i18n="community.sponsorTitle">Help Denial become what it can be.</h3>
-            <p class="support-copy" data-i18n-html="community.sponsorCopy">
-              <span>If Denial matters to you, I would genuinely appreciate your support.</span>
-              <span>Your support gives me more focused time to build, polish, and keep it free for everyone.</span>
-            </p>
-            <div class="support-row">
-              <a
-                class="support-primary"
-                href="http://sponsor.denialwm.org/en"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-sponsor-link
-              >
-                <span aria-hidden="true">✦</span>
-                <span data-i18n="community.sponsorCta">Support Denial directly</span>
-                <span aria-hidden="true">↗</span>
-              </a>
-              <div class="support-secondary">
-                <span data-i18n="community.sponsorAlternative">Or use another platform:</span>
-                <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
-                <a class="support-button" href="https://ko-fi.com/E5P523D5FN" target="_blank" rel="noopener noreferrer" title="Support Denial on Ko-fi">
-                  <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true">
-                  <span>Ko-fi</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <nav class="community-links" aria-label="Denial community links" data-i18n-aria="community.navigation">
-          <a class="community-link" href="https://github.com/denialwm/denial">
-            <span class="community-name">
-              <svg class="community-icon" aria-hidden="true">
-                <use href="#github-icon"></use>
-              </svg>
-              <strong>GitHub</strong>
-            </span>
-            <span class="community-description" data-i18n="community.github">Source, issues, and releases</span>
-            <span class="community-arrow" aria-hidden="true">↗</span>
-          </a>
-          <a class="community-link" data-discord-link href="https://discord.gg/vy5t8aCxj">
-            <span class="community-name">
-              <svg class="community-icon" aria-hidden="true">
-                <use href="#discord-icon"></use>
-              </svg>
-              <strong>Discord</strong>
-            </span>
-            <span class="community-description" data-i18n="community.discord">Chat with Denial users</span>
-            <span class="community-arrow" aria-hidden="true">↗</span>
-          </a>
-        </nav>
-      </section>
-
       <section class="install container" id="install" aria-labelledby="install-title">
         <div class="install-heading" data-reveal>
           <div>
-            <p class="section-label" data-i18n="install.label">Package install · Linux x86-64</p>
+            <p class="section-label" data-i18n="install.label">Install</p>
             <h2 id="install-title" data-i18n="install.heading">
-              Install Denial in three steps.
+              Android device, desktop, or Droidloom.
             </h2>
           </div>
         </div>
+
+        <div class="install-tabs" role="tablist" aria-label="Install target" data-i18n-aria="install.tabsLabel">
+          <button
+            class="install-tab"
+            type="button"
+            role="tab"
+            id="install-tab-android"
+            aria-controls="install-panel-android"
+            aria-selected="false"
+            tabindex="-1"
+            data-install-tab="android"
+            data-i18n="install.tabs.android"
+          >Android device</button>
+          <button
+            class="install-tab"
+            type="button"
+            role="tab"
+            id="install-tab-desktop"
+            aria-controls="install-panel-desktop"
+            aria-selected="true"
+            data-install-tab="desktop"
+            data-i18n="install.tabs.desktop"
+          >Desktop</button>
+          <button
+            class="install-tab"
+            type="button"
+            role="tab"
+            id="install-tab-droidloom"
+            aria-controls="install-panel-droidloom"
+            aria-selected="false"
+            tabindex="-1"
+            data-install-tab="droidloom"
+            data-i18n="install.tabs.droidloom"
+          >Droidloom preview</button>
+        </div>
+
+        <div
+          class="install-panel-note"
+          id="install-panel-android"
+          role="tabpanel"
+          aria-labelledby="install-tab-android"
+          data-install-panel="android"
+          hidden
+        >
+          <h3 data-i18n="install.android.title">Android device</h3>
+          <p data-i18n="install.android.copy">
+            Early access. Device images are coming soon and are not public yet.
+          </p>
+          <a class="button button-primary" href="#early-access" data-i18n="install.android.cta">
+            Join early access
+          </a>
+        </div>
+
+        <div
+          id="install-panel-desktop"
+          role="tabpanel"
+          aria-labelledby="install-tab-desktop"
+          data-install-panel="desktop"
+        >
 
         <svg class="visually-hidden" aria-hidden="true">
           <symbol id="copy-symbol" viewBox="0 0 16 16">
@@ -2785,6 +3373,94 @@
             </div>
           </li>
         </ol>
+        </div>
+
+        <div
+          class="install-panel-note"
+          id="install-panel-droidloom"
+          role="tabpanel"
+          aria-labelledby="install-tab-droidloom"
+          data-install-panel="droidloom"
+          hidden
+        >
+          <h3 data-i18n="install.droidloom.title">Droidloom preview</h3>
+          <p data-i18n="install.droidloom.copy">
+            The preview targets x86_64 Arch Linux and Omarchy, with AMD or
+            Intel graphics. NVIDIA rendering is not validated. Startup is
+            manual. Follow the upstream install guide.
+          </p>
+          <div class="install-links">
+            <a class="button button-primary" href="https://github.com/denialwm/droidloom/blob/main/docs/INSTALL.md" data-i18n="install.droidloom.cta">
+              Droidloom install guide
+            </a>
+            <a class="text-link" href="https://github.com/denialwm/droidloom/blob/main/docs/KNOWN_ISSUES.md" data-i18n="install.droidloom.issues">
+              Known issues
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="commercial container" id="commercial" aria-labelledby="commercial-title" data-reveal>
+        <div class="commercial-panel">
+          <p class="section-label" data-i18n="commercial.label">Commercial</p>
+          <h2 id="commercial-title" data-i18n="commercial.heading">Hardware, kiosk, and embedded.</h2>
+          <p data-i18n="commercial.copy">
+            Device bring-up, custom shells, and Droidloom integration under
+            contract. The code stays GPL-3.0-or-later.
+          </p>
+          <a class="button button-primary" href="mailto:doctor.logix@gmail.com">
+            <span class="visually-hidden" data-i18n="commercial.emailLabel">Email</span>
+            doctor.logix@gmail.com
+          </a>
+        </div>
+      </section>
+
+      <section
+        class="community container"
+        aria-labelledby="community-title"
+        data-reveal
+      >
+        <div>
+          <p class="section-label" data-i18n="community.label">Community</p>
+          <h2 id="community-title" data-i18n="community.heading">Follow the work. Join the conversation.</h2>
+          <p class="community-text" data-i18n="community.copy">
+            Denial and Droidloom are built in public. Follow development on
+            GitHub, or talk with people using them on Discord.
+          </p>
+        </div>
+
+        <nav class="community-links" aria-label="Community links" data-i18n-aria="community.navigation">
+          <a class="community-link" href="https://github.com/denialwm/denial">
+            <span class="community-name">
+              <svg class="community-icon" aria-hidden="true">
+                <use href="#github-icon"></use>
+              </svg>
+              <strong>Denial</strong>
+            </span>
+            <span class="community-description" data-i18n="community.github">Source, issues, and releases</span>
+            <span class="community-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="community-link" href="https://github.com/denialwm/droidloom">
+            <span class="community-name">
+              <svg class="community-icon" aria-hidden="true">
+                <use href="#github-icon"></use>
+              </svg>
+              <strong>Droidloom</strong>
+            </span>
+            <span class="community-description" data-i18n="community.droidloom">Android apps as Wayland windows</span>
+            <span class="community-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="community-link" data-discord-link href="https://discord.gg/vy5t8aCxj">
+            <span class="community-name">
+              <svg class="community-icon" aria-hidden="true">
+                <use href="#discord-icon"></use>
+              </svg>
+              <strong>Discord</strong>
+            </span>
+            <span class="community-description" data-i18n="community.discord">Chat with Denial users</span>
+            <span class="community-arrow" aria-hidden="true">↗</span>
+          </a>
+        </nav>
       </section>
     </main>
 
@@ -2854,18 +3530,35 @@
             <use class="mark-caret" href="#denial-caret" />
           </svg>
           <p data-i18n="footer.tagline">
-            Flutter-native from the compositor up.
+            Linux on Android devices. Denial on the desktop.
           </p>
         </div>
 
         <div class="footer-groups">
+          <nav class="footer-group" aria-label="Project" data-i18n-aria="footer.project">
+            <p class="footer-group-title" data-i18n="footer.project">Project</p>
+            <ul>
+              <li>
+                <a href="https://manual.denialwm.org/" data-manual-link data-i18n="footer.manual">Manual</a>
+              </li>
+              <li>
+                <a href="#devices" data-i18n="footer.devices">Supported devices</a>
+              </li>
+              <li>
+                <a href="https://github.com/denialwm/droidloom">Droidloom</a>
+              </li>
+              <li>
+                <a href="#commercial" data-i18n="footer.commercial">Commercial</a>
+              </li>
+            </ul>
+          </nav>
           <nav class="footer-group footer-community" aria-label="Community" data-i18n-aria="community.label">
             <p class="footer-group-title" data-i18n="community.label">Community</p>
             <ul>
               <li>
-                <a href="http://sponsor.denialwm.org/en" target="_blank" rel="noopener noreferrer" data-sponsor-link>
+                <a href="https://sponsor.denialwm.org/en" target="_blank" rel="noopener noreferrer" data-sponsor-link>
                   <span aria-hidden="true">✦</span>
-                  <span data-i18n="community.supportLink">Support Denial</span>
+                  <span data-i18n="community.supportLink">Support Denial and Droidloom</span>
                 </a>
               </li>
               <li>

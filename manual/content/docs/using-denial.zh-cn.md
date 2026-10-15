@@ -2,7 +2,7 @@
 title: 使用 Denial
 weight: 20
 prev: getting-started
-next: configuration
+next: mobile-and-tablets
 ---
 
 Denial 的参考桌面是嵌入合成器的 Flutter 桌面外壳。它提供启动器、仪表板、概览、系统栏、

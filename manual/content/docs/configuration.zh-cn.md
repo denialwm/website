@@ -1,7 +1,7 @@
 ---
 title: 设置与显示器
 weight: 30
-prev: using-denial
+prev: mobile-and-tablets
 next: system-services
 ---
 

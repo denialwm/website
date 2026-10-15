@@ -84,7 +84,7 @@ languages:
         - name: Support
           identifier: direct-support
           parent: support
-          url: "http://sponsor.denialwm.org/cn"
+          url: "https://sponsor.denialwm.org/cn"
           weight: 1
         - name: GitHub Sponsors
           identifier: github-sponsors

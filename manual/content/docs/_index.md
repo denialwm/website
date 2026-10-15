@@ -16,7 +16,7 @@ everyday use, configuration, system integration, and development.
     <p><span>If Denial matters to you, I would genuinely appreciate your support.</span><span>Your support gives me more focused time to build, polish, and keep it free for everyone.</span></p>
   </div>
   <div class="support-row">
-    <a class="support-primary" href="http://sponsor.denialwm.org/en" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✦</span> Support Denial directly <span aria-hidden="true">↗</span></a>
+    <a class="support-primary" href="https://sponsor.denialwm.org/en" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✦</span> Support Denial and Droidloom <span aria-hidden="true">↗</span></a>
     <div class="support-actions">
       <span>Or use another platform:</span>
       <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
@@ -33,6 +33,8 @@ everyday use, configuration, system integration, and development.
 {{< cards >}}
   {{< card link="/docs/getting-started/" title="Getting started" subtitle="Install Denial, run the preflight check, and start your first session." icon="play" >}}
   {{< card link="/docs/using-denial/" title="Using Denial" subtitle="Learn the desktop, window controls, keyboard shortcuts, and built-in tools." icon="desktop-computer" >}}
+  {{< card link="/docs/mobile-and-tablets/" title="Mobile and tablets" subtitle="Touch gestures, the mobile shell, and the system services it can use." icon="device-mobile" >}}
+  {{< card link="/docs/droidloom/" title="Droidloom" subtitle="Android apps as Linux Wayland windows. Early preview, with a link to the install guide." icon="collection" >}}
 {{< /cards >}}
 
 ## Desktop and system
