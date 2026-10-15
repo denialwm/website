@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Droidloom is an open-source companion that runs Android apps as Wayland windows on Linux — alongside Denial Mobile and as a desktop preview.">
+    <meta name="theme-color" content="#0b0910">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://denialwm.org/droidloom.html">
+    <meta property="og:title" content="Droidloom | Companion for Android apps on Linux">
+    <meta property="og:description" content="Droidloom is an open-source companion that runs Android apps as Wayland windows on Linux — alongside Denial Mobile and as a desktop preview.">
+    <meta property="og:image" content="https://denialwm.org/assets/desktop-glass-dashboard.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="alternate" hreflang="en" href="https://denialwm.org/droidloom.html">
+    <link rel="alternate" hreflang="zh-Hans" href="https://denialwm.org/droidloom.html?lang=zh-CN">
+    <link rel="alternate" hreflang="x-default" href="https://denialwm.org/droidloom.html">
+    <link rel="icon" href="/assets/denial-dark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Droidloom | Companion for Android apps on Linux</title>
+    <script>
+      document.documentElement.classList.add("has-js");
+    </script>
+  </head>
+  <body data-page="droidloom">
+    <label class="language-picker">
+      <span class="visually-hidden" data-i18n="language.label">Language</span>
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path
+          d="M10 2.25a7.75 7.75 0 1 0 0 15.5 7.75 7.75 0 0 0 0-15.5Zm0 0c1.7 1.75 2.58 4.34 2.58 7.75S11.7 16 10 17.75M10 2.25C8.3 4 7.42 6.59 7.42 10S8.3 16 10 17.75M2.25 10h15.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-width="1.25"
+        />
+      </svg>
+      <select data-language-picker aria-label="Language" data-i18n-aria="language.label">
+        <option value="en">English</option>
+        <option value="zh-CN">简体中文</option>
+      </select>
+    </label>
+
+    <svg class="visually-hidden" aria-hidden="true" focusable="false">
+      <defs>
+        <path id="denial-word" d="M 385.758984 210.169688 C 425.752734 210.169688 449.124609 185.194688 449.124609 144.525937 C 449.124609 103.997813 425.668359 79.219688 387.080859 79.219688 L 343.402734 79.219688 L 343.402734 210.169688 L 385.758984 210.169688 z M 362.921484 193.210313 L 362.921484 96.179063 L 385.843359 96.179063 C 415.037109 96.179063 429.549609 114.179063 429.549609 144.525937 C 429.549609 175.013438 415.037109 193.210313 384.549609 193.210313 L 362.921484 193.210313 z M 506.344922 212.279063 C 527.354297 212.279063 543.891797 199.875938 547.323047 181.960313 L 529.463672 181.960313 C 526.819922 190.735313 518.748047 196.810313 506.626172 196.810313 C 490.369922 196.810313 481.032422 185.475938 480.413672 168.769688 L 548.729297 168.769688 L 548.729297 163.763438 C 548.729297 135.104062 531.657422 115.247813 505.388672 115.247813 C 480.076172 115.247813 462.132422 135.638438 462.132422 163.932187 C 462.132422 191.972813 478.838672 212.279063 506.344922 212.279063 z M 480.610547 154.707188 C 482.185547 139.941563 491.579297 130.716563 505.557422 130.716563 C 519.619922 130.716563 529.126172 139.941563 530.616797 154.707188 L 480.610547 154.707188 z M 583.249219 156.732188 C 583.249219 139.491563 593.008594 132.122813 605.664844 132.122813 C 618.489844 132.122813 625.971094 139.772813 625.971094 154.622813 L 625.971094 210.169688 L 644.505469 210.169688 L 644.505469 152.344688 C 644.505469 128.072812 630.021094 115.500938 610.952344 115.500938 C 598.717969 115.500938 589.239844 120.788438 582.911719 131.335313 L 582.911719 117.357188 L 564.714844 117.357188 L 564.714844 210.169688 L 583.249219 210.169688 L 583.249219 156.732188 z M 665.4375 210.169688 L 683.971875 210.169688 L 683.971875 117.357188 L 665.4375 117.357188 L 665.4375 210.169688 z M 674.6625 101.354063 C 681.24375 101.354063 686.446875 96.347813 686.446875 90.019688 C 686.446875 83.607188 681.24375 78.600938 674.6625 78.600938 C 668.08125 78.600938 662.9625 83.607188 662.9625 90.019688 C 662.9625 96.347813 668.08125 101.354063 674.6625 101.354063 z M 733.194141 211.660313 C 749.197266 211.660313 756.762891 204.460313 760.616016 196.979062 L 760.981641 196.979062 L 760.981641 210.169688 L 779.262891 210.169688 L 779.262891 146.522813 C 779.262891 127.650938 765.284766 115.500938 742.419141 115.500938 C 719.216016 115.500938 704.197266 127.988438 703.325391 145.650937 L 721.522266 145.650937 C 722.225391 137.129063 730.297266 130.716563 742.166016 130.716563 C 753.950391 130.716563 760.897266 137.213437 760.897266 146.185313 L 760.897266 146.972813 C 760.897266 153.750938 755.075391 153.554063 737.694141 155.663438 C 718.794141 157.885312 701.019141 162.441563 701.019141 183.619687 C 701.019141 202.182187 714.744141 211.660313 733.194141 211.660313 z M 736.991016 196.725938 C 726.162891 196.725938 719.497266 191.972813 719.497266 183.985313 C 719.497266 174.563438 728.637891 170.963437 738.734766 169.472813 C 748.578516 168.066563 758.422266 166.575938 760.981641 164.550938 L 760.981641 175.463437 C 760.981641 186.882188 753.331641 196.725938 736.991016 196.725938 z" />
+        <path id="denial-caret" d="M 816.597266 79.219688 L 798.062891 79.219688 L 798.062891 210.169688 L 816.597266 210.169688 L 816.597266 79.219688 z" />
+        <linearGradient id="denial-caret-gradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#d3c1f5" />
+          <stop offset="0.55" stop-color="#9c79db" />
+          <stop offset="1" stop-color="#7150b8" />
+        </linearGradient>
+        <linearGradient id="denial-shine-gradient" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#6d9ede" stop-opacity="0" />
+          <stop offset="0.34" stop-color="#6d9ede" stop-opacity="0.55" />
+          <stop offset="0.52" stop-color="#ffffff" stop-opacity="0.9" />
+          <stop offset="0.7" stop-color="#bea6ea" stop-opacity="0.8" />
+          <stop offset="1" stop-color="#bea6ea" stop-opacity="0" />
+        </linearGradient>
+        <clipPath id="denial-mark-clip">
+          <use href="#denial-word" />
+          <use href="#denial-caret" />
+        </clipPath>
+        <symbol id="github-icon" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.55v-2.1c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .3.21.66.8.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"
+          />
+        </symbol>
+        <symbol id="discord-icon" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M20.32 4.37A19.8 19.8 0 0 0 15.43 2.85a.07.07 0 0 0-.08.04c-.21.38-.44.86-.61 1.25a18.3 18.3 0 0 0-5.49 0 12.6 12.6 0 0 0-.62-1.25.08.08 0 0 0-.08-.04 19.7 19.7 0 0 0-4.88 1.52.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06c0 .02.01.04.03.05a19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.02c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.1 12.9 12.9 0 0 1-1.87-.9.08.08 0 0 1-.01-.12l.37-.3a.07.07 0 0 1 .08 0 14.2 14.2 0 0 0 12.06 0 .07.07 0 0 1 .08 0l.37.3a.08.08 0 0 1 0 .13c-.6.34-1.22.64-1.88.89a.08.08 0 0 0-.04.1c.36.7.77 1.36 1.23 2a.08.08 0 0 0 .08.02 19.8 19.8 0 0 0 6-3.03.08.08 0 0 0 .03-.05c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03ZM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.15-1.09-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42Z"
+          />
+        </symbol>
+      </defs>
+    </svg>
+
+    <div class="atmosphere" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="site-header-inner container">
+        <a class="site-logo" href="/" aria-label="Denial home">
+          <svg class="wordmark" viewBox="338 73 484 144" aria-hidden="true">
+            <use class="mark-word" href="#denial-word" />
+            <use class="mark-caret" href="#denial-caret" />
+          </svg>
+        </a>
+        <nav class="site-nav" aria-label="Primary" data-i18n-aria="nav.primary">
+        <a href="/" data-i18n="nav.home">Home</a>
+        <a href="/mobile.html" data-i18n="nav.mobile">Mobile</a>
+        <a href="/desktop.html" data-i18n="nav.desktop">Desktop</a>
+        <a href="/droidloom.html" class="is-active" aria-current="page" data-i18n="nav.droidloom">Droidloom</a>
+        <a href="/support.html" data-i18n="nav.support">Support</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero container" aria-labelledby="droidloom-title">
+        <p class="section-label">Droidloom</p>
+        <h1 id="droidloom-title" data-i18n="droidloom.page.heading">Android apps as Wayland windows.</h1>
+        <p class="page-lede" data-i18n="droidloom.page.lede">
+          Droidloom is a companion open-source project: it runs Android apps
+          and games as native windows on a Linux Wayland session. It pairs well
+          with Denial Mobile ports and has a desktop preview of its own.
+        </p>
+        <div class="hero-actions" style="margin-top:1.25rem">
+          <a class="button button-primary" href="https://github.com/denialwm/droidloom/blob/main/docs/INSTALL.md" data-i18n="install.droidloom.cta">Droidloom install guide</a>
+          <a class="button" href="https://github.com/denialwm/droidloom">GitHub</a>
+          <a class="button" href="/mobile.html" data-i18n="nav.mobile">Denial Mobile</a>
+        </div>
+      </section>
+
+      <section class="container page-section" aria-labelledby="dl-fit-title" data-reveal>
+        <p class="section-label" data-i18n="droidloom.fitLabel">Alongside Denial</p>
+        <h2 id="dl-fit-title" data-i18n="droidloom.fitHeading">Where it helps.</h2>
+        <div class="stack-grid">
+          <article class="stack-card">
+            <p class="stack-index">01</p>
+            <h3 data-i18n="droidloom.fit.linuxTitle">On Denial Mobile</h3>
+            <p data-i18n="droidloom.fit.linuxCopy">
+              After Linux is ported to a supported phone or tablet, Droidloom
+              can keep Android apps available next to Denial.
+            </p>
+          </article>
+          <article class="stack-card">
+            <p class="stack-index">02</p>
+            <h3 data-i18n="droidloom.fit.desktopTitle">Desktop preview</h3>
+            <p data-i18n="droidloom.fit.desktopCopy">
+              The public preview targets x86_64 Arch Linux and Omarchy with AMD
+              or Intel graphics. NVIDIA rendering is not validated yet.
+            </p>
+          </article>
+          <article class="stack-card">
+            <p class="stack-index">03</p>
+            <h3 data-i18n="droidloom.fit.gamesTitle">Games</h3>
+            <p data-i18n="droidloom.fit.gamesCopy">
+              Arknights: Endfield runs through Droidloom. We don’t publish
+              benchmark claims here.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="container page-section" data-reveal>
+        <p class="section-label" data-i18n="install.label">Install</p>
+        <h2 data-i18n="install.droidloom.title">Droidloom preview</h2>
+        <p class="section-intro" data-i18n="install.droidloom.copy">
+          The preview targets x86_64 Arch Linux and Omarchy, with AMD or
+          Intel graphics. NVIDIA rendering is not validated. Startup is
+          manual. Follow the upstream install guide.
+        </p>
+        <div class="install-links" style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center">
+          <a class="button button-primary" href="https://github.com/denialwm/droidloom/blob/main/docs/INSTALL.md" data-i18n="install.droidloom.cta">Droidloom install guide</a>
+          <a class="text-link" href="https://github.com/denialwm/droidloom/blob/main/docs/KNOWN_ISSUES.md" data-i18n="install.droidloom.issues">Known issues</a>
+        </div>
+      </section>
+    </main>
+
+
+    <footer>
+      <div class="footer-inner container">
+        <div class="footer-brand">
+          <svg class="wordmark" viewBox="338 73 484 144" role="img" aria-label="Denial">
+            <use class="mark-word" href="#denial-word" />
+            <use class="mark-caret" href="#denial-caret" />
+          </svg>
+          <p data-i18n="footer.tagline">
+            A Flutter-native Wayland compositor — on the desk and on supported mobile devices.
+          </p>
+        </div>
+
+        <div class="footer-groups">
+          <nav class="footer-group" aria-label="Project" data-i18n-aria="footer.project">
+            <p class="footer-group-title" data-i18n="footer.project">Project</p>
+            <ul>
+              <li><a href="/mobile.html" data-i18n="nav.mobile">Mobile</a></li>
+              <li><a href="/desktop.html" data-i18n="nav.desktop">Desktop</a></li>
+              <li><a href="/droidloom.html">Droidloom</a></li>
+              <li><a href="/support.html" data-i18n="nav.support">Support</a></li>
+              <li><a href="https://manual.denialwm.org/" data-manual-link data-i18n="footer.manual">Manual</a></li>
+            </ul>
+          </nav>
+          <nav class="footer-group footer-community" aria-label="Community" data-i18n-aria="community.label">
+            <p class="footer-group-title" data-i18n="community.label">Community</p>
+            <ul>
+              <li>
+                <a href="https://sponsor.denialwm.org/en" target="_blank" rel="noopener noreferrer" data-sponsor-link>
+                  <span aria-hidden="true">✦</span>
+                  <span data-i18n="community.supportLink">Support Denial</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/denialwm/denial">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#github-icon"></use></svg>
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a data-discord-link href="https://discord.gg/vy5t8aCxj">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#discord-icon"></use></svg>
+                  Discord
+                </a>
+              </li>
+              <li>
+                <a href="https://www.reddit.com/r/denialwm/">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d="M12 0C5.37 0 0 5.37 0 12c0 3.31 1.34 6.31 3.52 8.49l-2.29 2.28C.78 23.23 1.1 24 1.74 24H12c6.63 0 12-5.37 12-12S18.63 0 12 0Zm4.39 3.2a2 2 0 1 1-1.95 2.46 2.37 2.37 0 0 0-2.03 2.34v.01c1.78.07 3.4.57 4.69 1.36a2.8 2.8 0 1 1 2.9 4.75c-.09 3.26-3.64 5.88-8 5.88s-7.9-2.62-8-5.87a2.8 2.8 0 1 1 3.01-4.75 10.2 10.2 0 0 1 4.64-1.36V8a3.2 3.2 0 0 1 2.88-3.21A2 2 0 0 1 16.39 3.2ZM8.3 11.58c-.78 0-1.46.78-1.5 1.8-.05 1.01.64 1.42 1.42 1.42.79 0 1.37-.37 1.42-1.38.05-1.02-.55-1.84-1.34-1.84Zm7.41 0c-.79 0-1.39.82-1.34 1.84.05 1.01.63 1.38 1.42 1.38.78 0 1.47-.41 1.42-1.42-.04-1.02-.72-1.8-1.5-1.8Zm-3.7 4.01c-.98 0-1.91.04-2.78.13-.14.02-.24.17-.18.31a3.2 3.2 0 0 0 5.91 0c.06-.14-.03-.29-.18-.31-.86-.09-1.8-.13-2.77-.13Z"/>
+                  </svg>
+                  Reddit
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="footer-bottom container">
+        <span data-i18n-html="footer.license">
+          Denial is free and open-source software, licensed under
+          <a href="https://github.com/denialwm/denial/blob/main/LICENSE">
+            GPL-3.0-or-later</a>.
+        </span>
+      </div>
+    </footer>
+    <script src="/i18n/zh-CN.js"></script>
+    <script src="/script.js"></script>
+  </body>
+</html>

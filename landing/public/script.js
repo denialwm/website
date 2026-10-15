@@ -78,28 +78,34 @@ localizedGalleryItems.forEach((item) => {
   };
 });
 
+const pageMetaKey = () => {
+  const page = document.body?.dataset?.page || "home";
+  return `meta.${page}`;
+};
+
 const applyLocale = (locale, { persist = false, updateUrl = false } = {}) => {
   activeLocale = supportedLocales.has(locale) ? locale : "en";
   document.documentElement.lang = activeLocale;
-  document.title = translation("meta.title", originalPageMetadata.title);
+  const metaRoot = pageMetaKey();
+  document.title = translation(`${metaRoot}.title`, originalPageMetadata.title);
 
   if (pageDescription) {
     pageDescription.content = translation(
-      "meta.description",
+      `${metaRoot}.description`,
       originalPageMetadata.description,
     );
   }
 
   if (openGraphTitle) {
     openGraphTitle.content = translation(
-      "meta.title",
+      `${metaRoot}.title`,
       originalPageMetadata.ogTitle,
     );
   }
 
   if (openGraphDescription) {
     openGraphDescription.content = translation(
-      "meta.ogDescription",
+      `${metaRoot}.ogDescription`,
       originalPageMetadata.ogDescription,
     );
   }
@@ -320,6 +326,10 @@ const shellTokenClass = (token) => {
 };
 
 const renderInstallerSource = (source) => {
+  if (!installerSource) {
+    return;
+  }
+
   const fragment = document.createDocumentFragment();
   const normalizedSource = source.replace(/\r\n?/g, "\n").replace(/\n$/, "");
 
@@ -353,7 +363,9 @@ const renderInstallerSource = (source) => {
 
   installerSource.replaceChildren(fragment);
   installerSource.removeAttribute("aria-busy");
-  installerCopyButton.disabled = false;
+  if (installerCopyButton) {
+    installerCopyButton.disabled = false;
+  }
 };
 
 const loadInstallerSource = () => {
@@ -373,46 +385,50 @@ const loadInstallerSource = () => {
     })
     .then(renderInstallerSource)
     .catch(() => {
-      const error = document.createElement("span");
-      error.className = "code-line installer-source-error";
-      error.textContent = translation(
-        "installer.loadError",
-        "Could not load the installer. Please try again.",
-      );
-      installerSource.replaceChildren(error);
-      installerSource.removeAttribute("aria-busy");
+      if (installerSource) {
+        const error = document.createElement("span");
+        error.className = "code-line installer-source-error";
+        error.textContent = translation(
+          "installer.loadError",
+          "Could not load the installer. Please try again.",
+        );
+        installerSource.replaceChildren(error);
+        installerSource.removeAttribute("aria-busy");
+      }
       installerSourceRequest = undefined;
     });
 };
 
-installerDialogOpen.addEventListener("click", () => {
-  loadInstallerSource();
-  installerDialog.showModal();
-  document.body.classList.add("is-dialog-open");
-});
+if (installerDialog && installerDialogOpen && installerDialogClose) {
+  installerDialogOpen.addEventListener("click", () => {
+    loadInstallerSource();
+    installerDialog.showModal();
+    document.body.classList.add("is-dialog-open");
+  });
 
-installerDialogClose.addEventListener("click", () => installerDialog.close());
+  installerDialogClose.addEventListener("click", () => installerDialog.close());
 
-installerDialog.addEventListener("close", () => {
-  document.body.classList.remove("is-dialog-open");
-});
+  installerDialog.addEventListener("close", () => {
+    document.body.classList.remove("is-dialog-open");
+  });
 
-installerDialog.addEventListener("click", (event) => {
-  if (event.target !== installerDialog) {
-    return;
-  }
+  installerDialog.addEventListener("click", (event) => {
+    if (event.target !== installerDialog) {
+      return;
+    }
 
-  const bounds = installerDialog.getBoundingClientRect();
-  const clickIsOutside =
-    event.clientX < bounds.left ||
-    event.clientX > bounds.right ||
-    event.clientY < bounds.top ||
-    event.clientY > bounds.bottom;
+    const bounds = installerDialog.getBoundingClientRect();
+    const clickIsOutside =
+      event.clientX < bounds.left ||
+      event.clientX > bounds.right ||
+      event.clientY < bounds.top ||
+      event.clientY > bounds.bottom;
 
-  if (clickIsOutside) {
-    installerDialog.close();
-  }
-});
+    if (clickIsOutside) {
+      installerDialog.close();
+    }
+  });
+}
 
 document.querySelectorAll("[data-copy-target]").forEach((button) => {
   button.addEventListener("click", async () => {
