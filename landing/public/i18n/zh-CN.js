@@ -5,7 +5,7 @@ window.denialTranslations = {
         title: "Denial | Flutter 原生 Wayland 合成器",
         description:
           "Denial 是开源的 Flutter 原生 Wayland 合成器与桌面外壳，也可在已移植 Linux 的受支持手机和平板上作为触控优先外壳运行。",
-        ogDescription: "开源 Flutter 原生 Wayland 合成器——桌面与受支持的移动设备。",
+        ogDescription: "开源 Flutter 原生 Wayland 合成器，面向桌面与受支持的移动设备。",
       },
       mobile: {
         title: "Denial Mobile | 受支持设备上的 Linux 外壳",
@@ -22,13 +22,13 @@ window.denialTranslations = {
       droidloom: {
         title: "Droidloom | 在 Linux 上运行 Android 应用的伴侣项目",
         description:
-          "Droidloom 是开源伴侣项目，将 Android 应用作为 Wayland 窗口运行在 Linux 上——可与 Denial Mobile 搭配，也有桌面预览。",
+          "Droidloom 是开源伴侣项目，将 Android 应用作为 Wayland 窗口运行在 Linux 上，可与 Denial Mobile 搭配，也有桌面预览。",
         ogDescription: "Android 应用作为 Linux Wayland 窗口。",
       },
       support: {
         title: "支持 | Denial",
         description:
-          "支持开源项目 Denial。捐赠、申请抢先体验，或询问 Denial Mobile 移植——每条路径都说明清楚。",
+          "支持开源项目 Denial。捐赠、申请抢先体验，或询问 Denial Mobile 移植。每条路径都说明清楚。",
         ogDescription: "支持 Denial 的开发。",
       },
     },
@@ -47,7 +47,7 @@ window.denialTranslations = {
       kicker: "Flutter 原生 Wayland 合成器",
       headline: "有生命力的桌面外壳。",
       copy:
-        "Denial 是用 Flutter 构建的开源 Wayland 合成器：堆叠、平铺与滚动布局，玻璃效果，实时外壳编辑，Xwayland 与屏幕共享——同一套代码也可在受支持的手机和平板上作为触控优先外壳运行。",
+        "Denial 是用 Flutter 构建的开源 Wayland 合成器：堆叠、平铺与滚动布局，玻璃效果，实时外壳编辑，Xwayland 与屏幕共享。同一套代码也可在受支持的手机和平板上作为触控优先外壳运行。",
       installDesktop: "在桌面安装",
       mobile: "Denial Mobile",
       support: "支持项目",
@@ -82,36 +82,36 @@ window.denialTranslations = {
       deskCopy: "提供 Arch、Fedora、Debian 软件包。NixOS flake 与模块。Void 已从源码测试。",
       deskLink: "Denial Desktop",
       mobileTitle: "在移动设备上",
-      mobileCopy: "同一套 Denial 代码，在受支持设备上作为触控优先外壳——前提是硬件已移植 Linux。",
+      mobileCopy: "同一套 Denial 代码，在受支持设备上作为触控优先外壳（前提是硬件已移植 Linux）。",
       mobileLink: "Denial Mobile",
-      droidloomCopy: "伴侣项目：在 Linux 上将 Android 应用作为 Wayland 窗口运行——适合设备移植，也有桌面预览。",
+      droidloomCopy: "伴侣项目：在 Linux 上将 Android 应用作为 Wayland 窗口运行，适合设备移植，也有桌面预览。",
       droidloomLink: "关于 Droidloom",
     },
     mobile: {
       label: "Denial Mobile",
       heading: "Denial 跑在受支持的手机和平板上。",
       lede:
-        "Denial Mobile 是同一款开源合成器，在已移植 Linux 的设备上作为触控优先外壳运行。它不能安装在原版 Android 上——必须先有硬件上的 Linux。",
+        "Denial Mobile 是同一款开源合成器，在已移植 Linux 的设备上作为触控优先外壳运行。它不能安装在原版 Android 上，必须先有硬件上的 Linux。",
       bringup: {
         label: "适配",
         heading: "设备适配如何进行。",
         intro:
-          "移植从厂商已发布的内核源码开始，再改进为带 Denial 的 Linux Wayland 会话。维护者无法从零适配一台设备——没有公开的内核源码，申请无法继续。",
+          "移植从厂商已发布的内核源码开始，再改进为带 Denial 的 Linux Wayland 会话。维护者无法从零适配一台设备。没有公开的内核源码，申请无法继续。",
         step1Title: "1. 检查内核源码",
         step1Copy: "每份申请都会核厂商是否提供内核源码。若没有，申请会被拒绝。",
         step2Title: "2. 人工审核",
         step2Copy: "申请不会自动通过。维护者逐一审阅，再决定是否接手。",
         step3Title: "3. 接受后再谈付款",
         step3Copy:
-          "申请被接受后，再约定范围。如有付款，仅在接受之后——不能仅靠公开赞助页的捐赠。",
+          "申请被接受后，再约定范围。如有付款，仅在接受之后，不能仅靠公开赞助页的捐赠。",
         todoHeading: "尚待确定的政策细节",
-        todoPhone: "<strong>TODO：</strong>谁购买或提供用于移植的手机——待决定并写明。",
-        todoDonation: "<strong>TODO：</strong>被接受移植的最低捐赠/贡献——待决定并写明。",
-        todoAccept: "<strong>TODO：</strong>确认对外说明申请绝不会自动通过（仅维护者审核）——已属事实；如需可再润色。",
+        todoPhone: "<strong>TODO：</strong>谁购买或提供用于移植的手机：待决定并写明。",
+        todoDonation: "<strong>TODO：</strong>被接受移植的最低捐赠/贡献：待决定并写明。",
+        todoAccept: "<strong>TODO：</strong>确认对外说明申请绝不会自动通过（仅维护者审核）。已属事实；如需可再润色。",
       },
       droidloomHeading: "让 Android 应用仍可使用。",
       droidloomCopy:
-        "在 Denial Mobile 移植上，Droidloom 可在同一 Linux 会话中以原生 Wayland 窗口运行 Android 应用和游戏——是 Denial 的伴侣，而非替代。",
+        "在 Denial Mobile 移植上，Droidloom 可在同一 Linux 会话中以原生 Wayland 窗口运行 Android 应用和游戏，是 Denial 的伴侣，而非替代。",
     },
     devices: {
       label: "设备",
@@ -138,7 +138,7 @@ window.denialTranslations = {
         earlyCopy: "设备镜像尚未公开发布。请先申请抢先体验，以便确认设备与需求后再分享构建。",
         earlyCta: "申请抢先体验",
         desktopTitle: "桌面现已可用",
-        desktopCopy: "桌面上的 Denial 现可安装——在移动镜像仍处早期时，是体验同一项目的好方式。",
+        desktopCopy: "桌面上的 Denial 现可安装。在移动镜像仍处早期时，这是体验同一项目的好方式。",
         desktopCta: "在桌面安装 Denial",
       },
       kernel: {
@@ -180,7 +180,7 @@ window.denialTranslations = {
         label: "抢先体验",
         title: "申请抢先体验",
         requestIntro:
-          "设备镜像与预发布构建会在确认需求后安排。请先说明详情——仅捐赠不会解锁抢先体验。",
+          "设备镜像与预发布构建会在确认需求后安排。请先说明详情。仅捐赠不会解锁抢先体验。",
         emailTitle: "邮件",
         emailCopy: "会预填你想要的内容与联系方式的简短模板。",
         emailCta: "发送抢先体验申请",
@@ -192,7 +192,7 @@ window.denialTranslations = {
         label: "设备移植",
         title: "Denial Mobile 移植",
         requestIntro:
-          "希望 Denial 跑在其他设备上？请使用 Denial Mobile 页上的申请流程——需提供型号与内核源码，且每份申请都会审核。",
+          "希望 Denial 跑在其他设备上？请使用 Denial Mobile 页上的申请流程。需提供型号与内核源码，且每份申请都会审核。",
         ctaPage: "Denial Mobile 移植申请",
       },
     },
@@ -311,11 +311,11 @@ window.denialTranslations = {
     commercial: {
       label: "企业",
       heading: "与企业合作",
-      copy: "有时硬件或嵌入式团队希望获得 Denial 或 Droidloom 的集成帮助。若是如此，发一封简短邮件即可——这里没有推销。",
+      copy: "有时硬件或嵌入式团队希望获得 Denial 或 Droidloom 的集成帮助。若是如此，发一封简短邮件即可。这里没有推销。",
       emailLabel: "电子邮箱",
     },
     footer: {
-      tagline: "Flutter 原生 Wayland 合成器——桌面与受支持的移动设备。",
+      tagline: "Flutter 原生 Wayland 合成器，面向桌面与受支持的移动设备。",
       project: "项目",
       manual: "手册",
       devices: "设备",
