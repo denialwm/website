@@ -325,6 +325,7 @@ window.denialTranslations = {
           paid: "移植属于付费工作，按具体情况商定，与赞助无关。告诉我设备型号，我会和你详细沟通。",
           email: "发邮件申请",
           github: "在 GitHub 提交议题",
+          publicNote: "GitHub 议题是公开的。联系方式、报价等私人信息请通过邮件发送。",
         },
         freeNote: "Denial 是自由开源软件，没有任何内容需要赞助才能解锁。<a class=\"text-link\" href=\"/support.html\">赞助</a>用于支付开发、测试设备和下载托管的费用。",
         noDevice: "没有设备？今天就可以<a class=\"text-link\" href=\"/#install\">在桌面上安装 Denial</a>。",
