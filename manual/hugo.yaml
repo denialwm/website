@@ -46,7 +46,7 @@ languages:
             icon: github
         - name: Discord
           identifier: discord
-          url: "https://discord.gg/vy5t8aCxj"
+          url: "https://discord.gg/4Fjjg3Q55r"
           weight: 6
           params:
             icon: discord
@@ -99,7 +99,7 @@ languages:
             icon: github
         - name: Discord
           identifier: discord
-          url: "https://discord.gg/PT2QvXrdF"
+          url: "https://discord.gg/4Fjjg3Q55r"
           weight: 6
           params:
             icon: discord
