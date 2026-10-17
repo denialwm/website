@@ -1,0 +1,52 @@
+name: Refresh sponsor wall
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Public sponsorships only: private sponsors are never returned
+      # without the maintainer's read:user scope.
+      - name: Fetch public GitHub sponsors
+        env:
+          GH_TOKEN: ${{ secrets.SPONSORS_TOKEN || github.token }}
+        run: |
+          gh api graphql -f query='
+            query {
+              user(login: "doctorlogix") {
+                sponsorshipsAsMaintainer(first: 100, activeOnly: false) {
+                  nodes {
+                    sponsorEntity {
+                      __typename
+                      ... on User { login name avatarUrl url }
+                      ... on Organization { login name avatarUrl url }
+                    }
+                  }
+                }
+              }
+            }' \
+            --jq '[.data.user.sponsorshipsAsMaintainer.nodes[].sponsorEntity
+                   | {login, name, avatar: .avatarUrl, url,
+                      org: (.__typename == "Organization")}]' \
+            > landing/public/data/sponsors.json
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- landing/public/data/sponsors.json; then
+            echo "Sponsor list unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git add landing/public/data/sponsors.json
+          git commit -m "Refresh sponsor wall"
+          git push

@@ -3,20 +3,21 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Droidloom is an open-source companion that runs Android apps as Wayland windows on Linux, alongside Denial Mobile and as a desktop preview.">
+    <meta name="description" content="Droidloom runs Android apps as real Linux Wayland windows: a real Android userspace, no VM, zero-copy GPU graphics, and no closed-source blobs.">
     <meta name="theme-color" content="#0b0910">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://denialwm.org/droidloom.html">
-    <meta property="og:title" content="Droidloom | Companion for Android apps on Linux">
-    <meta property="og:description" content="Droidloom is an open-source companion that runs Android apps as Wayland windows on Linux, alongside Denial Mobile and as a desktop preview.">
-    <meta property="og:image" content="https://denialwm.org/assets/desktop-glass-dashboard.webp">
+    <meta property="og:title" content="Droidloom | Android apps as real Linux windows">
+    <meta property="og:description" content="Droidloom runs Android apps as real Linux Wayland windows: a real Android userspace, no VM, zero-copy GPU graphics, and no closed-source blobs.">
+    <meta property="og:image" content="https://denialwm.org/assets/droidloom-pad-apps.webp">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="alternate" hreflang="en" href="https://denialwm.org/droidloom.html">
     <link rel="alternate" hreflang="zh-Hans" href="https://denialwm.org/droidloom.html?lang=zh-CN">
     <link rel="alternate" hreflang="x-default" href="https://denialwm.org/droidloom.html">
     <link rel="icon" href="/assets/denial-dark.svg" type="image/svg+xml">
+    <link rel="preload" href="/assets/fonts/InterVariable-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/styles.css">
-    <title>Droidloom | Companion for Android apps on Linux</title>
+    <title>Droidloom | Android apps as real Linux windows</title>
     <script>
       document.documentElement.classList.add("has-js");
     </script>
@@ -61,7 +62,7 @@
 
     <header class="site-header">
       <div class="site-header-inner container">
-        <a class="site-logo" href="/" aria-label="Denial home">
+        <a class="site-logo" href="/" aria-label="Denial home" data-i18n-aria="nav.logoLabel">
           <svg class="wordmark" viewBox="338 73 484 144" aria-hidden="true">
             <use class="mark-word" href="#denial-word" />
             <use class="mark-caret" href="#denial-caret" />
@@ -71,9 +72,8 @@
         <nav class="site-nav" aria-label="Primary" data-i18n-aria="nav.primary">
         <a href="/" data-i18n="nav.home">Home</a>
         <a href="/mobile.html" data-i18n="nav.mobile">Mobile</a>
-        <a href="/desktop.html" data-i18n="nav.desktop">Desktop</a>
         <a href="/droidloom.html" class="is-active" aria-current="page" data-i18n="nav.droidloom">Droidloom</a>
-        <a href="/support.html" data-i18n="nav.support">Support</a>
+        <a href="/support.html" class="nav-support" data-i18n="nav.support">Support</a>
         </nav>
         <label class="language-picker">
               <span class="visually-hidden" data-i18n="language.label">Language</span>
@@ -95,64 +95,314 @@
       </div>
     </header>
 
-    <main>
-      <section class="page-hero container" aria-labelledby="droidloom-title">
-        <p class="section-label">Droidloom</p>
-        <h1 id="droidloom-title" data-i18n="droidloom.page.heading">Android apps as Wayland windows.</h1>
-        <p class="page-lede" data-i18n="droidloom.page.lede">
-          Droidloom is a companion open-source project: it runs Android apps
-          and games as native windows on a Linux Wayland session. It pairs well
-          with Denial Mobile ports and has a desktop preview of its own.
-        </p>
-        <div class="hero-actions" style="margin-top:1.25rem">
-          <a class="button button-primary" href="https://github.com/denialwm/droidloom/blob/main/docs/INSTALL.md" data-i18n="install.droidloom.cta">Droidloom install guide</a>
-          <a class="button" href="https://github.com/denialwm/droidloom">GitHub</a>
-          <a class="button" href="/mobile.html" data-i18n="nav.mobile">Denial Mobile</a>
+    <main class="dl-page">
+      <section class="dl-hero container" aria-labelledby="droidloom-title">
+        <div class="dl-hero-copy">
+          <p class="section-label">Droidloom</p>
+          <h1 id="droidloom-title" data-i18n-html="droidloomPage.hero.title">Android apps,<br>as <span class="accent">real</span> Linux windows.</h1>
+          <p class="page-lede" data-i18n="droidloomPage.hero.lede">
+            Droidloom runs a real Android userspace on your Linux kernel and
+            gives every app its own Wayland window. GPU accelerated, zero-copy,
+            and open source from top to bottom.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#try">
+              <span data-i18n="droidloomPage.hero.tryCta">Try the preview</span>
+              <svg class="button-arrow" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="m7 4 6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/>
+              </svg>
+            </a>
+            <a class="button" href="https://github.com/denialwm/droidloom">
+              <svg class="button-icon" aria-hidden="true"><use href="#github-icon"></use></svg>
+              GitHub
+            </a>
+          </div>
         </div>
+
+        <figure class="dl-shot dl-shot--hero">
+            <a class="dl-shot-frame" href="/assets/droidloom-pad-apps.webp" target="_blank" rel="noopener">
+              <img src="/assets/droidloom-pad-apps.webp" width="2000" height="1415" data-i18n-alt="droidloomPage.hero.shotAlt" alt="Google Play and Firefox open as separate windows on a OnePlus Pad 4 running Denial, above an htop terminal listing Firefox's Android processes" decoding="async" fetchpriority="high">
+            </a>
+            <figcaption data-i18n="droidloomPage.hero.shotCaption">OnePlus Pad 4 running Denial. Play Store and Firefox are Android apps in their own windows; htop lists them as ordinary host processes.</figcaption>
+          </figure>
       </section>
 
-      <section class="container page-section" aria-labelledby="dl-fit-title" data-reveal>
-        <p class="section-label" data-i18n="droidloom.fitLabel">Alongside Denial</p>
-        <h2 id="dl-fit-title" data-i18n="droidloom.fitHeading">Where it helps.</h2>
-        <div class="stack-grid">
+      <section class="container page-section" aria-labelledby="dl-why-title" data-reveal>
+        <p class="section-label" data-i18n="droidloomPage.why.label">Why it’s different</p>
+        <h2 id="dl-why-title" data-i18n="droidloomPage.why.title">Not an Android desktop in a box.</h2>
+        <p class="section-intro" data-i18n="droidloomPage.why.intro">
+          Other approaches boot a whole Android session and hand you one big
+          window to live inside. Droidloom takes Android apart and puts each
+          app on your desktop as its own window, next to everything else.
+        </p>
+        <div class="dl-grid dl-grid--2">
           <article class="stack-card">
             <p class="stack-index">01</p>
-            <h3 data-i18n="droidloom.fit.linuxTitle">On Denial Mobile</h3>
-            <p data-i18n="droidloom.fit.linuxCopy">
-              After Linux is ported to a supported phone or tablet, Droidloom
-              can keep Android apps available next to Denial.
+            <h3 data-i18n="droidloomPage.why.windows.title">One window per app</h3>
+            <p data-i18n-html="droidloomPage.why.windows.copy">
+              Every Android task becomes its own <code>xdg_toplevel</code>.
+              Tile it, resize it, move it between workspaces, close it from
+              your compositor. Android gets the new geometry and lays itself
+              out again, the way a native app would.
             </p>
           </article>
           <article class="stack-card">
             <p class="stack-index">02</p>
-            <h3 data-i18n="droidloom.fit.desktopTitle">Desktop preview</h3>
-            <p data-i18n="droidloom.fit.desktopCopy">
-              The public preview targets x86_64 Arch Linux and Omarchy with AMD
-              or Intel graphics. NVIDIA rendering is not validated yet.
+            <h3 data-i18n="droidloomPage.why.noVm.title">Real Android, no VM</h3>
+            <p data-i18n-html="droidloomPage.why.noVm.copy">
+              ART, Binder, Zygote and system_server run directly on the host
+              kernel in their own namespaces, with a private binderfs instance.
+              No second kernel, no emulator, no container image to babysit.
+              Android apps show up in <code>htop</code> like any other process.
             </p>
           </article>
           <article class="stack-card">
             <p class="stack-index">03</p>
-            <h3 data-i18n="droidloom.fit.gamesTitle">Games</h3>
-            <p data-i18n="droidloom.fit.gamesCopy">
-              Arknights: Endfield runs through Droidloom. We don’t publish
-              benchmark claims here.
+            <h3 data-i18n="droidloomPage.why.graphics.title">Zero-copy graphics</h3>
+            <p data-i18n="droidloomPage.why.graphics.copy">
+              App buffers reach the compositor as DMA-BUFs with explicit
+              synchronization. Eligible layers skip Android’s own composition
+              entirely: the compositor samples the app’s original buffers, with
+              no intermediate render and no copies.
+            </p>
+          </article>
+          <article class="stack-card">
+            <p class="stack-index">04</p>
+            <h3 data-i18n="droidloomPage.why.blobs.title">No closed-source blobs</h3>
+            <p data-i18n="droidloomPage.why.blobs.copy">
+              Mesa for graphics, Teto for ARM translation, and Droidloom itself
+              under GPL-3.0-or-later.
             </p>
           </article>
         </div>
       </section>
 
-      <section class="container page-section" data-reveal>
-        <p class="section-label" data-i18n="install.label">Install</p>
-        <h2 data-i18n="install.droidloom.title">Droidloom preview</h2>
-        <p class="section-intro" data-i18n="install.droidloom.copy">
-          The preview targets x86_64 Arch Linux and Omarchy, with AMD or
-          Intel graphics. NVIDIA rendering is not validated. Startup is
-          manual. Follow the upstream install guide.
+      <section class="container page-section" aria-labelledby="dl-native-title" data-reveal>
+        <p class="section-label" data-i18n="droidloomPage.integration.label">Desktop integration</p>
+        <h2 id="dl-native-title" data-i18n="droidloomPage.integration.title">Feels like it was always there.</h2>
+        <div class="dl-feature-layout">
+          <ul class="dl-features">
+            <li>
+              <h3 data-i18n="droidloomPage.integration.launcher.title">In your app launcher</h3>
+              <p data-i18n="droidloomPage.integration.launcher.copy">Android apps are exported as regular desktop entries, with names and icons, updated live as you install and remove them.</p>
+            </li>
+            <li>
+              <h3 data-i18n="droidloomPage.integration.clipboard.title">Clipboard, both ways</h3>
+              <p data-i18n="droidloomPage.integration.clipboard.copy">Text, links, HTML, images and copied files move between Android and Linux apps.</p>
+            </li>
+            <li>
+              <h3 data-i18n="droidloomPage.integration.notifications.title">Native notifications</h3>
+              <p data-i18n="droidloomPage.integration.notifications.copy">Android notifications appear as desktop notifications. Clicks and actions open the app; dismissing on the desktop clears them in Android.</p>
+            </li>
+            <li>
+              <h3 data-i18n="droidloomPage.integration.keyboard.title">Your keyboard</h3>
+              <p data-i18n="droidloomPage.integration.keyboard.copy">Text fields use the compositor’s own input method. Android never draws a keyboard of its own.</p>
+            </li>
+            <li>
+              <h3 data-i18n="droidloomPage.integration.modes.title">Desktop or mobile mode</h3>
+              <p data-i18n="droidloomPage.integration.modes.copy">Phone-sized windows that remember their size, or apps that fill the screen. Choose per app.</p>
+            </li>
+            <li>
+              <h3 data-i18n="droidloomPage.integration.debug.title">Debuggable</h3>
+              <p data-i18n-html="droidloomPage.integration.debug.copy"><code>droidloomctl logs</code> and <code>droidloomctl crashes</code> work as your user, without sudo, even while Android is still booting.</p>
+            </li>
+          </ul>
+          <div class="dl-shot-stack">
+            <figure class="dl-shot">
+            <a class="dl-shot-frame" href="/assets/droidloom-pad-quad.webp" target="_blank" rel="noopener">
+              <img src="/assets/droidloom-pad-quad.webp" width="1600" height="1132" data-i18n-alt="droidloomPage.integration.shotAlt" alt="htop, Arknights: Endfield, Arknights and Google Play tiled in four windows on a OnePlus Pad 4 with Denial" decoding="async" loading="lazy">
+            </a>
+            <figcaption data-i18n="droidloomPage.integration.shotCaption">Endfield, Arknights and Google Play tiled next to htop, which lists Endfield as an ordinary Linux process.</figcaption>
+          </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="container page-section" aria-labelledby="dl-denial-title" data-reveal>
+        <p class="section-label" data-i18n="droidloomPage.denial.label">Better with Denial</p>
+        <h2 id="dl-denial-title" data-i18n="droidloomPage.denial.title">Built together, down to the protocol.</h2>
+        <p class="section-intro" data-i18n="droidloomPage.denial.intro">
+          Droidloom works on any modern Wayland compositor. On Denial it goes
+          further: the two speak dedicated Wayland protocols, so Android apps
+          behave as if Denial were their own system UI.
         </p>
-        <div class="install-links" style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center">
-          <a class="button button-primary" href="https://github.com/denialwm/droidloom/blob/main/docs/INSTALL.md" data-i18n="install.droidloom.cta">Droidloom install guide</a>
-          <a class="text-link" href="https://github.com/denialwm/droidloom/blob/main/docs/KNOWN_ISSUES.md" data-i18n="install.droidloom.issues">Known issues</a>
+        <div class="dl-denial-layout">
+          <div class="dl-protocols">
+            <article class="dl-protocol">
+              <code class="dl-protocol-name">denial_insets_v1</code>
+              <h3 data-i18n="droidloomPage.denial.insets.title">Status bar and navigation spacing</h3>
+              <p data-i18n-html="droidloomPage.denial.insets.copy">
+                Denial tells Android where its status bar and bottom navigation
+                indicator are. Apps receive real <code>WindowInsets</code> and
+                lay their content around Denial’s bars, exactly as they would on
+                a phone.
+              </p>
+            </article>
+            <article class="dl-protocol">
+              <code class="dl-protocol-name">denial_frame_timeline_v1</code>
+              <h3 data-i18n="droidloomPage.denial.timing.title">Exact frame timing</h3>
+              <p data-i18n="droidloomPage.denial.timing.copy">
+                Denial grants each frame with a latch deadline and a
+                presentation target. Android renders for the exact refresh
+                Denial will show, instead of guessing.
+              </p>
+            </article>
+            <article class="dl-protocol">
+              <code class="dl-protocol-name">denial_text_input_panel_v1</code>
+              <h3 data-i18n="droidloomPage.denial.keyboard.title">On-screen keyboard</h3>
+              <p data-i18n="droidloomPage.denial.keyboard.copy">
+                Android’s show and hide keyboard requests drive Denial’s
+                on-screen keyboard directly, and dismissing it stays dismissed.
+              </p>
+            </article>
+          </div>
+          <figure class="dl-shot dl-shot--phone">
+            <a class="dl-shot-frame" href="/assets/droidloom-phone-insets.webp" target="_blank" rel="noopener">
+              <img src="/assets/droidloom-phone-insets.webp" width="900" height="2001" data-i18n-alt="droidloomPage.denial.shotAlt" alt="Google Play on a Motorola Edge 70 running Denial, laid out between Denial’s status bar and gesture bar" decoding="async" loading="lazy">
+            </a>
+            <figcaption data-i18n="droidloomPage.denial.shotCaption">Motorola Edge 70 running Denial. Google Play lays out between Denial’s status bar and gesture bar, the same way it would on Android.</figcaption>
+          </figure>
+        </div>
+        <p class="stack-note" data-i18n-html="droidloomPage.denial.note">
+          The protocols are product-neutral and documented in the
+          <a class="text-link" href="https://github.com/denialwm/droidloom/tree/main/docs/contracts">Droidloom repository</a>.
+          Any compositor can implement them.
+        </p>
+      </section>
+
+      <section class="container page-section" aria-labelledby="dl-runs-title" data-reveal>
+        <p class="section-label" data-i18n="droidloomPage.runs.label">What runs</p>
+        <h2 id="dl-runs-title" data-i18n="droidloomPage.runs.title">Native on ARM, translated on x86 when needed.</h2>
+        <div class="dl-platforms">
+          <article class="dl-platform">
+            <div class="dl-platform-copy">
+              <p class="stack-index" data-i18n="droidloomPage.runs.arm.tag">ARM64 · phones and tablets</p>
+              <h3 data-i18n="droidloomPage.runs.arm.title">Nearly anything.</h3>
+              <p data-i18n="droidloomPage.runs.arm.copy">
+                On ARM devices, Android apps run natively on the same
+                architecture they were built for. If it runs on Android, expect
+                it to run on Droidloom.
+              </p>
+            </div>
+            <figure class="dl-shot">
+            <a class="dl-shot-frame" href="/assets/droidloom-pad-endfield.webp" target="_blank" rel="noopener">
+              <img src="/assets/droidloom-pad-endfield.webp" width="1600" height="1132" data-i18n-alt="droidloomPage.runs.arm.shotAlt" alt="Arknights: Endfield, Arknights and htop tiled side by side on a OnePlus Pad 4 with Denial" decoding="async" loading="lazy">
+            </a>
+            <figcaption data-i18n="droidloomPage.runs.arm.shotCaption">Arknights: Endfield, Arknights and htop, tiled on a OnePlus Pad 4.</figcaption>
+          </figure>
+          </article>
+          <article class="dl-platform">
+            <a class="dl-teto-banner" href="https://github.com/denialwm/teto">
+              <img src="/assets/teto-banner.webp" width="2000" height="667" data-i18n-alt="droidloomPage.runs.x86.bannerAlt" alt="Teto: Translation Engine with Target Optimization" decoding="async" loading="lazy">
+            </a>
+            <div class="dl-platform-copy">
+              <p class="stack-index" data-i18n="droidloomPage.runs.x86.tag">x86_64 · desktop</p>
+              <h3 data-i18n="droidloomPage.runs.x86.title">Most things, through Teto.</h3>
+              <p data-i18n-html="droidloomPage.runs.x86.copy">
+                Apps with x86_64 builds run natively. ARM-only apps and games
+                run through
+                <a class="text-link" href="https://github.com/denialwm/teto">Teto</a>,
+                an open-source ARM64 translation engine based on Android’s Berberis. Most apps work;
+                games depend on what Teto supports, and that list keeps growing.
+              </p>
+              <ul class="device-chips">
+                <li class="device-chip device-chip--accent">Neverness to Everness</li>
+                <li class="device-chip device-chip--accent">Brawl Stars</li>
+                <li class="device-chip device-chip--accent">Clash of Clans</li>
+              </ul>
+            </div>
+            <figure class="dl-shot">
+              <a class="dl-shot-frame" href="/assets/droidloom-desktop-teto.webp" target="_blank" rel="noopener">
+                <img src="/assets/droidloom-desktop-teto.webp" width="2000" height="1124" data-i18n-alt="droidloomPage.runs.x86.shotAlt" alt="Brawl Stars, Neverness to Everness and Clash of Clans running as separate windows on an x86_64 Linux desktop" decoding="async" loading="lazy">
+              </a>
+              <figcaption data-i18n="droidloomPage.runs.x86.shotCaption">Brawl Stars, Neverness to Everness and Clash of Clans on an x86_64 desktop. All three are ARM64 builds, translated by Teto.</figcaption>
+            </figure>
+          </article>
+        </div>
+
+        <div class="support-nudge">
+          <p data-i18n-html="droidloomPage.runs.nudge.copy"><strong>Droidloom is made by one developer.</strong> If it runs an app you rely on, sponsoring funds the work on it.</p>
+          <a class="button" href="/support.html" data-i18n="droidloomPage.runs.nudge.cta">Support Droidloom</a>
+        </div>
+      </section>
+
+      <section class="install container page-section" id="try" aria-labelledby="dl-try-title" data-reveal>
+        <p class="section-label" data-i18n="droidloomPage.try.label">Try it</p>
+        <h2 id="dl-try-title" data-i18n="droidloomPage.try.title">Try the preview.</h2>
+        <p class="section-intro" data-i18n="droidloomPage.try.intro">
+          The desktop preview targets x86_64 Arch Linux and Omarchy with AMD or
+          Intel graphics. You need a Wayland session and about 20&nbsp;GiB of
+          free space. NVIDIA rendering is not validated yet.
+        </p>
+
+        <svg class="visually-hidden" aria-hidden="true">
+          <symbol id="copy-symbol" viewBox="0 0 16 16">
+            <rect x="5.25" y="5.25" width="7.25" height="7.25" rx="1.25" fill="none" stroke="currentColor" stroke-width="1.35"/>
+            <path d="M3.5 10.25h-.25A1.75 1.75 0 0 1 1.5 8.5V3.25A1.75 1.75 0 0 1 3.25 1.5H8.5a1.75 1.75 0 0 1 1.75 1.75v.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.35"/>
+          </symbol>
+          <symbol id="check-symbol" viewBox="0 0 16 16">
+            <path d="m2.75 8.25 3.1 3.1 7.4-7.4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/>
+          </symbol>
+        </svg>
+
+        <ol class="install-steps">
+          <li class="install-step">
+            <span class="install-step-number" aria-hidden="true"></span>
+            <div class="install-step-copy">
+              <h3 data-i18n="droidloomPage.try.install.title">Install the packages</h3>
+              <p data-i18n-html="droidloomPage.try.install.copy">
+                Download and read the installer, then run it. It adds the
+                Droidloom pacman repository and installs the runtime and the
+                Android image. Updates arrive through your normal
+                <strong>pacman -Syu</strong>.
+              </p>
+            </div>
+            <div class="code-panel code-panel--compact">
+              <div class="code-panel-header">
+                <span class="code-panel-identity">
+                  <span class="code-panel-icon" aria-hidden="true">$</span>
+                  <span class="code-panel-title" data-i18n="droidloomPage.try.install.panel">shell · install</span>
+                </span>
+                <button class="copy-button" type="button" data-copy-target="droidloom-install" aria-label="Copy install commands" data-i18n-aria="droidloomPage.try.install.copyLabel">
+                  <svg class="copy-icon" aria-hidden="true"><use href="#copy-symbol"></use></svg>
+                  <svg class="check-icon" aria-hidden="true"><use href="#check-symbol"></use></svg>
+                  <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
+                </button>
+              </div>
+              <pre><code id="droidloom-install"><span class="code-line"><span class="syntax-command">curl</span> <span class="syntax-option">-fLO</span> <span class="syntax-url">https://denialwm.github.io/droidloom/install.sh</span></span><span class="code-line"><span class="syntax-command">less</span> <span class="syntax-package">install.sh</span></span><span class="code-line"><span class="syntax-command">sh</span> <span class="syntax-package">install.sh</span></span></code></pre>
+            </div>
+          </li>
+          <li class="install-step">
+            <span class="install-step-number" aria-hidden="true"></span>
+            <div class="install-step-copy">
+              <h3 data-i18n="droidloomPage.try.run.title">Start Android and install apps</h3>
+              <p data-i18n="droidloomPage.try.run.copy">
+                Run these from your Wayland session as your normal user. The
+                first start asks for administrator access once to set up
+                Android’s data.
+              </p>
+            </div>
+            <div class="code-panel code-panel--compact">
+              <div class="code-panel-header">
+                <span class="code-panel-identity">
+                  <span class="code-panel-icon" aria-hidden="true">$</span>
+                  <span class="code-panel-title" data-i18n="droidloomPage.try.run.panel">shell · first run</span>
+                </span>
+                <button class="copy-button" type="button" data-copy-target="droidloom-run" aria-label="Copy first run commands" data-i18n-aria="droidloomPage.try.run.copyLabel">
+                  <svg class="copy-icon" aria-hidden="true"><use href="#copy-symbol"></use></svg>
+                  <svg class="check-icon" aria-hidden="true"><use href="#check-symbol"></use></svg>
+                  <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
+                </button>
+              </div>
+              <pre><code id="droidloom-run"><span class="code-line"><span class="syntax-command">droidloomctl</span> <span class="syntax-package">start</span></span><span class="code-line"><span class="syntax-command">droidloomctl</span> <span class="syntax-package">install</span> <span class="syntax-url">~/Downloads/app.apk</span></span><span class="code-line"><span class="syntax-command">droidloomctl</span> <span class="syntax-package">launch</span> <span class="syntax-url">com.android.settings</span></span></code></pre>
+            </div>
+          </li>
+        </ol>
+
+        <div class="dl-try-links">
+          <a class="button button-primary" href="https://github.com/denialwm/droidloom/blob/main/docs/INSTALL.md" data-i18n="droidloomPage.try.guide">Full install guide</a>
+          <a class="text-link" href="https://github.com/denialwm/droidloom/blob/main/docs/KNOWN_ISSUES.md" data-i18n="droidloomPage.try.knownIssues">Known issues</a>
+          <a class="text-link" href="https://github.com/denialwm/droidloom/blob/main/docs/BUILDING.md" data-i18n="droidloomPage.try.build">Build it yourself</a>
         </div>
       </section>
     </main>
@@ -166,7 +416,7 @@
             <use class="mark-caret" href="#denial-caret" />
           </svg>
           <p data-i18n="footer.tagline">
-            A Flutter-native Wayland compositor for the desk and for supported mobile devices.
+            A Flutter-native Wayland compositor for desktops, phones and tablets.
           </p>
         </div>
 
@@ -175,8 +425,7 @@
             <p class="footer-group-title" data-i18n="footer.project">Project</p>
             <ul>
               <li><a href="/mobile.html" data-i18n="nav.mobile">Mobile</a></li>
-              <li><a href="/desktop.html" data-i18n="nav.desktop">Desktop</a></li>
-              <li><a href="/droidloom.html">Droidloom</a></li>
+              <li><a href="/droidloom.html" data-i18n="nav.droidloom">Droidloom</a></li>
               <li><a href="/support.html" data-i18n="nav.support">Support</a></li>
               <li><a href="https://manual.denialwm.org/" data-manual-link data-i18n="footer.manual">Manual</a></li>
             </ul>

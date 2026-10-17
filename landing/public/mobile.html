@@ -3,20 +3,21 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Denial Mobile is the Denial compositor as a touch-first shell on phones and tablets where Linux has been ported. Not for stock Android.">
+    <meta name="description" content="Denial Mobile is a touch-first Linux shell for phones and tablets: gestures, fingerprint unlock, mobile data, and your Android apps.">
     <meta name="theme-color" content="#0b0910">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://denialwm.org/mobile.html">
     <meta property="og:title" content="Denial Mobile">
-    <meta property="og:description" content="Denial Mobile is the Denial compositor as a touch-first shell on phones and tablets where Linux has been ported. Not for stock Android.">
-    <meta property="og:image" content="https://denialwm.org/assets/desktop-glass-dashboard.webp">
+    <meta property="og:description" content="Denial Mobile is a touch-first Linux shell for phones and tablets: gestures, fingerprint unlock, mobile data, and your Android apps.">
+    <meta property="og:image" content="https://denialwm.org/assets/droidloom-pad-apps.webp">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="alternate" hreflang="en" href="https://denialwm.org/mobile.html">
     <link rel="alternate" hreflang="zh-Hans" href="https://denialwm.org/mobile.html?lang=zh-CN">
     <link rel="alternate" hreflang="x-default" href="https://denialwm.org/mobile.html">
     <link rel="icon" href="/assets/denial-dark.svg" type="image/svg+xml">
+    <link rel="preload" href="/assets/fonts/InterVariable-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/styles.css">
-    <title>Denial Mobile | Linux shell on supported devices</title>
+    <title>Denial Mobile | A Linux phone you’d actually use</title>
     <script>
       document.documentElement.classList.add("has-js");
     </script>
@@ -61,7 +62,7 @@
 
     <header class="site-header">
       <div class="site-header-inner container">
-        <a class="site-logo" href="/" aria-label="Denial home">
+        <a class="site-logo" href="/" aria-label="Denial home" data-i18n-aria="nav.logoLabel">
           <svg class="wordmark" viewBox="338 73 484 144" aria-hidden="true">
             <use class="mark-word" href="#denial-word" />
             <use class="mark-caret" href="#denial-caret" />
@@ -71,9 +72,8 @@
         <nav class="site-nav" aria-label="Primary" data-i18n-aria="nav.primary">
         <a href="/" data-i18n="nav.home">Home</a>
         <a href="/mobile.html" class="is-active" aria-current="page" data-i18n="nav.mobile">Mobile</a>
-        <a href="/desktop.html" data-i18n="nav.desktop">Desktop</a>
         <a href="/droidloom.html" data-i18n="nav.droidloom">Droidloom</a>
-        <a href="/support.html" data-i18n="nav.support">Support</a>
+        <a href="/support.html" class="nav-support" data-i18n="nav.support">Support</a>
         </nav>
         <label class="language-picker">
               <span class="visually-hidden" data-i18n="language.label">Language</span>
@@ -95,195 +95,285 @@
       </div>
     </header>
 
-    <main>
-      <section class="page-hero container" aria-labelledby="mobile-title">
-        <p class="section-label" data-i18n="mobile.label">Denial Mobile</p>
-        <h1 id="mobile-title" data-i18n="mobile.heading">Denial on supported phones and tablets.</h1>
-        <p class="page-lede" data-i18n="mobile.lede">
-          Denial Mobile is the same open-source compositor, running as a
-          touch-first shell on devices where Linux has been ported. It does not
-          install on stock Android. Linux on the hardware comes first.
-        </p>
-      </section>
-
-      <section class="container page-section" aria-labelledby="status-title" data-reveal>
-        <p class="section-label" data-i18n="devices.statusLabel">Supported today</p>
-        <h2 id="status-title" data-i18n="devices.heading">Devices running Denial Mobile.</h2>
-        <p class="section-intro" data-i18n="devices.intro">
-          Owner-confirmed status for the devices running this stack today.
-        </p>
-        <div class="device-card-grid">
-          <article class="device-card">
-            <div class="device-card-top">
-              <h3>OnePlus Pad 4</h3>
-              <span class="device-badge device-badge--full" data-i18n="devices.badge.full">Full features</span>
-            </div>
-            <p class="device-card-copy" data-i18n="devices.card.pad4">Owner-confirmed full-feature port. Denial runs as the touch-first Linux shell on this tablet.</p>
-            <div class="device-chips">
-              <span class="device-chip" data-i18n="devices.chip.touch">Touch shell</span> <span class="device-chip device-chip--accent" data-i18n="devices.chip.fingerprint">Fingerprint</span> <span class="device-chip" data-i18n="devices.chip.droidloom">Droidloom</span>
-            </div>
-          </article>
-          <article class="device-card">
-            <div class="device-card-top">
-              <h3>Moto Edge 70</h3>
-              <span class="device-badge device-badge--partial" data-i18n="devices.badge.partial">Partial</span>
-            </div>
-            <p class="device-card-copy" data-i18n="devices.card.partial">Runs the stack. Camera and mobile network are not available yet.</p>
-            <div class="device-chips">
-              <span class="device-chip" data-i18n="devices.chip.touch">Touch shell</span> <span class="device-chip device-chip--accent" data-i18n="devices.chip.fingerprint">Fingerprint</span> <span class="device-chip device-chip--off" data-i18n="devices.chip.noCamera">No camera</span> <span class="device-chip device-chip--off" data-i18n="devices.chip.noNetwork">No mobile network</span>
-            </div>
-          </article>
-          <article class="device-card">
-            <div class="device-card-top">
-              <h3>OnePlus 12R</h3>
-              <span class="device-badge device-badge--partial" data-i18n="devices.badge.partial">Partial</span>
-            </div>
-            <p class="device-card-copy" data-i18n="devices.card.partial">Runs the stack. Camera and mobile network are not available yet.</p>
-            <div class="device-chips">
-              <span class="device-chip" data-i18n="devices.chip.touch">Touch shell</span> <span class="device-chip device-chip--accent" data-i18n="devices.chip.fingerprint">Fingerprint</span> <span class="device-chip device-chip--off" data-i18n="devices.chip.noCamera">No camera</span> <span class="device-chip device-chip--off" data-i18n="devices.chip.noNetwork">No mobile network</span>
-            </div>
-          </article>
-        </div>
-        <p class="devices-note" data-i18n="devices.fingerprint">
-          On all of these devices, the under-display fingerprint sensor works
-          through Denial’s custom Wayland protocols.
-        </p>
-        <div class="device-placeholders" style="margin-top:1.75rem">
-          <div class="device-placeholder device-placeholder--phone">
-            <p class="placeholder-kicker" data-i18n="hero.placeholderKicker">Placeholder</p>
-            <p class="placeholder-title" data-i18n="hero.phonePlaceholder">Phone video</p>
-            <p class="placeholder-note" data-i18n="hero.placeholderNote">Not recorded yet. No device footage is shown here.</p>
-          </div>
-          <div class="device-placeholder device-placeholder--tablet">
-            <p class="placeholder-kicker" data-i18n="hero.placeholderKicker">Placeholder</p>
-            <p class="placeholder-title" data-i18n="hero.tabletPlaceholder">Tablet video</p>
-            <p class="placeholder-note" data-i18n="hero.placeholderNote">Not recorded yet. No device footage is shown here.</p>
+    <main class="mb-page">
+      <section class="mb-hero container" aria-labelledby="mobile-title">
+        <div class="mb-hero-copy">
+          <p class="section-label" data-i18n="hero.mobile">Denial Mobile</p>
+          <h1 id="mobile-title" data-i18n-html="mobilePage.hero.title">A Linux phone you’d <span class="accent">actually</span> use.</h1>
+          <p class="page-lede" data-i18n="mobilePage.hero.lede">
+            Denial Mobile is the Denial compositor as a touch-first shell for
+            phones and tablets. Gestures, fingerprint unlock, mobile data, and
+            your Android apps, on Linux.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#get-it">
+              <span data-i18n="mobilePage.hero.cta">Get Denial Mobile</span>
+              <svg class="button-arrow" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="m7 4 6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/>
+              </svg>
+            </a>
+            <a class="button" href="#devices" data-i18n="mobilePage.hero.devicesCta">See devices</a>
           </div>
         </div>
-      </section>
 
-      <section class="container page-section" aria-labelledby="bringup-title" data-reveal>
-        <p class="section-label" data-i18n="mobile.bringup.label">Bring-up</p>
-        <h2 id="bringup-title" data-i18n="mobile.bringup.heading">How device bring-up works.</h2>
-        <p class="section-intro" data-i18n="mobile.bringup.intro">
-          A port starts from the manufacturer’s released kernel source, which
-          is then improved for a Linux Wayland session with Denial. The owner
-          cannot bring up a device from nothing. Without published kernel
-          source, a request cannot proceed.
-        </p>
-        <div class="port-steps">
-          <article class="port-step">
-            <h3 data-i18n="mobile.bringup.step1Title">1. Kernel source check</h3>
-            <p data-i18n="mobile.bringup.step1Copy">
-              Every request is checked for available manufacturer kernel source.
-              If none exists, the request is declined.
-            </p>
-          </article>
-          <article class="port-step">
-            <h3 data-i18n="mobile.bringup.step2Title">2. Manual review</h3>
-            <p data-i18n="mobile.bringup.step2Copy">
-              Requests are not auto-accepted. The owner reviews each one and
-              decides whether to take it on.
-            </p>
-          </article>
-          <article class="port-step">
-            <h3 data-i18n="mobile.bringup.step3Title">3. Acceptance, then payment</h3>
-            <p data-i18n="mobile.bringup.step3Copy">
-              If a request is accepted, scope is agreed next. Any payment
-              happens only after acceptance, not by donating on the public
-              sponsor page alone.
-            </p>
-          </article>
-        </div>
-
-        <div class="coming-soon-slot" id="bringup-todos" style="margin-top:1.5rem">
-          <p class="section-label">TODO · owner</p>
-          <h3 style="margin:0.4rem 0 0;font-size:1.15rem" data-i18n="mobile.bringup.todoHeading">Policy details still open</h3>
-          <ul class="todo-list" style="margin:0.85rem 0 0;padding-left:1.2rem;color:var(--muted);line-height:1.65">
-            <li data-i18n-html="mobile.bringup.todoPhone"><strong>TODO:</strong> Who buys or provides the phone for a port: decide and document.</li>
-            <li data-i18n-html="mobile.bringup.todoDonation"><strong>TODO:</strong> Minimum donation / contribution for accepted ports: decide and document.</li>
-            <li data-i18n-html="mobile.bringup.todoAccept"><strong>TODO:</strong> Confirm public wording that requests are never auto-accepted (owner review only). Already true; polish if needed.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="container page-section" aria-labelledby="get-it-title" data-reveal>
-        <p class="section-label" data-i18n="devices.get.label">How to get it</p>
-        <h2 id="get-it-title" data-i18n="devices.get.heading">Images and guides.</h2>
-        <div class="port-steps">
-          <article class="port-step">
-            <h3 data-i18n="devices.get.earlyTitle">Early access images</h3>
-            <p data-i18n="devices.get.earlyCopy">
-              Public device images are not available yet. Request early access
-              so we can confirm your device and what you need before any build
-              is shared.
-            </p>
-            <p style="margin-top:0.85rem">
-              <a class="button button-primary" href="/support.html#early-access" data-i18n="devices.get.earlyCta">Request early access</a>
-            </p>
-          </article>
-          <article class="port-step">
-            <h3 data-i18n="devices.get.desktopTitle">Desktop today</h3>
-            <p data-i18n="devices.get.desktopCopy">
-              Denial on the desktop is installable now. It is a good way to try the
-              same project while mobile images are still early.
-            </p>
-            <p style="margin-top:0.85rem">
-              <a class="button" href="/desktop.html#install" data-i18n="devices.get.desktopCta">Install Denial on desktop</a>
-            </p>
-          </article>
-        </div>
-        <div class="coming-soon-slot" id="kernel-guide">
-          <p class="section-label" data-i18n="devices.kernel.label">Coming soon</p>
-          <h3 style="margin:0.4rem 0 0;font-size:1.15rem" data-i18n="devices.kernel.heading">Kernel and flashing guide</h3>
-          <p data-i18n="devices.kernel.copy">
-            A kernel repository with build and flashing instructions will be
-            published here. No steps are listed yet.
+        <div class="mb-hero-devices">
+          <div class="dl-shot-frame mb-hero-tablet">
+            <video autoplay muted loop playsinline preload="auto" poster="/assets/mobile-hero-tablet.webp" width="1018" height="720" data-i18n-aria="mobilePage.hero.tabletVideo" aria-label="Denial on a tablet, moving between a terminal, Google Play and the home screen">
+              <source src="/assets/mobile-hero-tablet.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="dl-shot-frame mb-hero-phone">
+            <video autoplay muted loop playsinline preload="auto" poster="/assets/mobile-hero-phone.webp" width="360" height="800" data-i18n-aria="mobilePage.hero.phoneVideo" aria-label="Denial on a Motorola Edge 70, opening Google Play and going back to the home screen">
+              <source src="/assets/mobile-hero-phone.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="mb-hero-note">
+            <span data-i18n-html="mobilePage.hero.note"><strong>These are Linux mobile devices!</strong> Not Android, and not a PC.</span>
+            <svg class="mb-hero-note-arrow" viewBox="0 0 90 60" aria-hidden="true">
+              <path pathLength="1" d="M4 50 C 34 55, 64 44, 80 9" />
+              <path pathLength="1" d="M69 15 L80 8 L84 21" />
+            </svg>
           </p>
         </div>
       </section>
 
-      <section class="container page-section" id="request-port" aria-labelledby="request-port-title" data-reveal>
-        <p class="section-label" data-i18n="devices.requestLabel">Request a port</p>
-        <h2 id="request-port-title" data-i18n="devices.requestHeading">Ask about your device.</h2>
-        <p class="section-intro" data-i18n="devices.requestIntro">
-          Include the device model and a link to its kernel source if you know
-          one. Each request is reviewed; payment only comes after acceptance.
-          Please don’t use the public sponsor page to request a port.
+      <section class="container page-section" aria-labelledby="touch-title" data-reveal>
+        <p class="section-label" data-i18n="mobilePage.shell.label">The shell</p>
+        <h2 id="touch-title" data-i18n="mobilePage.shell.heading">Built for touch, from the compositor up.</h2>
+        <p class="section-intro" data-i18n="mobilePage.shell.intro">
+          The mobile shell has its own home
+          screen, recents, quick settings, notifications and keyboard, all
+          drawn by Denial itself.
         </p>
-        <div class="request-grid">
-          <article class="request-card">
-            <h3 data-i18n="devices.requestEmailTitle">Email a request</h3>
-            <p data-i18n="devices.requestEmailCopy">
-              Prefills a short template: device model, kernel source link, what
-              you need, and how to reach you.
+
+        <ul class="mb-screens" aria-label="Mobile shell screens" data-i18n-aria="mobilePage.shell.listAria">
+          <li class="mb-screen">
+            <div class="mb-screen-slot"><img src="/assets/mobile-home.webp" width="600" height="1334" alt="Denial Mobile home screen with app icons, the clock and the dock" data-i18n-alt="mobilePage.shell.home.alt" decoding="async" loading="lazy"></div>
+            <h3 data-i18n="mobilePage.shell.home.title">Home</h3>
+            <p data-i18n="mobilePage.shell.home.copy">A paged app grid with your wallpaper.</p>
+          </li>
+          <li class="mb-screen">
+            <div class="mb-screen-slot"><img src="/assets/mobile-recents.webp" width="600" height="1334" alt="Recents view with Google Play and other open apps as cards" data-i18n-alt="mobilePage.shell.recents.alt" decoding="async" loading="lazy"></div>
+            <h3 data-i18n="mobilePage.shell.recents.title">Recents</h3>
+            <p data-i18n="mobilePage.shell.recents.copy">Every open app, one swipe away.</p>
+          </li>
+          <li class="mb-screen">
+            <div class="mb-screen-slot"><img src="/assets/mobile-notifications.webp" width="600" height="1334" alt="Notification panel with the clock and status bar" data-i18n-alt="mobilePage.shell.notifications.alt" decoding="async" loading="lazy"></div>
+            <h3 data-i18n="mobilePage.shell.notifications.title">Notifications</h3>
+            <p data-i18n="mobilePage.shell.notifications.copy">One history for Linux and Android apps alike.</p>
+          </li>
+          <li class="mb-screen">
+            <div class="mb-screen-slot"><img src="/assets/mobile-keyboard.webp" width="600" height="1334" alt="Denial on-screen keyboard over the home screen" data-i18n-alt="mobilePage.shell.keyboard.alt" decoding="async" loading="lazy"></div>
+            <h3 data-i18n="mobilePage.shell.keyboard.title">Keyboard</h3>
+            <p data-i18n="mobilePage.shell.keyboard.copy">Built into the compositor, for every app, Android ones included.</p>
+          </li>
+          <li class="mb-screen">
+            <div class="mb-screen-slot"><img src="/assets/mobile-lock.webp" width="600" height="1334" alt="Lock screen showing the time, date and battery" data-i18n-alt="mobilePage.shell.lock.alt" decoding="async" loading="lazy"></div>
+            <h3 data-i18n="mobilePage.shell.lock.title">Lock screen</h3>
+            <p data-i18n="mobilePage.shell.lock.copy">A session lock with fingerprint and password unlock.</p>
+          </li>
+          <li class="mb-screen">
+            <div class="mb-screen-slot"><img src="/assets/mobile-quick-settings.webp" width="600" height="1334" alt="Quick settings with Wi-Fi, Bluetooth, mobile data, brightness and volume tiles" data-i18n-alt="mobilePage.shell.quickSettings.alt" decoding="async" loading="lazy"></div>
+            <h3 data-i18n="mobilePage.shell.quickSettings.title">Quick settings</h3>
+            <p data-i18n="mobilePage.shell.quickSettings.copy">Wi-Fi, Bluetooth, mobile data, brightness, rotation and desktop view.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="container page-section" aria-labelledby="hardware-title" data-reveal>
+        <p class="section-label" data-i18n="mobilePage.hardware.label">The hardware</p>
+        <h2 id="hardware-title" data-i18n="mobilePage.hardware.heading">Fingerprint, SIM, rotation and haptics.</h2>
+        <div class="dl-grid mb-hardware">
+          <article class="stack-card">
+            <h3 data-i18n="mobilePage.hardware.fingerprint.title">Fingerprint unlock</h3>
+            <p data-i18n="mobilePage.hardware.fingerprint.copy">
+              Under-display sensors work through Denial’s own Wayland
+              protocols. Verification starts the moment the session locks,
+              and your password always works too.
             </p>
-            <a class="button button-primary" href="mailto:doctor.logix@gmail.com?subject=Denial%20Mobile%20port%20request&body=Device%20model%3A%0A%28e.g.%20OnePlus%20Pad%204%29%0A%0AKernel%20source%20link%20%28if%20known%29%3A%0A%28manufacturer%20kernel%20source%20/%20GitHub%20/%20CodeLinaro%20/%20etc.%29%0A%0AWhat%20you%20need%3A%0A%28Denial%20Mobile%20on%20this%20device%2C%20timeline%20notes%29%0A%0AContact%3A%0A%28preferred%20email%20/%20Discord%29%0A%0ANotes%3A%0AI%20understand%20each%20request%20is%20reviewed.%20A%20port%20is%20only%20possible%20if%20the%20manufacturer%20has%20released%20kernel%20source.%20Payment%2C%20if%20any%2C%20happens%20only%20after%20a%20request%20is%20accepted." data-i18n="devices.requestEmailCta">Email port request</a>
           </article>
-          <article class="request-card">
-            <h3 data-i18n="devices.requestGhTitle">GitHub issue</h3>
-            <p data-i18n="devices.requestGhCopy">
-              Open a tracked request on the Denial repository with the same
-              details.
+          <article class="stack-card">
+            <h3 data-i18n="mobilePage.hardware.sim.title">Mobile data and SIM</h3>
+            <p data-i18n="mobilePage.hardware.sim.copy">
+              Carrier, signal and data status from ModemManager. Toggle mobile
+              data from quick settings and unlock your SIM with its PIN.
             </p>
-            <a class="button" href="https://github.com/denialwm/denial/issues/new?title=Denial%20Mobile%20port%20request%3A%20&body=%23%23%20Device%20model%5Cn%5Cn%23%23%20Kernel%20source%20link%20%28if%20known%29%5Cn%5Cn%23%23%20What%20you%20need%5Cn%5Cn%23%23%20Contact%5Cn%5Cn%23%23%20Notes%5CnI%20understand%20each%20request%20is%20reviewed.%20A%20port%20is%20only%20possible%20if%20the%20manufacturer%20has%20released%20kernel%20source.%20Payment%2C%20if%20any%2C%20happens%20only%20after%20acceptance.%5Cn" target="_blank" rel="noopener noreferrer" data-i18n="devices.requestGhCta">Open a GitHub issue</a>
+          </article>
+          <article class="stack-card">
+            <h3 data-i18n="mobilePage.hardware.rotation.title">Auto-rotation</h3>
+            <p data-i18n-html="mobilePage.hardware.rotation.copy">
+              The shell and your apps follow the device through
+              <code>iio-sensor-proxy</code>, with a rotation lock in quick
+              settings.
+            </p>
+          </article>
+          <article class="stack-card">
+            <h3 data-i18n="mobilePage.hardware.haptics.title">Haptics</h3>
+            <p data-i18n-html="mobilePage.hardware.haptics.copy">
+              Tap feedback and a buzz on a rejected fingerprint, through
+              <code>hapticd</code>.
+            </p>
           </article>
         </div>
-        <p class="request-note" data-i18n="devices.requestNote">
-          Donations on the sponsor page support general development. They are
-          not a purchase of a device port.
+        <p class="stack-note" data-i18n="mobilePage.hardware.note">
+          Denial uses the system services already on the device. Each feature
+          shows up when its hardware and service are there.
         </p>
       </section>
 
-      <section class="container page-section" aria-labelledby="mobile-dl-title" data-reveal>
-        <p class="section-label">Droidloom</p>
-        <h2 id="mobile-dl-title" data-i18n="mobile.droidloomHeading">Keeping Android apps nearby.</h2>
-        <p class="section-intro" data-i18n="mobile.droidloomCopy">
-          On Denial Mobile ports, Droidloom can run Android apps and games as
-          native Wayland windows on the same Linux session (a companion to
-          Denial, not a replacement for it).
+      <section class="container page-section" aria-labelledby="any-screen-title" data-reveal>
+        <div class="mb-split">
+          <div>
+            <p class="section-label" data-i18n="mobilePage.convergence.label">Convergence</p>
+            <h2 id="any-screen-title" data-i18n="mobilePage.convergence.heading">Same Denial, any screen.</h2>
+            <p class="section-intro" data-i18n="mobilePage.convergence.intro">
+              Plug any Denial phone or tablet into a monitor and it becomes
+              the desktop:
+              stacking, tiling and scrolling layouts, the full shell, and the
+              same apps you were just using with your fingers.
+            </p>
+          </div>
+          <figure class="dl-shot mb-converge">
+            <div class="mb-converge-frame">
+              <video autoplay muted loop playsinline preload="metadata" poster="/assets/mobile-convergence.webp" width="720" height="1280" data-i18n-aria="mobilePage.convergence.videoAria" aria-label="A OnePlus Pad 4 connected to a monitor, moving between a fullscreen game and a tiled Denial desktop">
+                <source src="/assets/mobile-convergence.mp4" type="video/mp4">
+              </video>
+            </div>
+            <figcaption data-i18n="mobilePage.convergence.caption">A OnePlus Pad 4 plugged into a monitor. Denial runs the desktop on the big screen; the tablet is the keyboard and touchpad.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="container page-section" aria-labelledby="apps-title" data-reveal>
+        <p class="section-label" data-i18n="mobilePage.apps.label">Android apps</p>
+        <h2 id="apps-title" data-i18n="mobilePage.apps.heading">Your apps come with you.</h2>
+        <p class="section-intro" data-i18n="mobilePage.apps.intro">
+          Moving to a Linux phone usually means leaving your apps behind, but
+          with Droidloom they come along. It runs Android apps natively on
+          ARM, each in its own window: Google Play, your messengers, even demanding games.
         </p>
-        <a class="button" href="/droidloom.html" data-i18n="home.droidloomLink">About Droidloom</a>
+        <div class="mb-apps">
+          <figure class="dl-shot">
+            <a class="dl-shot-frame" href="/assets/droidloom-pad-endfield.webp" target="_blank" rel="noopener">
+              <img src="/assets/droidloom-pad-endfield.webp" width="1600" height="1132" data-i18n-alt="mobilePage.apps.shotAlt" alt="Arknights: Endfield, Arknights and htop tiled side by side on a OnePlus Pad 4 with Denial" decoding="async" loading="lazy">
+            </a>
+            <figcaption data-i18n="mobilePage.apps.caption">Arknights: Endfield, Arknights and htop, tiled on a OnePlus Pad 4.</figcaption>
+          </figure>
+          <div class="mb-apps-copy">
+            <ul class="dl-features">
+              <li>
+                <h3 data-i18n="mobilePage.apps.layout.title">Laid out like on Android</h3>
+                <p data-i18n="mobilePage.apps.layout.copy">Apps see Denial’s status bar and gesture bar as their own and lay out around them.</p>
+              </li>
+              <li>
+                <h3 data-i18n="mobilePage.apps.keyboard.title">Denial’s keyboard</h3>
+                <p data-i18n="mobilePage.apps.keyboard.copy">Text fields in Android apps open Denial’s on-screen keyboard.</p>
+              </li>
+              <li>
+                <h3 data-i18n="mobilePage.apps.notifications.title">Notifications</h3>
+                <p data-i18n="mobilePage.apps.notifications.copy">Android notifications land in Denial’s notification history.</p>
+              </li>
+            </ul>
+            <a class="button" href="/droidloom.html" data-i18n="mobilePage.apps.more">More about Droidloom</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="container page-section" id="devices" aria-labelledby="devices-title" data-reveal>
+        <p class="section-label" data-i18n="mobilePage.devices.label">Devices</p>
+        <h2 id="devices-title" data-i18n="mobilePage.devices.heading">Running Denial today.</h2>
+        <div class="mb-table-wrap">
+          <table class="mb-table">
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="mobilePage.devices.columns.device">Device</th>
+                <th scope="col" data-i18n="mobilePage.devices.columns.touchShell">Touch shell</th>
+                <th scope="col">Wi-Fi</th>
+                <th scope="col">Bluetooth</th>
+                <th scope="col" data-i18n="mobilePage.devices.columns.audio">Audio</th>
+                <th scope="col" data-i18n="mobilePage.devices.columns.fastCharging">Fast charging</th>
+                <th scope="col" data-i18n="mobilePage.devices.columns.microphone">Microphone</th>
+                <th scope="col" data-i18n="mobilePage.devices.columns.camera">Camera</th>
+                <th scope="col" data-i18n="mobilePage.devices.columns.fingerprint">Fingerprint</th>
+                <th scope="col" data-i18n="mobilePage.devices.columns.mobileData">Mobile data</th>
+                <th scope="col" data-i18n="mobilePage.devices.columns.androidApps">Android apps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">OnePlus Pad 4<span data-i18n="mobilePage.devices.tablet">Tablet</span></th>
+                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes">SuperVOOC</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="na">—</td><td class="na">—</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Lenovo Idea Tab Pro<span data-i18n="mobilePage.devices.tablet">Tablet</span></th>
+                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="na">—</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Motorola Edge 70<span data-i18n="mobilePage.devices.phone">Phone</span></th>
+                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="early" data-i18n="mobilePage.devices.early">Early</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">OnePlus 12R<span data-i18n="mobilePage.devices.phone">Phone</span></th>
+                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes">SuperVOOC</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="stack-note" data-i18n-html="mobilePage.devices.note">
+          <strong>Not yet</strong>: the hardware is there but hasn’t been
+          brought up yet. Every item on this list can be implemented. <strong>—</strong> means the device doesn’t have that
+          hardware.
+        </p>
+
+        <div class="support-nudge">
+          <p><strong data-i18n="mobilePage.devices.nudge">Help fund the next device and the next feature.</strong></p>
+          <a class="button" href="/support.html" data-i18n="mobilePage.devices.supportCta">Support the project</a>
+        </div>
+      </section>
+
+      <section class="container page-section" id="get-it" aria-labelledby="get-it-title" data-reveal>
+        <p class="section-label" data-i18n="mobilePage.getIt.label">Get it</p>
+        <h2 id="get-it-title" data-i18n="mobilePage.getIt.heading">Get Denial on your device.</h2>
+        <div class="dl-grid dl-grid--2">
+          <article class="stack-card mb-get-card">
+            <p class="mb-status" data-i18n="mobilePage.getIt.status">In preparation</p>
+            <h3 data-i18n="mobilePage.getIt.install.title">Install on your device</h3>
+            <p data-i18n="mobilePage.getIt.install.copy">
+              Ready-to-flash images and ARM64 Droidloom builds for every
+              ported device, free for everyone. The installer only writes
+              non-critical partitions, so your device always stays
+              recoverable.
+            </p>
+            <div class="mb-get-actions">
+              <a class="button button-primary" data-discord-link href="https://discord.gg/vy5t8aCxj" data-i18n="mobilePage.getIt.install.discord">Follow progress on Discord</a>
+            </div>
+          </article>
+          <article class="stack-card mb-get-card" id="bring-device">
+            <h3 data-i18n="mobilePage.getIt.bring.title">Bring Denial to your device</h3>
+            <p data-i18n="mobilePage.getIt.bring.copy">
+              Ports work best on devices from 2022 onward with a Snapdragon
+              7&nbsp;Gen&nbsp;1 or newer, or a comparable MediaTek Dimensity.
+              The manufacturer must have published kernel source, and the
+              bootloader must be unlockable. Different device? Ask anyway.
+            </p>
+            <p data-i18n="mobilePage.getIt.bring.paid">
+              A port is paid work, agreed case by case and separate from
+              sponsoring. Tell me the model and I’ll talk it through with you.
+            </p>
+            <div class="mb-get-actions">
+              <a class="button" href="mailto:doctor.logix@gmail.com?subject=Denial%20Mobile%20port%20request&body=Device%20model%3A%0A%28e.g.%20OnePlus%20Pad%204%29%0A%0AKernel%20source%20link%20%28if%20known%29%3A%0A%28manufacturer%20kernel%20source%20/%20GitHub%20/%20CodeLinaro%20/%20etc.%29%0A%0AWhat%20you%20need%3A%0A%28Denial%20Mobile%20on%20this%20device%2C%20timeline%20notes%29%0A%0AContact%3A%0A%28preferred%20email%20/%20Discord%29%0A%0ANotes%3A%0AI%20understand%20each%20request%20is%20reviewed.%20A%20port%20is%20only%20possible%20if%20the%20manufacturer%20has%20released%20kernel%20source.%20Payment%2C%20if%20any%2C%20happens%20only%20after%20a%20request%20is%20accepted." data-i18n="mobilePage.getIt.bring.email">Email a request</a>
+              <a class="button" href="https://github.com/denialwm/denial/issues/new?title=Denial%20Mobile%20port%20request%3A%20&body=%23%23%20Device%20model%5Cn%5Cn%23%23%20Kernel%20source%20link%20%28if%20known%29%5Cn%5Cn%23%23%20What%20you%20need%5Cn%5Cn%23%23%20Contact%5Cn%5Cn%23%23%20Notes%5CnI%20understand%20each%20request%20is%20reviewed.%20A%20port%20is%20only%20possible%20if%20the%20manufacturer%20has%20released%20kernel%20source.%20Payment%2C%20if%20any%2C%20happens%20only%20after%20acceptance.%5Cn" target="_blank" rel="noopener noreferrer" data-i18n="mobilePage.getIt.bring.github">Open a GitHub issue</a>
+            </div>
+          </article>
+        </div>
+        <p class="stack-note" data-i18n-html="mobilePage.getIt.freeNote">
+          Denial is free and open source, and nothing is locked behind a
+          sponsorship. <a class="text-link" href="/support.html">Sponsoring</a>
+          pays for development, test devices and download hosting.
+        </p>
+        <p class="stack-note" data-i18n-html="mobilePage.getIt.noDevice">
+          No device? <a class="text-link" href="/#install">Install Denial on your desktop</a> today.
+        </p>
       </section>
     </main>
 
@@ -296,7 +386,7 @@
             <use class="mark-caret" href="#denial-caret" />
           </svg>
           <p data-i18n="footer.tagline">
-            A Flutter-native Wayland compositor for the desk and for supported mobile devices.
+            A Flutter-native Wayland compositor for desktops, phones and tablets.
           </p>
         </div>
 
@@ -305,8 +395,7 @@
             <p class="footer-group-title" data-i18n="footer.project">Project</p>
             <ul>
               <li><a href="/mobile.html" data-i18n="nav.mobile">Mobile</a></li>
-              <li><a href="/desktop.html" data-i18n="nav.desktop">Desktop</a></li>
-              <li><a href="/droidloom.html">Droidloom</a></li>
+              <li><a href="/droidloom.html" data-i18n="nav.droidloom">Droidloom</a></li>
               <li><a href="/support.html" data-i18n="nav.support">Support</a></li>
               <li><a href="https://manual.denialwm.org/" data-manual-link data-i18n="footer.manual">Manual</a></li>
             </ul>

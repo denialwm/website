@@ -3,18 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Denial is an open-source Flutter-native Wayland compositor and shell for Linux desktops, and a touch-first shell on supported mobile devices.">
+    <meta name="description" content="Denial is an open-source Flutter-native Wayland compositor and shell for Linux desktops, and a touch-first shell on phones and tablets.">
     <meta name="theme-color" content="#0b0910">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://denialwm.org/">
     <meta property="og:title" content="Denial | Flutter-native Wayland compositor">
-    <meta property="og:description" content="Denial is an open-source Flutter-native Wayland compositor and shell for Linux desktops, and a touch-first shell on supported mobile devices.">
+    <meta property="og:description" content="Denial is an open-source Flutter-native Wayland compositor and shell for Linux desktops, and a touch-first shell on phones and tablets.">
     <meta property="og:image" content="https://denialwm.org/assets/desktop-glass-dashboard.webp">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="alternate" hreflang="en" href="https://denialwm.org/">
     <link rel="alternate" hreflang="zh-Hans" href="https://denialwm.org/?lang=zh-CN">
     <link rel="alternate" hreflang="x-default" href="https://denialwm.org/">
     <link rel="icon" href="/assets/denial-dark.svg" type="image/svg+xml">
+    <link rel="preload" href="/assets/fonts/InterVariable-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/styles.css">
     <title>Denial | Flutter-native Wayland compositor</title>
     <script>
@@ -61,7 +62,7 @@
 
     <header class="site-header">
       <div class="site-header-inner container">
-        <a class="site-logo" href="/" aria-label="Denial home">
+        <a class="site-logo" href="/" aria-label="Denial home" data-i18n-aria="nav.logoLabel">
           <svg class="wordmark" viewBox="338 73 484 144" aria-hidden="true">
             <use class="mark-word" href="#denial-word" />
             <use class="mark-caret" href="#denial-caret" />
@@ -71,9 +72,8 @@
         <nav class="site-nav" aria-label="Primary" data-i18n-aria="nav.primary">
         <a href="/" class="is-active" aria-current="page" data-i18n="nav.home">Home</a>
         <a href="/mobile.html" data-i18n="nav.mobile">Mobile</a>
-        <a href="/desktop.html" data-i18n="nav.desktop">Desktop</a>
         <a href="/droidloom.html" data-i18n="nav.droidloom">Droidloom</a>
-        <a href="/support.html" data-i18n="nav.support">Support</a>
+        <a href="/support.html" class="nav-support" data-i18n="nav.support">Support</a>
         </nav>
         <label class="language-picker">
               <span class="visually-hidden" data-i18n="language.label">Language</span>
@@ -114,24 +114,24 @@
 
             <p class="hero-kicker" data-i18n="hero.kicker">Flutter-native Wayland compositor</p>
 
-            <p class="hero-headline" data-i18n="hero.headline">A desktop shell that feels alive.</p>
+            <p class="hero-headline" data-i18n-html="hero.headline">Linux can be a premium experience. <span class="accent">Denial proves it.</span></p>
 
             <p class="hero-copy" data-i18n="hero.copy">
               Denial is an open-source Wayland compositor built with Flutter:
               stacking, tiling, and scrolling layouts, glass, live shell editing,
               Xwayland, and screen sharing. The same codebase also runs as
-              a touch-first shell on supported phones and tablets.
+              a touch-first shell on phones and tablets. Give it a try.
             </p>
 
             <div class="hero-actions">
-              <a class="button button-primary" href="/desktop.html#install">
-                <span data-i18n="hero.installDesktop">Install on desktop</span>
+              <a class="button button-primary" href="#install">
+                <span data-i18n="desktop.installCta">Install Denial</span>
                 <svg class="button-arrow" viewBox="0 0 20 20" aria-hidden="true">
                   <path d="m7 4 6 6-6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/>
                 </svg>
               </a>
               <a class="button" href="/mobile.html" data-i18n="hero.mobile">Denial Mobile</a>
-              <a class="button" href="/support.html" data-i18n="hero.support">Support the project</a>
+              <a class="button" href="https://manual.denialwm.org/" data-manual-link data-i18n="footer.manual">Manual</a>
             </div>
           </div>
 
@@ -140,13 +140,13 @@
               <video
                 class="gallery-media gallery-video"
                 autoplay muted loop playsinline preload="metadata"
-                poster="/assets/hero-loop.webp"
+                poster="/assets/home-main.webp"
                 width="1280" height="720"
                 aria-label="A short preview of the Denial desktop"
                 data-i18n-aria="hero.previewLabel"
                 data-gallery-video
               >
-                <source src="/assets/hero-loop.mp4" type="video/mp4">
+                <source src="/assets/home-main.mp4" type="video/mp4">
                 <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
               </video>
             </div>
@@ -181,53 +181,659 @@
         </div>
       </div>
 
-      <section class="container page-section" aria-labelledby="about-title" data-reveal>
-        <p class="section-label" data-i18n="home.aboutLabel">About</p>
-        <h2 id="about-title" data-i18n="home.aboutHeading">What Denial is.</h2>
-        <p class="section-intro" data-i18n="home.aboutCopy">
-          Denial is a community open-source project: a Flutter-native Wayland
-          compositor you can install on Linux desktops today, and a touch-first
-          shell on a small set of phones and tablets where Linux has already
-          been ported. Built in public on GitHub.
-        </p>
-        <div class="stack-grid" style="margin-top:1.5rem">
-          <article class="stack-card">
-            <p class="stack-index">01</p>
-            <h3 data-i18n="home.deskTitle">On the desk</h3>
-            <p data-i18n="home.deskCopy">
-              Packages for Arch, Fedora, and Debian. NixOS flake and module.
-              Void tested from source.
+            <section class="gallery container" id="desktop" aria-labelledby="gallery-title" data-reveal>
+        <div class="gallery-heading">
+          <p class="section-label" data-i18n="gallery.label">Gallery</p>
+          <h2 id="gallery-title" data-i18n="gallery.heading">Sometimes words are not enough.</h2>
+        </div>
+
+        <figure class="desktop-feature">
+          <div class="gallery-media-frame">
+            <video
+              class="gallery-media gallery-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster="/assets/home-main.webp"
+              width="1280"
+              height="720"
+              aria-label="A short preview of the Denial desktop"
+              data-i18n-aria="hero.previewLabel"
+              data-gallery-video
+            >
+              <source src="/assets/home-main.mp4" type="video/mp4">
+              <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
+            </video>
+          </div>
+        </figure>
+
+        <div class="gallery-grid">
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Lockscreen overview"
+            data-gallery-item
+            data-gallery-type="video"
+            data-gallery-src="/assets/gallery-lockscreen.mp4"
+            data-gallery-poster="/assets/gallery-lockscreen.webp"
+            data-gallery-title="Lockscreen overview"
+            data-gallery-kind="Integrated lockscreen, no need for extra components (SUPER L)"
+            data-i18n-gallery="gallery.items.lockscreen"
+          >
+            <div class="gallery-media-frame">
+              <video
+                class="gallery-media gallery-video"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster="/assets/gallery-lockscreen.webp"
+                aria-hidden="true"
+                data-gallery-video
+              >
+                <source src="/assets/gallery-lockscreen.mp4" type="video/mp4">
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
+              </video>
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Lockscreen overview</h3>
+              <p class="gallery-item-kind">
+                Integrated lockscreen, no need for extra components (SUPER L)
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Polkit Agent"
+            data-gallery-item
+            data-gallery-type="video"
+            data-gallery-src="/assets/gallery-polkit.mp4"
+            data-gallery-poster="/assets/gallery-polkit.webp"
+            data-gallery-title="Polkit Agent"
+            data-gallery-kind="Built-in authentication prompt, no separate agent to install"
+            data-i18n-gallery="gallery.items.polkit"
+          >
+            <div class="gallery-media-frame">
+              <video
+                class="gallery-media gallery-video"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster="/assets/gallery-polkit.webp"
+                aria-hidden="true"
+                data-gallery-video
+              >
+                <source src="/assets/gallery-polkit.mp4" type="video/mp4">
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
+              </video>
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Polkit Agent</h3>
+              <p class="gallery-item-kind">
+                Built-in authentication prompt, no separate agent to install
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Activity Overview"
+            data-gallery-item
+            data-gallery-type="video"
+            data-gallery-src="/assets/gallery-activity-overview.mp4"
+            data-gallery-poster="/assets/gallery-activity-overview.webp"
+            data-gallery-title="Activity Overview"
+            data-gallery-kind="Every open window at a glance (SUPER A)"
+            data-i18n-gallery="gallery.items.overview"
+          >
+            <div class="gallery-media-frame">
+              <video
+                class="gallery-media gallery-video"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster="/assets/gallery-activity-overview.webp"
+                aria-hidden="true"
+                data-gallery-video
+              >
+                <source
+                  src="/assets/gallery-activity-overview.mp4"
+                  type="video/mp4"
+                >
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
+              </video>
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Activity Overview</h3>
+              <p class="gallery-item-kind">
+                Every open window at a glance (SUPER A)
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Customization"
+            data-gallery-item
+            data-gallery-type="video"
+            data-gallery-src="/assets/gallery-customization.mp4"
+            data-gallery-poster="/assets/gallery-customization.webp"
+            data-gallery-title="Customization"
+            data-gallery-kind="Denial was made for ricing. Customize everything."
+            data-i18n-gallery="gallery.items.customization"
+          >
+            <div class="gallery-media-frame">
+              <video
+                class="gallery-media gallery-video"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster="/assets/gallery-customization.webp"
+                aria-hidden="true"
+                data-gallery-video
+              >
+                <source src="/assets/gallery-customization.mp4" type="video/mp4">
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
+              </video>
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Customization</h3>
+              <p class="gallery-item-kind">
+                Denial was made for ricing. Customize everything.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open App Switcher"
+            data-gallery-item
+            data-gallery-type="video"
+            data-gallery-src="/assets/gallery-app-switcher.mp4"
+            data-gallery-poster="/assets/gallery-app-switcher.webp"
+            data-gallery-title="App Switcher"
+            data-gallery-kind="Switch between open apps (SUPER Tab)"
+            data-i18n-gallery="gallery.items.appSwitcher"
+          >
+            <div class="gallery-media-frame">
+              <video
+                class="gallery-media gallery-video"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster="/assets/gallery-app-switcher.webp"
+                aria-hidden="true"
+                data-gallery-video
+              >
+                <source src="/assets/gallery-app-switcher.mp4" type="video/mp4">
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
+              </video>
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">App Switcher</h3>
+              <p class="gallery-item-kind">
+                Switch between open apps (SUPER Tab)
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Flutter DevTools"
+            data-gallery-item
+            data-gallery-type="video"
+            data-gallery-src="/assets/gallery-2026-08-03.mp4"
+            data-gallery-poster="/assets/gallery-2026-08-03.webp"
+            data-gallery-title="Flutter DevTools"
+            data-gallery-kind="Flutter DevTools remain fully supported in Denial"
+            data-i18n-gallery="gallery.items.devtools"
+          >
+            <div class="gallery-media-frame">
+              <video
+                class="gallery-media gallery-video"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster="/assets/gallery-2026-08-03.webp"
+                aria-hidden="true"
+                data-gallery-video
+              >
+                <source src="/assets/gallery-2026-08-03.mp4" type="video/mp4">
+                <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
+              </video>
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Flutter DevTools</h3>
+              <p class="gallery-item-kind">
+                Flutter DevTools remain fully supported in Denial
+              </p>
+            </figcaption>
+          </figure>
+        </div>
+
+      </section>
+
+      <section class="gallery screenshots container" id="screenshots" aria-labelledby="screenshots-title" data-reveal>
+        <div class="gallery-heading">
+          <p class="section-label" data-i18n="screenshots.label">Screenshots</p>
+          <h2 id="screenshots-title" data-i18n="screenshots.heading">Glass, moods and the launcher.</h2>
+        </div>
+
+        <div class="gallery-grid gallery-grid--stills">
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Glass dashboard"
+            data-gallery-item
+            data-gallery-type="image"
+            data-gallery-src="/assets/desktop-glass-dashboard.webp"
+            data-gallery-title="Glass dashboard"
+            data-gallery-kind="Translucent dashboard and terminal visualizers"
+            data-i18n-gallery="gallery.items.glassDashboard"
+          >
+            <div class="gallery-media-frame">
+              <img
+                class="gallery-media"
+                src="/assets/desktop-glass-dashboard.webp"
+                alt=""
+                width="1600"
+                height="901"
+              >
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Glass dashboard</h3>
+              <p class="gallery-item-kind">
+                Translucent dashboard and terminal visualizers
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Another mood"
+            data-gallery-item
+            data-gallery-type="image"
+            data-gallery-src="/assets/desktop-purple.webp"
+            data-gallery-title="Another mood"
+            data-gallery-kind="Purple wallpaper, btop, launcher, and an audio visualizer"
+            data-i18n-gallery="gallery.items.desktopPurple"
+          >
+            <div class="gallery-media-frame">
+              <img
+                class="gallery-media"
+                src="/assets/desktop-purple.webp"
+                alt=""
+                width="1600"
+                height="902"
+              >
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Another mood</h3>
+              <p class="gallery-item-kind">
+                Purple wallpaper, btop, launcher, and an audio visualizer
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="gallery-card"
+            role="button"
+            tabindex="0"
+            aria-label="Open Launcher, up close"
+            data-gallery-item
+            data-gallery-type="image"
+            data-gallery-src="/assets/desktop-glass-launcher.webp"
+            data-gallery-title="Launcher, up close"
+            data-gallery-kind="Glass application launcher over the desktop wallpaper"
+            data-i18n-gallery="gallery.items.glassLauncher"
+          >
+            <div class="gallery-media-frame">
+              <img
+                class="gallery-media"
+                src="/assets/desktop-glass-launcher.webp"
+                alt=""
+                width="1600"
+                height="756"
+              >
+            </div>
+            <figcaption>
+              <h3 class="gallery-item-title">Launcher, up close</h3>
+              <p class="gallery-item-kind">
+                Glass application launcher over the desktop wallpaper
+              </p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <dialog
+        class="gallery-dialog"
+        aria-labelledby="gallery-dialog-title"
+        data-gallery-dialog
+      >
+        <div class="gallery-dialog-shell">
+          <header class="gallery-dialog-header">
+            <div>
+              <h2 id="gallery-dialog-title" data-gallery-dialog-title></h2>
+              <p class="gallery-dialog-kind" data-gallery-dialog-kind></p>
+            </div>
+            <button
+              class="gallery-dialog-close"
+              type="button"
+              aria-label="Close gallery"
+              data-i18n-aria="gallery.close"
+              data-gallery-close
+            >
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path
+                  d="m5 5 10 10m0-10L5 15"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </button>
+          </header>
+
+          <div class="gallery-dialog-stage" data-gallery-dialog-stage></div>
+
+          <div class="gallery-dialog-footer">
+            <p class="gallery-dialog-counter" aria-live="polite">
+              <span data-gallery-dialog-current>01</span> /
+              <span data-gallery-dialog-total>06</span>
             </p>
-            <a class="text-link" href="/desktop.html" data-i18n="home.deskLink">Denial Desktop</a>
-          </article>
-          <article class="stack-card">
-            <p class="stack-index">02</p>
-            <h3 data-i18n="home.mobileTitle">On mobile</h3>
-            <p data-i18n="home.mobileCopy">
-              The same Denial codebase as a touch-first shell on supported
-              devices, after Linux is ported to the hardware.
-            </p>
-            <a class="text-link" href="/mobile.html" data-i18n="home.mobileLink">Denial Mobile</a>
-          </article>
-          <article class="stack-card">
-            <p class="stack-index">03</p>
-            <h3>Droidloom</h3>
-            <p data-i18n="home.droidloomCopy">
-              A companion project that runs Android apps as Wayland windows on
-              Linux. Handy on device ports and as a desktop preview.
-            </p>
-            <a class="text-link" href="/droidloom.html" data-i18n="home.droidloomLink">About Droidloom</a>
-          </article>
+            <nav class="gallery-dialog-navigation" aria-label="Gallery navigation" data-i18n-aria="gallery.navigation">
+              <button
+                class="gallery-control"
+                type="button"
+                aria-label="Previous gallery item"
+                data-i18n-aria="gallery.previous"
+                data-gallery-dialog-previous
+              >
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="m12.5 4-6 6 6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.6"
+                  />
+                </svg>
+              </button>
+              <button
+                class="gallery-control"
+                type="button"
+                aria-label="Next gallery item"
+                data-i18n-aria="gallery.next"
+                data-gallery-dialog-next
+              >
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="m7.5 4 6 6-6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.6"
+                  />
+                </svg>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </dialog>
+
+      <section class="beyond container page-section" aria-labelledby="beyond-title" data-reveal>
+        <p class="section-label" data-i18n="home.beyond.label">Beyond the desktop</p>
+        <h2 id="beyond-title" data-i18n="home.beyond.heading">Denial doesn’t stop at the desktop.</h2>
+        <div class="sp-projects">
+          <a class="sp-project" href="/mobile.html">
+            <img class="sp-project-img--top" src="/assets/mobile-card.webp" width="1018" height="720" alt="" loading="lazy" decoding="async">
+            <div class="sp-project-copy">
+              <h3>Denial Mobile</h3>
+              <p data-i18n="home.beyond.mobileCopy">
+                The same compositor as a touch-first shell for phones and
+                tablets. Plug one into a monitor and it becomes your desktop.
+              </p>
+              <span class="text-link" data-i18n="home.beyond.mobileLink">See Denial Mobile →</span>
+            </div>
+          </a>
+          <a class="sp-project" href="/droidloom.html">
+            <img src="/assets/droidloom-desktop-teto.webp" width="2000" height="1124" alt="" loading="lazy" decoding="async">
+            <div class="sp-project-copy">
+              <h3>Droidloom</h3>
+              <p data-i18n="home.beyond.droidloomCopy">
+                Android apps and games as real Linux windows, tiled next to
+                everything else on your Denial desktop.
+              </p>
+              <span class="text-link" data-i18n="home.beyond.droidloomLink">See Droidloom →</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="install container page-section" id="install" aria-labelledby="install-title">
+        <div class="install-heading" data-reveal>
+          <div>
+            <p class="section-label" data-i18n="install.label">Install</p>
+            <h2 id="install-title" data-i18n="install.desktopOnlyHeading">Install Denial on desktop.</h2>
+          </div>
+        </div>
+<svg class="visually-hidden" aria-hidden="true">
+          <symbol id="copy-symbol" viewBox="0 0 16 16">
+            <rect
+              x="5.25"
+              y="5.25"
+              width="7.25"
+              height="7.25"
+              rx="1.25"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.35"
+            />
+            <path
+              d="M3.5 10.25h-.25A1.75 1.75 0 0 1 1.5 8.5V3.25A1.75 1.75 0 0 1 3.25 1.5H8.5a1.75 1.75 0 0 1 1.75 1.75v.25"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-width="1.35"
+            />
+          </symbol>
+          <symbol id="check-symbol" viewBox="0 0 16 16">
+            <path
+              d="m2.75 8.25 3.1 3.1 7.4-7.4"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.6"
+            />
+          </symbol>
+        </svg>
+
+        <ol class="install-steps">
+          <li class="install-step">
+            <span class="install-step-number" aria-hidden="true"></span>
+            <div class="install-step-copy">
+              <h3 data-i18n="install.repository.title">Set up the Denial repository</h3>
+              <p data-i18n-html="install.repository.copy">
+                Verifies the release-key fingerprint, adds the signed
+                repository, and shows the full plan before touching
+                <strong>sudo</strong>.
+              </p>
+              <span class="install-step-hint">
+                <button
+                  class="install-source-button"
+                  type="button"
+                  data-installer-dialog-open
+                  data-i18n="install.repository.source"
+                >
+                  Read the installer source
+                </button>
+              </span>
+            </div>
+
+            <div class="code-panel code-panel--compact">
+              <div class="code-panel-header">
+                <span class="code-panel-identity">
+                  <span class="code-panel-icon" aria-hidden="true">$</span>
+                  <span class="code-panel-title" data-i18n="install.repository.panel">shell · repository setup</span>
+                </span>
+                <button
+                  class="copy-button"
+                  type="button"
+                  data-copy-target="repository-setup-command"
+                  aria-label="Copy repository setup command"
+                  data-i18n-aria="install.repository.copyLabel"
+                >
+                  <svg class="copy-icon" aria-hidden="true">
+                    <use href="#copy-symbol"></use>
+                  </svg>
+                  <svg class="check-icon" aria-hidden="true">
+                    <use href="#check-symbol"></use>
+                  </svg>
+                  <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
+                </button>
+              </div>
+              <pre><code id="repository-setup-command"><span class="code-line"><span class="syntax-command">curl</span> <span class="syntax-option">-fsSL</span> <span class="syntax-url">https://install.denialwm.org</span> <span class="syntax-operator">|</span> <span class="syntax-command">sh</span></span></code></pre>
+            </div>
+          </li>
+
+          <li class="install-step">
+            <span class="install-step-number" aria-hidden="true"></span>
+            <div class="install-step-copy">
+              <h3 data-i18n="install.package.title">Install Denial</h3>
+              <p data-i18n="install.package.copy">
+                First-party repositories currently ship x86-64 packages. ARM64
+                is fully supported from source, but binaries are not published
+                yet. The matching Flutter engine is installed automatically.
+              </p>
+            </div>
+
+            <div class="install-package-options">
+              <div class="code-panel code-panel--compact">
+                <div class="code-panel-header">
+                  <span class="code-panel-identity">
+                    <span class="code-panel-icon" aria-hidden="true">$</span>
+                    <span class="code-panel-title" data-i18n="install.package.panelArch">Arch / CachyOS / Omarchy</span>
+                  </span>
+                  <button
+                    class="copy-button"
+                    type="button"
+                    data-copy-target="denial-install-arch"
+                    aria-label="Copy Arch installation command"
+                    data-i18n-aria="install.package.copyLabelArch"
+                  >
+                    <svg class="copy-icon" aria-hidden="true"><use href="#copy-symbol"></use></svg>
+                    <svg class="check-icon" aria-hidden="true"><use href="#check-symbol"></use></svg>
+                    <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
+                  </button>
+                </div>
+                <pre><code id="denial-install-arch"><span class="code-line"><span class="syntax-command">sudo pacman</span> <span class="syntax-option">-Syu</span> <span class="syntax-package">denial</span></span></code></pre>
+              </div>
+
+              <div class="code-panel code-panel--compact">
+                <div class="code-panel-header">
+                  <span class="code-panel-identity">
+                    <span class="code-panel-icon" aria-hidden="true">$</span>
+                    <span class="code-panel-title" data-i18n="install.package.panelApt">Debian / Ubuntu</span>
+                  </span>
+                  <button
+                    class="copy-button"
+                    type="button"
+                    data-copy-target="denial-install-apt"
+                    aria-label="Copy Debian or Ubuntu installation command"
+                    data-i18n-aria="install.package.copyLabelApt"
+                  >
+                    <svg class="copy-icon" aria-hidden="true"><use href="#copy-symbol"></use></svg>
+                    <svg class="check-icon" aria-hidden="true"><use href="#check-symbol"></use></svg>
+                    <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
+                  </button>
+                </div>
+                <pre><code id="denial-install-apt"><span class="code-line"><span class="syntax-command">sudo apt</span> <span class="syntax-package">update</span> <span class="syntax-operator">&amp;&amp;</span> <span class="syntax-command">sudo apt</span> <span class="syntax-package">install denial</span></span></code></pre>
+              </div>
+
+              <div class="code-panel code-panel--compact">
+                <div class="code-panel-header">
+                  <span class="code-panel-identity">
+                    <span class="code-panel-icon" aria-hidden="true">$</span>
+                    <span class="code-panel-title" data-i18n="install.package.panelFedora">Fedora</span>
+                  </span>
+                  <button
+                    class="copy-button"
+                    type="button"
+                    data-copy-target="denial-install-fedora"
+                    aria-label="Copy Fedora installation command"
+                    data-i18n-aria="install.package.copyLabelFedora"
+                  >
+                    <svg class="copy-icon" aria-hidden="true"><use href="#copy-symbol"></use></svg>
+                    <svg class="check-icon" aria-hidden="true"><use href="#check-symbol"></use></svg>
+                    <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
+                  </button>
+                </div>
+                <pre><code id="denial-install-fedora"><span class="code-line"><span class="syntax-command">sudo dnf</span> <span class="syntax-package">install denial</span></span></code></pre>
+              </div>
+            </div>
+          </li>
+
+          <li class="install-step">
+            <span class="install-step-number" aria-hidden="true"></span>
+            <div class="install-step-copy">
+              <h3 data-i18n="install.session.title">Enjoy Denial</h3>
+              <p data-i18n-html="install.session.copy">
+                Log out, choose <strong>Denial</strong> from your display
+                manager’s session menu, and sign in.
+              </p>
+            </div>
+
+            <div class="install-session" aria-hidden="true">
+              <p data-i18n="install.session.menu">Session</p>
+              <ul>
+                <li>Hyprland</li>
+                <li class="is-chosen">Denial</li>
+                <li>niri</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+
+        <div class="support-nudge">
+          <p data-i18n-html="nudge.home"><strong>Denial is free, and built by one developer.</strong> If it’s become your desktop, consider sponsoring it.</p>
+          <a class="button" href="/support.html" data-i18n="nudge.cta">Support the project</a>
         </div>
       </section>
 
       <section class="community container page-section" aria-labelledby="community-title" data-reveal>
         <div>
           <p class="section-label" data-i18n="community.label">Community</p>
-          <h2 id="community-title" data-i18n="community.heading">Built with the people who use it.</h2>
+          <h2 id="community-title" data-i18n="community.heading">Developed in the open.</h2>
           <p class="community-text" data-i18n="community.copy">
-            Denial is developed in the open. Follow along on GitHub, chat on
-            Discord, or support the project if it helps you.
+            Follow along on GitHub, chat on Discord, or support the project if
+            it helps you.
           </p>
         </div>
         <nav class="community-links" aria-label="Community links" data-i18n-aria="community.navigation">
@@ -249,12 +855,76 @@
           </a>
           <a class="community-link" href="/support.html">
             <span class="community-name"><strong data-i18n="community.supportName">Support</strong></span>
-            <span class="community-description" data-i18n="community.supportDesc">Help keep development going</span>
+            <span class="community-description" data-i18n="community.supportDesc">Sponsor development</span>
             <span class="community-arrow" aria-hidden="true">→</span>
           </a>
         </nav>
+
+        <div class="home-sponsors">
+          <p class="section-label" data-i18n="sponsorWall.label">Sponsored by</p>
+          <ul class="sp-company-wall" data-company-wall aria-label="Company sponsors" data-i18n-aria="sponsorWall.companiesLabel" hidden></ul>
+          <ul class="sp-wall" data-sponsor-wall aria-label="GitHub sponsors" data-i18n-aria="sponsorWall.peopleLabel"></ul>
+        </div>
       </section>
     </main>
+
+    <dialog
+      class="installer-dialog"
+      id="installer-dialog"
+      aria-labelledby="installer-dialog-title"
+    >
+      <div class="installer-dialog-frame">
+        <div class="installer-dialog-header">
+          <div>
+            <p class="installer-dialog-label" data-i18n="installer.sourceLabel">Source / install.sh</p>
+            <h2 id="installer-dialog-title" data-i18n="installer.title">Repository setup installer</h2>
+          </div>
+          <button
+            class="installer-dialog-close"
+            type="button"
+            data-installer-dialog-close
+            aria-label="Close installer source"
+            data-i18n-aria="installer.close"
+          >
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path
+                d="m3.5 3.5 9 9m0-9-9 9"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="1.5"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div class="code-panel installer-code-panel">
+          <div class="code-panel-header">
+            <span class="code-panel-identity">
+              <span class="code-panel-icon" aria-hidden="true">sh</span>
+              <span class="code-panel-title">install.sh</span>
+            </span>
+            <button
+              class="copy-button"
+              type="button"
+              data-copy-target="installer-source"
+              aria-label="Copy installer source"
+              data-i18n-aria="installer.copyLabel"
+              disabled
+            >
+              <svg class="copy-icon" aria-hidden="true">
+                <use href="#copy-symbol"></use>
+              </svg>
+              <svg class="check-icon" aria-hidden="true">
+                <use href="#check-symbol"></use>
+              </svg>
+              <span class="copy-label" aria-live="polite" data-i18n="common.copy">Copy</span>
+            </button>
+          </div>
+          <pre><code id="installer-source" aria-busy="true"><span class="code-line" data-i18n="installer.loading">Loading installer…</span></code></pre>
+        </div>
+      </div>
+    </dialog>
 
 
     <footer>
@@ -265,7 +935,7 @@
             <use class="mark-caret" href="#denial-caret" />
           </svg>
           <p data-i18n="footer.tagline">
-            A Flutter-native Wayland compositor for the desk and for supported mobile devices.
+            A Flutter-native Wayland compositor for desktops, phones and tablets.
           </p>
         </div>
 
@@ -274,7 +944,6 @@
             <p class="footer-group-title" data-i18n="footer.project">Project</p>
             <ul>
               <li><a href="/mobile.html" data-i18n="nav.mobile">Mobile</a></li>
-              <li><a href="/desktop.html" data-i18n="nav.desktop">Desktop</a></li>
               <li><a href="/droidloom.html">Droidloom</a></li>
               <li><a href="/support.html" data-i18n="nav.support">Support</a></li>
               <li><a href="https://manual.denialwm.org/" data-manual-link data-i18n="footer.manual">Manual</a></li>

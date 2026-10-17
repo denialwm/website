@@ -37,7 +37,7 @@ const formattedTranslation = (key, fallback, values = {}) => {
 const localizedTextElements = document.querySelectorAll("[data-i18n]");
 const localizedHtmlElements = document.querySelectorAll("[data-i18n-html]");
 const localizedAriaElements = document.querySelectorAll("[data-i18n-aria]");
-const localizedWordElements = document.querySelectorAll("[data-i18n-words]");
+const localizedAltElements = document.querySelectorAll("[data-i18n-alt]");
 const localizedGalleryItems = document.querySelectorAll("[data-i18n-gallery]");
 const languagePicker = document.querySelector("[data-language-picker]");
 const manualLinks = document.querySelectorAll("[data-manual-link]");
@@ -64,11 +64,8 @@ localizedHtmlElements.forEach((element) => {
 localizedAriaElements.forEach((element) => {
   element.i18nOriginalAria = element.getAttribute("aria-label");
 });
-localizedWordElements.forEach((element) => {
-  element.i18nOriginalWords = Array.from(
-    element.querySelectorAll(":scope > .word"),
-    (word) => word.textContent,
-  );
+localizedAltElements.forEach((element) => {
+  element.i18nOriginalAlt = element.getAttribute("alt");
 });
 localizedGalleryItems.forEach((item) => {
   item.i18nOriginalGallery = {
@@ -131,42 +128,11 @@ const applyLocale = (locale, { persist = false, updateUrl = false } = {}) => {
     );
   });
 
-  const activeGallerySubtitle = document.querySelector(
-    "[data-gallery-subtitle].is-active",
-  );
-  document.querySelectorAll("[data-gallery-subtitle]").forEach((subtitle) => {
-    subtitle.textContent =
-      subtitle === activeGallerySubtitle
-        ? translation(
-            "gallery.subtitle",
-            "Screenshots can’t capture how smooth Denial feels.",
-          )
-        : "";
-  });
-
-  localizedWordElements.forEach((element) => {
-    const words = translation(
-      element.dataset.i18nWords,
-      element.i18nOriginalWords,
+  localizedAltElements.forEach((element) => {
+    element.setAttribute(
+      "alt",
+      translation(element.dataset.i18nAlt, element.i18nOriginalAlt),
     );
-    const separator = activeLocale === "zh-CN" ? "" : " ";
-    const fragment = document.createDocumentFragment();
-
-    words.forEach((word, index) => {
-      if (index > 0) {
-        fragment.append(document.createTextNode(separator));
-      }
-
-      const wordElement = document.createElement("span");
-      wordElement.className = `word${
-        index === words.length - 1 ? " word--accent" : ""
-      }`;
-      wordElement.style.setProperty("--i", index);
-      wordElement.textContent = word;
-      fragment.append(wordElement);
-    });
-
-    element.replaceChildren(fragment);
   });
 
   localizedGalleryItems.forEach((item) => {
@@ -471,74 +437,6 @@ const galleryItems = Array.from(document.querySelectorAll("[data-gallery-item]")
 const galleryVideos = document.querySelectorAll("[data-gallery-video]");
 const galleryDialog = document.querySelector("[data-gallery-dialog]");
 const galleryNumberLabel = (number) => String(number).padStart(2, "0");
-const gallerySubtitleLines = Array.from(
-  document.querySelectorAll("[data-gallery-subtitle]"),
-);
-const originalGallerySubtitles = [
-  "Screenshots can’t capture how smooth Denial feels.",
-  "Smoothness doesn’t fit in a screenshot.",
-  "Some things only make sense in motion.",
-  "A screenshot can show Denial. Motion makes it real.",
-  "You have to see Denial move.",
-  "Denial was made to be experienced in motion.",
-];
-
-if (gallerySubtitleLines.length === 2 && !reducedMotion.matches) {
-  let gallerySubtitleIndex = 0;
-  let activeGallerySubtitle = 0;
-  let gallerySubtitleTimer;
-
-  const rotateGallerySubtitle = () => {
-    const outgoingLine = gallerySubtitleLines[activeGallerySubtitle];
-    activeGallerySubtitle = activeGallerySubtitle === 0 ? 1 : 0;
-    const incomingLine = gallerySubtitleLines[activeGallerySubtitle];
-    const gallerySubtitles = translation(
-      "gallery.subtitles",
-      originalGallerySubtitles,
-    );
-    gallerySubtitleIndex = (gallerySubtitleIndex + 1) % gallerySubtitles.length;
-    incomingLine.textContent = gallerySubtitles[gallerySubtitleIndex];
-    outgoingLine.classList.remove("is-active");
-    outgoingLine.classList.add("is-leaving");
-
-    requestAnimationFrame(() => {
-      incomingLine.classList.add("is-active");
-    });
-
-    window.setTimeout(() => {
-      outgoingLine.classList.remove("is-leaving");
-      outgoingLine.textContent = "";
-    }, 650);
-  };
-
-  const startGallerySubtitleRotation = () => {
-    if (gallerySubtitleTimer) {
-      return;
-    }
-
-    gallerySubtitleTimer = window.setInterval(rotateGallerySubtitle, 4000);
-  };
-
-  const stopGallerySubtitleRotation = () => {
-    window.clearInterval(gallerySubtitleTimer);
-    gallerySubtitleTimer = undefined;
-  };
-
-  if ("IntersectionObserver" in window) {
-    const gallerySubtitleObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        startGallerySubtitleRotation();
-      } else {
-        stopGallerySubtitleRotation();
-      }
-    });
-
-    gallerySubtitleObserver.observe(gallerySubtitleLines[0].parentElement);
-  } else {
-    startGallerySubtitleRotation();
-  }
-}
-
 if (galleryDialog && galleryItems.length) {
   const galleryDialogStage = galleryDialog.querySelector(
     "[data-gallery-dialog-stage]",
@@ -893,57 +791,471 @@ if (idleRegions.length && "IntersectionObserver" in window) {
   idleRegions.forEach((region) => idleObserver.observe(region));
 }
 
-const installTabButtons = Array.from(
-  document.querySelectorAll("[data-install-tab]"),
-);
-const installPanels = Array.from(
-  document.querySelectorAll("[data-install-panel]"),
-);
+const sponsorWalls = document.querySelectorAll("[data-sponsor-wall]");
+const companyWalls = document.querySelectorAll("[data-company-wall]");
 
-const selectInstallTab = (id) => {
-  const selectedTab = installTabButtons.find(
-    (tab) => tab.dataset.installTab === id,
-  );
-
-  if (!selectedTab) {
-    return;
-  }
-
-  installTabButtons.forEach((tab) => {
-    const isSelected = tab === selectedTab;
-    tab.setAttribute("aria-selected", isSelected ? "true" : "false");
-    tab.tabIndex = isSelected ? 0 : -1;
-  });
-
-  installPanels.forEach((panel) => {
-    panel.hidden = panel.dataset.installPanel !== id;
-  });
+const sponsorLink = (sponsor, className, size) => {
+  const link = document.createElement("a");
+  const avatar = document.createElement("img");
+  const name = document.createElement("span");
+  link.href = sponsor.url;
+  link.rel = "noopener";
+  if (className) link.className = className;
+  avatar.src = `${sponsor.avatar}${sponsor.avatar.includes("?") ? "&" : "?"}s=${size * 2}`;
+  avatar.alt = "";
+  avatar.width = size;
+  avatar.height = size;
+  avatar.loading = "lazy";
+  name.textContent = sponsor.name || sponsor.login;
+  link.append(avatar, name);
+  return link;
 };
 
-installTabButtons.forEach((tab, index) => {
-  tab.addEventListener("click", () => {
-    selectInstallTab(tab.dataset.installTab);
+if (sponsorWalls.length || companyWalls.length) {
+  fetch("/data/sponsors.json")
+    .then((response) => (response.ok ? response.json() : []))
+    .then((sponsors) => {
+      const companies = sponsors.filter((sponsor) => sponsor.org);
+      const people = sponsors.filter((sponsor) => !sponsor.org);
+
+      // Companies get their own row. The Support page keeps an open slot
+      // in it; elsewhere the row only appears once a company sponsors.
+      companyWalls.forEach((wall) => {
+        companies.forEach((sponsor) => {
+          const item = document.createElement("li");
+          item.append(sponsorLink(sponsor, "sp-company", 56));
+          wall.append(item);
+        });
+        if (wall.hasAttribute("data-company-invite")) {
+          const invite = document.createElement("li");
+          invite.innerHTML =
+            '<a class="sp-company sp-company-invite" href="#companies"><span class="sp-company-plus" aria-hidden="true">+</span><span></span></a>';
+          invite.querySelector("span:last-child").textContent = translation(
+            "sponsorWall.company",
+            "Your company here",
+          );
+          wall.append(invite);
+        }
+        if (wall.children.length) wall.hidden = false;
+      });
+
+      sponsorWalls.forEach((wall) => {
+        people.forEach((sponsor) => {
+          const item = document.createElement("li");
+          item.append(sponsorLink(sponsor, "", 48));
+          wall.append(item);
+        });
+        const invite = document.createElement("li");
+        invite.className = "sp-wall-you";
+        invite.innerHTML =
+          '<a href="https://github.com/sponsors/doctorlogix" rel="noopener"><span class="sp-wall-plus" aria-hidden="true">+</span><span></span></a>';
+        invite.querySelector("span:last-child").textContent = translation(
+          "sponsorWall.you",
+          "You?",
+        );
+        wall.append(invite);
+      });
+    })
+    .catch(() => {});
+}
+
+const goalMeter = document.querySelector("[data-goal-meter]");
+
+if (goalMeter) {
+  fetch("/data/goal.json")
+    .then((response) => (response.ok ? response.json() : null))
+    .then((goal) => {
+      if (!goal || !(goal.target > 0)) return;
+      const format = new Intl.NumberFormat(document.documentElement.lang, {
+        style: "currency",
+        currency: goal.currency || "EUR",
+        maximumFractionDigits: 0,
+      });
+      const percent = Math.min(100, Math.round((goal.raised / goal.target) * 100));
+      goalMeter.querySelector("[data-goal-raised]").textContent = format.format(goal.raised);
+      goalMeter.querySelector("[data-goal-target]").textContent = format.format(goal.target);
+      goalMeter.querySelector("[data-goal-bar]").setAttribute("aria-valuenow", percent);
+      goalMeter.querySelector("[data-goal-fill]").style.width = `${percent}%`;
+      goalMeter.hidden = false;
+    })
+    .catch(() => {});
+}
+
+/* Night sky
+   - Far stars: baked once into a repeating tile, redrawn only on scroll
+     (slow parallax).
+   - Near stars: twinkle on a second canvas that idles at 24 fps and runs
+     at full rate only while a meteor is crossing or the page scrolls.
+   - Meteors: one shared direction per visit, like a shower, with the
+     occasional pair and a rare fireball.
+   - The nebula behind both is plain CSS (.atmosphere::before).
+   Everything stops while the tab is hidden; reduced motion gets one
+   still frame. */
+const atmosphere = document.querySelector(".atmosphere");
+
+if (atmosphere && "HTMLCanvasElement" in window) {
+  const tileSize = 1024;
+  const farDepth = 0.025;
+  const nearDepth = 0.06;
+  const idleInterval = 1000 / 24;
+  const lowPower =
+    (navigator.hardwareConcurrency || 8) <= 4 || navigator.connection?.saveData === true;
+
+  const random = (min, max) => min + Math.random() * (max - min);
+  const pixelRatio = () => Math.min(window.devicePixelRatio || 1, 1.5);
+
+  // Mostly white, some blue-white and lavender, a few warm stars.
+  const palette = [
+    [0.5, "244 242 250"],
+    [0.2, "202 218 255"],
+    [0.16, "218 200 252"],
+    [0.09, "255 234 210"],
+    [0.05, "255 212 182"],
+  ];
+  const pickColor = () => {
+    let roll = Math.random();
+    for (const [weight, color] of palette) {
+      roll -= weight;
+      if (roll <= 0) return color;
+    }
+    return palette[0][1];
+  };
+
+  const glowSprite = (color) => {
+    const sprite = document.createElement("canvas");
+    sprite.width = sprite.height = 32;
+    const context = sprite.getContext("2d");
+    const glow = context.createRadialGradient(16, 16, 0, 16, 16, 16);
+    glow.addColorStop(0, `rgb(${color} / 100%)`);
+    glow.addColorStop(0.12, `rgb(${color} / 95%)`);
+    glow.addColorStop(0.3, `rgb(${color} / 30%)`);
+    glow.addColorStop(1, `rgb(${color} / 0%)`);
+    context.fillStyle = glow;
+    context.fillRect(0, 0, 32, 32);
+    return sprite;
+  };
+
+  // Soft four-point glint for the few brightest stars.
+  const glintSprite = (color) => {
+    const sprite = document.createElement("canvas");
+    sprite.width = sprite.height = 64;
+    const context = sprite.getContext("2d");
+    const spike = (x0, y0, x1, y1) => {
+      const line = context.createLinearGradient(x0, y0, x1, y1);
+      line.addColorStop(0, `rgb(${color} / 0%)`);
+      line.addColorStop(0.5, `rgb(${color} / 55%)`);
+      line.addColorStop(1, `rgb(${color} / 0%)`);
+      context.strokeStyle = line;
+      context.lineWidth = 1;
+      context.beginPath();
+      context.moveTo(x0, y0);
+      context.lineTo(x1, y1);
+      context.stroke();
+    };
+    spike(32, 2, 32, 62);
+    spike(2, 32, 62, 32);
+    context.drawImage(glowSprite(color), 16, 16, 32, 32);
+    return sprite;
+  };
+
+  const sprites = new Map(palette.map(([, color]) => [color, glowSprite(color)]));
+  const glints = new Map(palette.map(([, color]) => [color, glintSprite(color)]));
+
+  const sky = document.createElement("div");
+  const farCanvas = document.createElement("canvas");
+  const nearCanvas = document.createElement("canvas");
+  const far = farCanvas.getContext("2d");
+  const near = nearCanvas.getContext("2d");
+  sky.className = "sky";
+  sky.setAttribute("aria-hidden", "true");
+  farCanvas.className = "sky-far";
+  nearCanvas.className = "sky-near";
+  sky.append(farCanvas, nearCanvas);
+  atmosphere.prepend(sky);
+  atmosphere.classList.add("has-sky");
+
+  // Far stars: one seamless tile, filled as a pattern.
+  let farPattern = null;
+  let tileRatio = 0;
+  const buildTile = (ratio) => {
+    const tile = document.createElement("canvas");
+    tile.width = tile.height = Math.round(tileSize * ratio);
+    const context = tile.getContext("2d");
+    context.scale(ratio, ratio);
+    const count = lowPower ? 320 : 520;
+    for (let index = 0; index < count; index += 1) {
+      const magnitude = Math.random() ** 2.4;
+      const size = 1.6 + magnitude * 3.4;
+      const x = Math.random() * tileSize;
+      const y = Math.random() * tileSize;
+      context.globalAlpha = 0.16 + magnitude * 0.55;
+      const sprite = sprites.get(pickColor());
+      // Draw wrapped copies so stars on an edge continue on the next tile.
+      for (const dx of [-tileSize, 0, tileSize]) {
+        for (const dy of [-tileSize, 0, tileSize]) {
+          context.drawImage(sprite, x + dx - size / 2, y + dy - size / 2, size, size);
+        }
+      }
+    }
+    farPattern = far.createPattern(tile, "repeat");
+    tileRatio = ratio;
+  };
+
+  // Near stars live in normalized coordinates, so a resize rescales them
+  // instead of reshuffling the sky.
+  const nearStars = Array.from({ length: 280 }, () => {
+    const magnitude = Math.random() ** 2.6;
+    const color = pickColor();
+    const restless = Math.random() < 0.12;
+    return {
+      x: Math.random(),
+      y: Math.random(),
+      size: 2.4 + magnitude * 6,
+      alpha: 0.35 + magnitude * 0.65,
+      amplitude: restless ? random(0.55, 0.85) : random(0.12, 0.38),
+      speedA: random(0.5, 2.1),
+      speedB: random(1.6, 4.4),
+      phaseA: Math.random() * Math.PI * 2,
+      phaseB: Math.random() * Math.PI * 2,
+      sprite: sprites.get(color),
+    };
+  });
+  const brightStars = Array.from({ length: 7 }, () => {
+    const color = Math.random() < 0.7 ? palette[0][1] : pickColor();
+    return {
+      x: random(0.04, 0.96),
+      y: random(0.03, 0.7),
+      size: random(14, 24),
+      alpha: random(0.55, 0.85),
+      amplitude: random(0.1, 0.25),
+      speedA: random(0.3, 0.8),
+      speedB: random(1.1, 2.2),
+      phaseA: Math.random() * Math.PI * 2,
+      phaseB: Math.random() * Math.PI * 2,
+      sprite: glints.get(color),
+    };
   });
 
-  tab.addEventListener("keydown", (event) => {
-    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") {
+  let width = 0;
+  let height = 0;
+  let ratio = 1;
+  let nearCount = 0;
+  let scrollY = window.scrollY;
+
+  const layout = () => {
+    ratio = pixelRatio();
+    width = window.innerWidth;
+    height = window.innerHeight;
+    for (const canvas of [farCanvas, nearCanvas]) {
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+    }
+    near.setTransform(ratio, 0, 0, ratio, 0, 0);
+    const area = width * height;
+    nearCount = Math.round(Math.min(280, Math.max(70, area / 7600)) * (lowPower ? 0.6 : 1));
+    if (ratio !== tileRatio) buildTile(ratio);
+  };
+
+  const parallax = (depth) => (reducedMotion.matches ? 0 : scrollY * depth);
+
+  const drawFar = () => {
+    far.setTransform(1, 0, 0, 1, 0, 0);
+    far.clearRect(0, 0, farCanvas.width, farCanvas.height);
+    const offset = (parallax(farDepth) * ratio) % (tileSize * ratio);
+    farPattern.setTransform(new DOMMatrix([1, 0, 0, 1, 0, -offset]));
+    far.fillStyle = farPattern;
+    far.fillRect(0, 0, farCanvas.width, farCanvas.height);
+  };
+
+  const twinkle = (star, seconds) => {
+    if (reducedMotion.matches) return star.alpha;
+    const wave =
+      0.6 * Math.sin(seconds * star.speedA + star.phaseA) +
+      0.4 * Math.sin(seconds * star.speedB + star.phaseB);
+    return star.alpha * (1 - (star.amplitude * (1 - wave)) / 2);
+  };
+
+  const drawStar = (star, seconds, offset) => {
+    let y = star.y * height - offset;
+    if (y < -star.size) y += height;
+    near.globalAlpha = twinkle(star, seconds);
+    const half = star.size / 2;
+    near.drawImage(star.sprite, star.x * width - half, y - half, star.size, star.size);
+  };
+
+  // Meteors share one direction per visit, like a shower.
+  const showerDirection = Math.random() < 0.5 ? -1 : 1;
+  const showerAngle = random(0.38, 0.58);
+  let meteors = [];
+  let nextMeteorAt = 0;
+
+  const spawnMeteor = (now, companion) => {
+    const fireball = !companion && Math.random() < 0.12;
+    const scale = Math.min(1.25, Math.max(0.6, Math.hypot(width, height) / 1800));
+    const angle = (companion ? companion.angle : showerAngle) + random(-0.05, 0.05);
+    const speed = random(1100, 1700) * scale * (fireball ? 0.7 : 1);
+    const startX =
+      showerDirection < 0 ? random(width * 0.35, width * 1.05) : random(width * -0.05, width * 0.65);
+    const meteor = {
+      angle,
+      x: companion ? companion.x + random(-90, 90) : startX,
+      y: companion ? companion.y + random(-40, 40) : random(height * -0.05, height * 0.42),
+      dx: Math.cos(angle) * showerDirection,
+      dy: Math.sin(angle),
+      speed,
+      length: random(110, 190) * scale * (fireball ? 1.8 : companion ? 0.75 : 1),
+      width: fireball ? 2.6 : random(1.2, 1.7),
+      color: fireball ? "214 236 255" : "244 242 250",
+      fireball,
+      born: now,
+      life: fireball ? random(1100, 1450) : random(480, 820),
+    };
+    meteors.push(meteor);
+    return meteor;
+  };
+
+  const drawMeteor = (meteor, now) => {
+    const age = (now - meteor.born) / meteor.life;
+    const travelled = ((now - meteor.born) / 1000) * meteor.speed;
+    const headX = meteor.x + meteor.dx * travelled;
+    const headY = meteor.y + meteor.dy * travelled;
+    const length = meteor.length * Math.min(1, age / 0.35);
+    const tailX = headX - meteor.dx * length;
+    const tailY = headY - meteor.dy * length;
+    let opacity = age < 0.12 ? age / 0.12 : age > 0.62 ? (1 - age) / 0.38 : 1;
+    if (meteor.fireball) opacity = Math.min(1, opacity + 0.35 * Math.exp(-(((age - 0.55) / 0.08) ** 2)));
+    const halfWidth = meteor.width / 2;
+    const normalX = -meteor.dy * halfWidth;
+    const normalY = meteor.dx * halfWidth;
+
+    const trail = near.createLinearGradient(tailX, tailY, headX, headY);
+    trail.addColorStop(0, `rgb(${meteor.color} / 0%)`);
+    trail.addColorStop(0.65, `rgb(${meteor.color} / ${Math.round(opacity * 30)}%)`);
+    trail.addColorStop(1, `rgb(${meteor.color} / ${Math.round(opacity * 95)}%)`);
+    near.globalAlpha = 1;
+    near.fillStyle = trail;
+    near.beginPath();
+    near.moveTo(tailX, tailY);
+    near.lineTo(headX + normalX, headY + normalY);
+    near.lineTo(headX - normalX, headY - normalY);
+    near.closePath();
+    near.fill();
+
+    const glow = meteor.fireball ? 22 : 11;
+    near.globalAlpha = opacity;
+    near.drawImage(sprites.get(meteor.fireball ? "202 218 255" : palette[0][1]), headX - glow / 2, headY - glow / 2, glow, glow);
+  };
+
+  const drawNear = (now) => {
+    const seconds = now / 1000;
+    const offset = parallax(nearDepth) % height;
+    near.clearRect(0, 0, width, height);
+    for (let index = 0; index < nearCount; index += 1) {
+      drawStar(nearStars[index], seconds, offset);
+    }
+    for (const star of brightStars) drawStar(star, seconds, offset);
+
+    if (meteors.length) {
+      near.globalCompositeOperation = "lighter";
+      meteors = meteors.filter((meteor) => now - meteor.born < meteor.life);
+      for (const meteor of meteors) drawMeteor(meteor, now);
+      near.globalCompositeOperation = "source-over";
+    }
+    near.globalAlpha = 1;
+  };
+
+  let frameRequest = 0;
+  let lastFrame = 0;
+  let busyUntil = 0;
+  let farDirty = true;
+
+  const tick = (now) => {
+    frameRequest = requestAnimationFrame(tick);
+    const busy = meteors.length > 0 || now < busyUntil;
+    if (!busy && now - lastFrame < idleInterval) return;
+    lastFrame = now;
+
+    if (now >= nextMeteorAt) {
+      const meteor = spawnMeteor(now);
+      if (!meteor.fireball && Math.random() < 0.15) {
+        window.setTimeout(() => spawnMeteor(performance.now(), meteor), random(120, 380));
+      }
+      nextMeteorAt = now + random(4000, 11000);
+    }
+    if (farDirty) {
+      drawFar();
+      farDirty = false;
+    }
+    drawNear(now);
+  };
+
+  const start = () => {
+    cancelAnimationFrame(frameRequest);
+    drawFar();
+    if (reducedMotion.matches) {
+      meteors = [];
+      drawNear(0);
       return;
     }
+    nextMeteorAt = performance.now() + random(1800, 4500);
+    frameRequest = requestAnimationFrame(tick);
+  };
 
-    event.preventDefault();
-    const direction = event.key === "ArrowRight" ? 1 : -1;
-    const next =
-      installTabButtons[
-        (index + direction + installTabButtons.length) %
-          installTabButtons.length
-      ];
-    next.focus();
-    selectInstallTab(next.dataset.installTab);
-  });
-});
+  layout();
+  start();
 
-document.querySelectorAll("[data-install-jump]").forEach((link) => {
-  link.addEventListener("click", () => {
-    selectInstallTab(link.dataset.installJump);
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (reducedMotion.matches) return;
+      scrollY = window.scrollY;
+      busyUntil = performance.now() + 220;
+      farDirty = true;
+    },
+    { passive: true },
+  );
+
+  let resizeTimer;
+  let lastWidth = window.innerWidth;
+  let lastHeight = window.innerHeight;
+  window.addEventListener("resize", () => {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(() => {
+      // Mobile address bars change the height while scrolling; ignore
+      // small height-only changes so the sky doesn't flicker.
+      const widthChanged = window.innerWidth !== lastWidth;
+      const heightChanged = Math.abs(window.innerHeight - lastHeight) > 140;
+      if (!widthChanged && !heightChanged && pixelRatio() === ratio) return;
+      lastWidth = window.innerWidth;
+      lastHeight = window.innerHeight;
+      layout();
+      drawFar();
+      drawNear(performance.now());
+    }, 120);
   });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      cancelAnimationFrame(frameRequest);
+    } else {
+      start();
+    }
+  });
+
+  reducedMotion.addEventListener?.("change", start);
+}
+
+// Mobile page videos: hold the poster for reduced motion, and only play
+// while it is on screen.
+document.querySelectorAll(".mb-converge video, .mb-hero-tablet video, .mb-hero-phone video").forEach((video) => {
+  if (reducedMotion.matches) {
+    video.removeAttribute("autoplay");
+    video.pause();
+    return;
+  }
+  if (!("IntersectionObserver" in window)) return;
+  new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) video.play().catch(() => {});
+    else video.pause();
+  }).observe(video);
 });
