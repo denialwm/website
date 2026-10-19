@@ -42,6 +42,7 @@ const localizedGalleryItems = document.querySelectorAll("[data-i18n-gallery]");
 const languagePicker = document.querySelector("[data-language-picker]");
 const manualLinks = document.querySelectorAll("[data-manual-link]");
 const sponsorLinks = document.querySelectorAll("[data-sponsor-link]");
+const localeOnlyElements = document.querySelectorAll("[data-locale]");
 const pageDescription = document.querySelector('meta[name="description"]');
 const openGraphTitle = document.querySelector('meta[property="og:title"]');
 const openGraphDescription = document.querySelector(
@@ -162,6 +163,10 @@ const applyLocale = (locale, { persist = false, updateUrl = false } = {}) => {
       activeLocale === "zh-CN"
         ? "https://sponsor.denialwm.org/cn"
         : "https://sponsor.denialwm.org/en";
+  });
+
+  localeOnlyElements.forEach((element) => {
+    element.hidden = element.dataset.locale !== activeLocale;
   });
 
   if (languagePicker) {
@@ -422,6 +427,33 @@ document.querySelectorAll("[data-copy-target]").forEach((button) => {
         "Try again",
       );
     }
+  });
+});
+
+// Links that copy a fixed value, like the QQ group number, which has no
+// invite URL. The label shows the result, then goes back to its translation.
+document.querySelectorAll("[data-copy-text]").forEach((link) => {
+  link.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const label = link.querySelector("[data-i18n]:not(strong)");
+    const text = link.dataset.copyText;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        copyFallback(text);
+      }
+
+      label.textContent = translation("qq.copied", "Copied");
+    } catch {
+      label.textContent = translation("common.tryAgain", "Try again");
+    }
+
+    window.clearTimeout(link.copyResetTimer);
+    link.copyResetTimer = window.setTimeout(() => {
+      label.textContent = translation(label.dataset.i18n, label.i18nOriginalText);
+    }, 2000);
   });
 });
 

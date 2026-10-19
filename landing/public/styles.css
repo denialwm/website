@@ -2836,8 +2836,10 @@
   font-size: 0.8rem;
 }
 
-.mb-get-note + .mb-get-actions {
-  margin-top: 0.2rem;
+.mb-get-actions + .mb-get-note {
+  margin-top: 0;
+  padding-top: 1rem;
+  line-height: 1.6;
 }
 
 /* ─────────────────────────────────────────────────────────

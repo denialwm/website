@@ -119,13 +119,20 @@ window.denialTranslations = {
     community: {
       label: "社区",
       heading: "以开放方式开发。",
-      copy: "可在 GitHub 关注进展，在 Discord 交流，或在它对你有帮助时支持项目。",
+      copy: "可在 GitHub 关注进展，在 QQ 群或 Discord 交流，或在它对你有帮助时支持项目。",
       navigation: "社区链接",
       github: "源代码、议题和版本发布",
       discord: "与 Denial 用户交流",
       supportLink: "支持 Denial",
       supportName: "支持",
       supportDesc: "赞助开发",
+    },
+    qq: {
+      name: "QQ 群",
+      community: "群号 1105410423，点击复制群号，与 Denial 用户交流",
+      follow: "加入 QQ 群 1105410423 关注进展",
+      footer: "QQ 群 1105410423",
+      copied: "群号已复制",
     },
     install: {
       label: "安装",
@@ -313,7 +320,7 @@ window.denialTranslations = {
       getIt: {
         label: "获取",
         heading: "在你的设备上用上 Denial。",
-        status: "准备中",
+        status: "即将推出",
         install: {
           title: "在你的设备上安装",
           copy: "可直接刷入的镜像和 ARM64 版 Droidloom，会为每台已完成移植的设备提供，所有人免费使用。安装程序只写入非关键分区，因此设备始终可以恢复。",
@@ -321,11 +328,11 @@ window.denialTranslations = {
         },
         bring: {
           title: "把 Denial 带到你的设备上",
-          copy: "移植最适合 2022 年及以后、搭载骁龙 7 Gen 1 或更新芯片，或同级联发科天玑芯片的设备。厂商必须已公开内核源码，且 bootloader 可以解锁。其他设备？也欢迎来问。",
-          paid: "移植属于付费工作，按具体情况商定，与赞助无关。告诉我设备型号，我会和你详细沟通。",
-          email: "发邮件申请",
-          github: "在 GitHub 提交议题",
-          publicNote: "GitHub 议题是公开的。联系方式、报价等私人信息请通过邮件发送。",
+          copy: "在 Device requests 讨论区提交你的设备请求，如果已经有人提过，就点赞支持。设备需要厂商已公开内核源码，且 bootloader 可以解锁。请求代表大家的需求，并不是承诺。",
+          requestCta: "提交设备请求",
+          browse: "查看所有请求",
+          sponsor: "每个移植都在我保留的真机上开发，并随每次发布重新测试；设备赞助者会在设备列表中署名致谢。",
+          sponsorCta: "想赞助一台设备？请先发邮件联系我。",
         },
         freeNote: "Denial 是自由开源软件，没有任何内容需要赞助才能解锁。<a class=\"text-link\" href=\"/support.html\">赞助</a>用于支付开发、测试设备和下载托管的费用。",
         noDevice: "没有设备？今天就可以<a class=\"text-link\" href=\"/#install\">在桌面上安装 Denial</a>。",
@@ -507,7 +514,7 @@ window.denialTranslations = {
       port: {
         label: "设备移植",
         title: "想让 Denial 跑在你的设备上？",
-        copy: "为你移植某款特定的手机或平板属于付费工作，按具体情况协商，与赞助无关。Denial Mobile 页面列出了设备需要满足的条件，以及如何提出请求。",
+        copy: "每个移植都在我保留的真机上开发和测试。任何人都可以提交设备请求，而设备赞助者让移植得以实现。详情见 Denial Mobile 页面。",
         cta: "把 Denial 带到你的设备上",
       },
       company: {
