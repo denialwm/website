@@ -14,8 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Public sponsorships only: private sponsors are never returned
-      # without the maintainer's read:user scope.
+      # Current public sponsorships only: ended ones drop off the wall, and
+      # private sponsors are never returned without the maintainer's
+      # read:user scope.
       - name: Fetch public GitHub sponsors
         env:
           GH_TOKEN: ${{ secrets.SPONSORS_TOKEN || github.token }}
@@ -23,7 +24,7 @@ jobs:
           gh api graphql -f query='
             query {
               user(login: "doctorlogix") {
-                sponsorshipsAsMaintainer(first: 100, activeOnly: false) {
+                sponsorshipsAsMaintainer(first: 100, activeOnly: true) {
                   nodes {
                     sponsorEntity {
                       __typename

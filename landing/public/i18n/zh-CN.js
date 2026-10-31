@@ -436,7 +436,7 @@ window.denialTranslations = {
         companiesAria: "企业赞助者",
         individuals: "个人",
         individualsAria: "GitHub 赞助者",
-        wallNote: "名单来自 <a class=\"text-link\" href=\"https://github.com/sponsors/doctorlogix\">GitHub Sponsors</a> 上的公开赞助者，每天更新。私密赞助永远不会被列出。",
+        wallNote: "名单来自 <a class=\"text-link\" href=\"https://github.com/sponsors/doctorlogix\">GitHub Sponsors</a> 上当前的公开赞助者，每天更新。已结束的赞助和私密赞助永远不会被列出。",
       },
       funding: {
         title: "从零开始，公开开发。",
@@ -466,7 +466,7 @@ window.denialTranslations = {
         pageCopy: "一个页面汇总了支持项目的所有方式。",
         pageCta: "支持 Denial",
         platformsTitle: "GitHub Sponsors 或 Ko-fi",
-        platformsCopy: "按月或一次性均可。在 GitHub 上公开赞助，就会列在本页的赞助者名单里。",
+        platformsCopy: "按月或一次性均可。在 GitHub 上公开赞助，赞助期间会列在本页的赞助者名单里。",
         freeTitle: "没钱？一样能帮上忙。",
         freeStar: "在 GitHub 上给 <a class=\"text-link\" href=\"https://github.com/denialwm/denial\">Denial</a> 和 <a class=\"text-link\" href=\"https://github.com/denialwm/droidloom\">Droidloom</a> 点 Star。",
         freeShare: "晒一张你的配置截图。大多数人就是这样知道 Denial 的。",
