@@ -12,6 +12,7 @@ Denial Settings 是独立的 Flutter Wayland 应用。它通过私有控制套�
 
 | 页面 | 控制内容 |
 | --- | --- |
+| 你 | 显示名称和头像 |
 | 外观 | 深色、浅色或无偏好配色；壁纸或自定义强调色；光标主题和物理尺寸；形状、玻璃效果、不透明度、模糊及焦点窗口效果 |
 | 语言 | 实时切换桌面外壳和 Settings 的语言 |
 | 键盘 | XKB 布局、变体、选项、重复延迟和重复速率 |
@@ -21,8 +22,9 @@ Denial Settings 是独立的 Flutter Wayland 应用。它通过私有控制套�
 | 动画 | 动画速度、面板运动、锁屏运动与关闭效果 |
 | 桌面布局 | 堆叠、平铺或滚动布局；显示器本地工作区；系统栏；普通与最大化窗口间距 |
 | 覆盖层 | 启动器、仪表板、通知和系统 HUD 的位置与尺寸 |
-| 锁屏 | 壁纸、变暗、模糊、时钟比例、状态显示与通知隐私 |
-| 指纹 | 为会话用户录入指纹；fprintd 报告设备时才显示 |
+| 锁屏 | 锁屏 PIN、壁纸、变暗、模糊、时钟比例、状态显示与通知隐私 |
+| 指纹 | 输入锁屏 PIN 后为会话用户录入指纹；fprintd 报告设备时才显示 |
+| 权限 | 为请求 Denial 键盘快捷键的应用选择询问、始终允许或始终拒绝 |
 | 音频 | 默认输出选择、音量、静音和应用音频流 |
 | 显示器与视频 | 主显示器、排列、模式、刷新率、旋转、缩放、VRR 和亮度 |
 | 网络 | Wi-Fi 状态、扫描、连接和已保存配置 |
@@ -111,7 +113,7 @@ maximize_padding=10
 优先使用事务化 Settings 界面。若手动编辑导致无法正常登录，请参阅
 [恢复输出布局](/zh-cn/docs/control-and-recovery/#recover-an-output-layout)。
 
-当 `iio-sensor-proxy` 提供加速度计时，Denial 可自动旋转内置的 `DSI-*`、`eDP-*` 和
+当 Phonewave 的 `steinerd` 提供加速度计时，Denial 可自动旋转内置的 `DSI-*`、`eDP-*` 和
 `LVDS-*` 面板。配置的变换表示固定安装方向；传感器旋转是临时状态，不会写回
 `outputs.conf`。
 
@@ -181,16 +183,5 @@ DENIAL_RENDER_DEVICE=/dev/dri/renderD128
 ```
 
 该文件还可覆盖 Flutter Bundle、输出配置路径、Qt 平台主题、Xwayland 缩放模式、桌面外壳
-配置和原生日志。规范的 Denial 变量使用 `DENIAL_*` 前缀。旧 `DENIA_*` 拼写暂时仍作为
+配置、原生日志和 Denial 的 polkit 代理。规范的 Denial 变量使用 `DENIAL_*` 前缀。旧 `DENIA_*` 拼写暂时仍作为
 兼容别名；两者同时存在时 `DENIAL_*` 优先。
-
-### 渲染器后备 {#renderer-fallback}
-
-Impeller GLES 是默认渲染器。只在驱动特定的渲染问题下选择保留的 Skia/Ganesh 后备：
-
-```ini
-DENIAL_FLUTTER_RENDERER=skia
-```
-
-修改后需重启 Denial 会话。删除覆盖项或设为 `impeller` 即可恢复默认。单次受控启动可用
-`denial-session --flutter-renderer skia`。

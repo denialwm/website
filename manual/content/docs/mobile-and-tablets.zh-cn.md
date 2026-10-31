@@ -45,24 +45,27 @@ Settings 可以从移动主屏打开，它仍是普通的 Denial 管理 Wayland 
 
 Denial 使用主机上已有的服务。服务或硬件缺失时，对应集成会隐藏或变成只读。
 
-在 NetworkManager 和 ModemManager 可用时，移动桌面外壳显示蜂窝网络注册状态、测得的
-信号质量，以及数据 Bearer 是否已连接。移动数据开关改变的是 NetworkManager 的全局
-WWAN 状态，不会创建 APN 或运营商配置。主 SIM PIN 提示接受 4–8 位数字，并报告剩余
+在 NetworkManager 和 ModemManager 可用时，或使用
+[Phonewave](https://github.com/denialwm/phonewave) 的 dmail 调制解调器服务时，移动桌面
+外壳显示蜂窝网络注册状态、测得的信号质量，以及数据 Bearer 是否已连接。dmail 运行时，
+Denial 优先读取它。移动数据开关改变的是 NetworkManager 的全局 WWAN 状态，或 dmail 的
+数据状态，不会创建 APN 或运营商配置。主 SIM PIN 提示接受 4–8 位数字，并报告剩余
 尝试次数。解锁 SIM 不会认证 Denial 会话，设备认证也不会消除仍在阻塞的 SIM 提示。
 PUK 恢复和多 SIM 管理不在这个界面里。
 
-如果 fprintd 报告有读卡器且用户已录入指纹，原生会话门锁定时（包括 `--start-locked`
-会话）会自动开始验证。密码解锁始终可用。指纹设置页只在存在读卡器时出现，并且在列出
-或录入指纹之前会要求用户的 sudo 密码。
+指纹解锁需要在 **Settings → 锁屏** 中设置锁屏 PIN。如果 fprintd 报告有读卡器、用户
+已录入指纹且已设置 PIN，原生会话门锁定时（包括 `--start-locked` 会话）会自动开始
+验证。密码解锁始终可用。指纹设置页只在存在读卡器时出现，并且在列出或录入指纹之前会
+要求输入锁屏 PIN。
 
-`iio-sensor-proxy` 为内置面板提供自动旋转。`hapticd` 可以提供可选且有界的轻触反馈，
-以及指纹拒绝反馈。
+Phonewave 的 `steinerd` 为内置面板提供自动旋转。Phonewave 的 `hapticd` 可以提供可选
+且有界的轻触反馈，以及指纹拒绝反馈。
 
 ## 自定义桌面外壳
 
-替代外壳提供自己的移动和桌面功能场景。Denial 保留生命周期、主题、本地化、安全锁定、
-输入发布、光标、屏幕键盘、截图选择和叠层顺序。公开入口是 `runDenialShell`，并分别
-提供 `mobile` 与 `desktop` 场景。
+参考桌面（包括其移动场景）是一个插件。替代外壳也是插件，它实现
+`package:denial_flutter_sdk/application.dart` 中的 `ShellApplication`，并拥有自己的
+完整界面树。原生 Wayland 所有权、资源生命周期、认证执行和恢复仍由 Rust 负责。
 
 ## 这些内容写在哪里
 

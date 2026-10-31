@@ -13,8 +13,10 @@ Denial publishes first-party **x86-64** packages for:
 - Fedora 44.
 
 Alpine Linux 3.24 is also supported through signed APK files attached to each
-GitHub release. NixOS 26.05 and Void Linux have completed runtime validation,
-but do not yet have first-party packages. Debian Forky/Sid may use the Debian
+GitHub release. NixOS 26.05 has a first-party source flake and module; see the
+[NixOS guide](https://github.com/denialwm/denial/blob/main/packaging/nixos/README.md).
+Void Linux has completed runtime validation but has no first-party package
+yet. Debian Forky/Sid may use the Debian
 13 `trixie` repository on a best-effort basis; that rolling target has not
 completed the validation matrix.
 
@@ -254,10 +256,9 @@ Log out, select **Denial** in your display manager, and sign in. SDDM is
 supported, but any display manager that exposes the installed Wayland session
 entry can start it.
 
-The desktop renders with Denial's compositor-integrated Impeller GLES backend
-by default. Skia/Ganesh remains available as a driver-compatibility fallback;
-see [Renderer fallback](/docs/configuration/#renderer-fallback) if the first
-session has rendering corruption or fails to present.
+The desktop renders with Denial's compositor-integrated Impeller GLES backend.
+The packaged engine is Impeller-only; it contains no Skia renderer to fall back
+to.
 
 The standard display-manager session starts unlocked. This is intentional:
 the display manager has already authenticated you, so immediately showing
@@ -342,6 +343,6 @@ sudo dnf remove denial
 doas apk del denial
 ```
 
-The optional `denial-ui-development` package is currently published only for
-Arch-family systems. Removing a package does not remove the repository
+The optional `denial-ui-development` package is paused for the current
+Flutter 3.47.5 generation. Removing a package does not remove the repository
 configuration, user configuration, or an editable `~/DenialUI` checkout.

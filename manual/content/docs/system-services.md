@@ -16,7 +16,7 @@ run.
 | --- | --- | --- |
 | Desktop audio | PulseAudio protocol | Output selection, volume and mute, hardware keys, and per-application streams |
 | Wi-Fi | NetworkManager or iwd | Radio state, scanning, connectivity, connect, disconnect, forget, and saved profiles |
-| Cellular | NetworkManager and ModemManager | Registration and signal status, bearer state, mobile-data toggle, and primary SIM PIN prompt |
+| Cellular | NetworkManager and ModemManager, or Phonewave's dmail | Registration and signal status, bearer state, mobile-data toggle, and primary SIM PIN prompt |
 | Bluetooth | BlueZ | Discovery, pairing agent, passkeys, trust, connect, disconnect, and removal |
 | Battery | UPower | Charge state, health and energy details, time estimates, and supported charge-threshold toggle |
 | Brightness | Kernel backlight and DDC/CI | Per-output reading and control |
@@ -25,10 +25,11 @@ run.
 | Session power | logind-compatible service | Suspend, hibernate, reboot, power off, authorization, and inhibitors |
 | Power profiles | power-profiles-daemon | Power saver, balanced, and performance profiles when available |
 | AMD tuning | LACT | Optional low, automatic, and high performance presets |
-| Authentication | PAM and optional fprintd | Password unlock, automatic fingerprint verification, and enrollment |
-| Orientation | iio-sensor-proxy | Automatic rotation for built-in panels |
-| Haptics | hapticd | Optional bounded tap and fingerprint-rejection feedback |
+| Authentication | PAM and optional fprintd | Password unlock, optional lock PIN, automatic fingerprint verification, and enrollment |
+| Orientation | Phonewave's steinerd | Automatic rotation for built-in panels |
+| Haptics | Phonewave's hapticd | Optional bounded tap and fingerprint-rejection feedback |
 | Appearance | Denial Settings portal | Standard colour-scheme and accent-color values for applications |
+| Permissions | Denial Access portal | Permission questions from sandboxed applications in Denial's own dialog |
 | Capture | wlr screencopy, PipeWire, and portals | Direct screenshots/recording and monitor sharing |
 
 ## Audio
@@ -58,9 +59,11 @@ not create new enterprise credentials. NetworkManager and iwd keep ownership
 of secrets and saved connections; system D-Bus and polkit policy decide which
 changes are authorized.
 
-With NetworkManager and ModemManager available, the mobile shell shows
-cellular registration, measured signal quality, and whether a data bearer is
-connected. The Mobile data tile changes NetworkManager's global WWAN state; it
+With NetworkManager and ModemManager available, or with
+[Phonewave](https://github.com/denialwm/phonewave)'s dmail modem service, the
+mobile shell shows cellular registration, measured signal quality, and whether
+a data bearer is connected. When dmail runs, Denial reads it first. The Mobile
+data tile changes NetworkManager's global WWAN state, or dmail's data state; it
 does not create an APN or carrier profile. A primary SIM PIN prompt accepts
 4–8 digits and reports remaining attempts. It is separate from device unlock:
 unlocking the SIM never authenticates the Denial session, and device
@@ -105,18 +108,22 @@ presets for the first supported AMD GPU. Both are optional.
 
 ## Fingerprint authentication
 
-If fprintd reports a reader and an enrolled finger, Denial starts verification
-automatically whenever the native session gate is locked, including a
-`--start-locked` session. A successful match still passes PAM account
-validation, wakes Denial-blanked outputs, and resets idle deadlines. Reader
-failure or missing enrollment leaves password authentication available.
+Fingerprint unlock needs a lock PIN. **Settings → Lock screen** sets one: a
+new PIN has six digits, and Settings asks for the account password to set the
+first PIN or to turn PIN unlock off. The password always stays available next
+to the PIN, and a PIN unlock still passes PAM account policy.
+
+If fprintd reports a reader and an enrolled finger and a PIN is set, Denial
+starts verification automatically whenever the native session gate is locked,
+including a `--start-locked` session. A successful match still passes PAM
+account validation, wakes Denial-blanked outputs, and resets idle deadlines.
+Reader failure or missing enrollment leaves password authentication available.
 
 The Fingerprint Settings page appears only when a reader is present. It asks
-for the user's sudo password before listing or enrolling fingers. The helper
-accepts only those bounded operations for the current user, never places a
-password in process arguments, releases the reader when the page closes, and
-expires its authorization after five minutes. On Arch, install `fprintd` and
-`sudo` to enable this workflow.
+for the lock PIN before listing or enrolling fingers. The helper accepts only
+those bounded operations for the current user, never places a PIN in process
+arguments, releases the reader when the page closes, and ends after five
+minutes. On Arch, install `fprintd` and `sudo` to enable this workflow.
 
 ## Session activation, portals, and autostart
 
@@ -128,7 +135,8 @@ elogind/non-systemd systems, but XDG autostart needs that system's own session
 runner.
 
 `denial-portal` implements the desktop Settings portal for Denial's committed
-colour scheme and accent. GTK remains the fallback for portal namespaces
+colour scheme and accent, and the Access portal, so permission questions from
+sandboxed applications appear in Denial's own dialog. GTK remains the fallback for portal namespaces
 Denial does not implement. ScreenCast and Screenshot route to
 `xdg-desktop-portal-wlr`; PipeWire stays outside the compositor process.
 

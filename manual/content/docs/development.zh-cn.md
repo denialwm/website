@@ -8,7 +8,7 @@ next: droidloom
 源码树包含三个运行时组件：
 
 - `compositor/` 中的 Rust 合成器、控制客户端与 Portal；
-- `dart_shell/` 中的嵌入式 Flutter 桌面外壳；
+- `dart_shell/` 中的嵌入式 Flutter 桌面外壳，由 `plugins/` 中的插件组成；
 - `settings_app/` 中的独立 Flutter Settings 应用。
 
 三者一起构建并使用同一个版本。
@@ -56,7 +56,7 @@ tools/denial-pc flutter-test
 tools/denial-pc flutter-test test/settings/settings_application_test.dart
 ```
 
-当前耦合世代为 Flutter 3.44.7 与 Dart 3.12.2。精确的 Flutter、Skia、引擎与 ABI
+当前耦合世代为 Flutter 3.47.5 与 Dart 3.13.4。精确的 Flutter、Skia、引擎与 ABI
 修订版记录在 `prebuilt/flutter-engine/SOURCE_LOCK.json`；请勿混用其他世代或架构的
 bundle 与引擎构件。
 
@@ -77,6 +77,10 @@ tools/denial-pc remove-session
 开发条目与打包的 Denial 会话相互独立，不会替换正在运行的合成器。
 
 ## 实时编辑 Flutter 桌面外壳
+
+> [!NOTE]
+> Flutter 3.47.5 代只提供发布版引擎，因此 `denial-ui-development` 软件包暂停发布。
+> 下文的实时编辑和性能分析会在匹配的软件包重新发布后再次可用。
 
 实时编辑是可选功能，不需要重新构建 Rust 合成器。安装版本匹配的开发环境：
 
@@ -157,29 +161,34 @@ denialctl ui restore
 
 ## 构建自定义桌面外壳
 
-公共框架入口如下：
+桌面外壳由插件组成。完整的桌面外壳本身也是插件，它实现公开 SDK 中的
+`ShellApplication`：
 
 ```dart
-import 'package:denial_dart_shell/denial.dart';
+@Plugin()
+library;
+
+import 'package:denial_sdk/composition.dart';
+import 'package:denial_flutter_sdk/application.dart';
 import 'package:flutter/widgets.dart';
 
-void main() {
-  runDenialShell(
-    shell: const DenialShell(
-      mobile: DenialShellScene(content: MyMobileShell()),
-      desktop: DenialShellScene(content: MyDesktopShell()),
-    ),
-  );
+@Provides(ShellApplication)
+class MyShell implements ShellApplication {
+  const MyShell();
+
+  @override
+  Widget createShell() => const MyShellRoot();
 }
 ```
 
-`runDenialShell` 会初始化原生桥接、生命周期、本地化、主题、安全锁屏、输入发布、光标、
-软键盘、截图选择及覆盖层顺序。自定义桌面外壳提供功能场景，并可使用导出的桌面外壳
-模型、操作、表面宿主、窗口构建器和可选本地应用。软件包外部代码不要导入 `lib/src`；
-只有 `package:denial_dart_shell/denial.dart` 是受支持的框架边界。
+`runDenialShell` 创建 Flutter 绑定和根 provider 作用域，不会挂载任何默认界面。被选中的
+桌面外壳拥有自己的完整界面树，包括锁屏界面、输入布局和窗口表面呈现。只使用公开的
+`denial_sdk` 与 `denial_flutter_sdk` 库；`plugins/denial_desktop` 中的参考桌面使用的也是
+这些库。
 
-经过检查的 `dart_shell/example/custom_shell.dart` 入口是最小完整示例。使用上文相同的
-`denialctl ui workspace` 及 profile/实时命令准备并激活其工作区。
+`dart_shell/example/custom_shell.dart` 是最小完整示例。
+[插件开发指南](https://github.com/denialwm/denial/blob/main/docs/PLUGIN_DEVELOPMENT.md)
+介绍如何使用 `denial-plugin-manager` 构建、安装和激活插件。
 
 > [!CAUTION]
 > 自定义 Flutter 桌面外壳是受信任的会话代码。它可以观察合成器状态，并调用官方桌面

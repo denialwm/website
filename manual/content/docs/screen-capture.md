@@ -5,9 +5,10 @@ prev: system-services
 next: control-and-recovery
 ---
 
-Denial has a built-in region screenshot flow and implements version 3 of the
-wlr screencopy protocol for external tools. Desktop portals turn screencopy
-frames into PipeWire streams for browsers and sandboxed applications.
+Denial has a built-in region screenshot flow. External tools can capture
+whole outputs or single windows through `ext-image-copy-capture-v1`, and older
+tools can use version 3 of the wlr screencopy protocol. Desktop portals turn
+captured frames into PipeWire streams for browsers and sandboxed applications.
 
 ## Built-in screenshots
 
@@ -74,27 +75,16 @@ wf-recorder -g "100,100 1280x720" -f region.mp4
 
 The Arch package installs portal routing that sends ScreenCast and Screenshot
 requests to `xdg-desktop-portal-wlr`; other desktop portal requests use the
-GTK backend. A Zenity monitor chooser is used because it works as a normal
-desktop window.
+GTK backend. Denial configures a Zenity monitor chooser for it, which opens as
+a normal desktop window.
 
 The complete path is:
 
 ```text
-application → desktop portal → xdg-desktop-portal-wlr → Denial screencopy
+application → desktop portal → xdg-desktop-portal-wlr → Denial image capture
             → PipeWire stream → application
 ```
 
 If an application offers a system screen-sharing dialog, choose the monitor
 there. The compositor itself does not link PipeWire; the portal backend owns
 the stream.
-
-## Current limitations
-
-- `slurp` requires layer-shell, which Denial does not currently advertise.
-  Interactive `slurp` region selection is therefore unavailable; explicit
-  coordinates still work.
-- Portal-based interactive screenshot regions and colour picking are not yet
-  available for the same reason.
-- Direct screencopy clients can receive the Flutter-owned software cursor even
-  when they do not request one. Denial's built-in screenshot flow explicitly
-  hides it before capturing.

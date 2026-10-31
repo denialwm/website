@@ -13,7 +13,9 @@ Denial 为以下系统发布官方 **x86-64** 软件包：
 - Fedora 44。
 
 Alpine Linux 3.24 也已受支持，其签名 APK 文件附在每个 GitHub Release 中。NixOS 26.05
-和 Void Linux 已通过运行时验证，但目前尚无官方软件包。Debian Forky/Sid 可尽力使用
+有官方源码 flake 和模块，参见
+[NixOS 指南](https://github.com/denialwm/denial/blob/main/packaging/nixos/README.md)。
+Void Linux 已通过运行时验证，但目前尚无官方软件包。Debian Forky/Sid 可尽力使用
 Debian 13 的 `trixie` 仓库；该滚动版本尚未完成完整验证矩阵。
 
 | 架构 | 可正常运行 | 提供二进制软件包 |
@@ -238,9 +240,8 @@ Xwayland，但不会启动另一个合成器。
 退出登录，在显示管理器中选择 **Denial**，然后登录。Denial 支持 SDDM；任何能显示已安装
 Wayland 会话条目的显示管理器也都可以启动它。
 
-默认情况下，桌面使用 Denial 与合成器集成的 Impeller GLES 后端渲染。Skia/Ganesh 仍可
-作为驱动兼容性后备；如果首次启动时画面损坏或无法显示，请参阅
-[渲染器后备](../configuration/#renderer-fallback)。
+桌面使用 Denial 与合成器集成的 Impeller GLES 后端渲染。软件包中的引擎只包含
+Impeller，没有可供回退的 Skia 渲染器。
 
 标准显示管理器会话启动时不会锁定。这是有意为之：显示管理器已经验证了你的身份，
 因此立刻显示 Denial 锁屏通常只会要求重复输入一次密码。
@@ -318,5 +319,5 @@ sudo dnf remove denial
 doas apk del denial
 ```
 
-可选的 `denial-ui-development` 软件包目前只面向 Arch 系发行版。卸载 Denial 不会删除
+可选的 `denial-ui-development` 软件包在当前 Flutter 3.47.5 代暂停发布。卸载 Denial 不会删除
 软件仓库配置、用户配置或可编辑的 `~/DenialUI` 检出目录。

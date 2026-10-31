@@ -15,13 +15,15 @@ compositor's Flutter frame.
 
 - **Applications** is a searchable launcher with keyboard navigation. Tap and
   release `Super`, or move the pointer into its configured edge trigger.
-- **Dashboard** provides wallpaper selection, output and application volume,
-  Bluetooth, power modes, and Settings. It is also edge-activated.
+- **Dashboard** provides the output device and volume, application volume,
+  Bluetooth, power modes, the notification center, and Settings. It is also
+  edge-activated.
 - **Overview** shows the windows on the current workspace. Open it with
   `Super+A` or a three-finger upward touchpad swipe.
-- **System bar** shows the clock, system activity, MPRIS media, notifications,
-  StatusNotifier/AppIndicator items, and legacy XEmbed tray icons. Each
-  selected display receives its own bar.
+- **System bar** shows the clock, CPU and GPU activity, battery, MPRIS media,
+  the workspace indicator when workspaces are on, StatusNotifier/AppIndicator
+  items, and legacy XEmbed tray icons. Each selected display receives its own
+  bar.
 - **Settings** opens as a normal Denial-managed Wayland window from the
   launcher, dashboard, mobile home screen, or a configured shortcut.
 
@@ -72,6 +74,8 @@ The current defaults include:
 | `Super+K` | Close the focused window |
 | `Super+Left/Right/Up/Down` | Focus a window in that direction |
 | `Super+Ctrl+Left/Right/Up/Down` | Swap a managed window in that direction |
+| `Super+Minus` / `Super+Equal` | Make the focused window narrower / wider |
+| `Super+Shift+Minus` / `Super+Shift+Equal` | Make the focused window shorter / taller |
 | `Super+Alt+Left/Right` | Switch to the previous or next workspace |
 | `Super+Alt+Shift+Left/Right` | Move the focused window to the adjacent workspace |
 | `Super+1` … `Super+9` | Switch directly to a workspace |
@@ -82,6 +86,7 @@ The current defaults include:
 | `Super+L` | Lock the session |
 | `Super+Space` / `Super+Shift+Space` | Select the next / previous keyboard layout |
 | `Super+Escape` | Release a captured or constrained pointer |
+| `Super+Alt+P` | Open the color tuning editor |
 | `Super` + left-button drag | Move a window |
 | `Super` + right-button drag | Resize a window |
 | Volume up, down, or mute | Change the default audio output |
@@ -89,8 +94,9 @@ The current defaults include:
 | `Ctrl+Alt+Backspace` | End the compositor session immediately |
 
 Maximize moved from `Super+Up` to `Super+W` when directional layout navigation
-was introduced. Existing shortcut files are migrated. **Toggle always on top**
-and **Open Dashboard** are available actions but have no default binding.
+was introduced. Existing shortcut files are migrated. **Toggle always on top**,
+**Open Dashboard**, **Open Settings**, **Reset window width**, and **Reset
+window height** are available actions but have no default binding.
 
 > [!CAUTION]
 > `Ctrl+Alt+Backspace` is an emergency exit. Unsaved application work may be
@@ -104,9 +110,10 @@ cards. Items can be activated, pinned, deleted, cleared, paused, or dragged
 into an application. Clipboard contents are hidden while the session is
 locked; still treat the history as sensitive data.
 
-Notifications appear in the shell and remain in notification history until
-they expire or are dismissed. Activating a notification can raise its existing
-window. Do Not Disturb suppresses ordinary banners, while critical alerts may
+Notifications appear in the shell and stay in notification history until you
+close them or their application withdraws them; only transient notifications
+expire. Related notifications are grouped. Activating one runs its default
+action, or opens the window or application it names. Do Not Disturb suppresses ordinary banners, while critical alerts may
 still appear; lock-screen previews can show full content, the application only,
 or nothing.
 
@@ -133,10 +140,11 @@ deployments currently use architecture-matched source builds.
 ## Locking and ending the session
 
 `Super+L` closes the native security gate and shows the Flutter lock screen.
-Password authentication uses PAM. When fprintd is installed and the user has
-an enrolled finger, verification also starts automatically while locked;
-password unlock remains available in parallel. Fingerprint enrollment is
-managed in Settings after a separate sudo-password check.
+Password authentication uses PAM. **Settings → Lock screen** can add a
+six-digit lock PIN; the password stays available next to it. Fingerprint
+unlock needs a lock PIN: when fprintd is installed, the user has an enrolled
+finger, and a PIN is set, verification starts automatically while locked.
+Fingerprint enrollment is managed in Settings after entering the lock PIN.
 
 The session menu can lock, log out, suspend, hibernate, restart, or power off.
 System actions go through the system session service and honor inhibitors and

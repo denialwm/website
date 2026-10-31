@@ -52,30 +52,33 @@ and system services are available.
 Denial uses the host's existing services. Optional integrations disappear or
 become read-only when the service or hardware is missing.
 
-With NetworkManager and ModemManager, the mobile shell shows cellular
-registration, measured signal quality, and whether a data bearer is connected.
-The Mobile data tile changes NetworkManager's global WWAN state. It does not
-create an APN or carrier profile. A primary SIM PIN prompt accepts 4–8 digits
+With NetworkManager and ModemManager, or with [Phonewave](https://github.com/denialwm/phonewave)'s dmail modem service,
+the mobile shell shows cellular registration, measured signal quality, and
+whether a data bearer is connected. When dmail runs, Denial reads it first. The
+Mobile data tile changes NetworkManager's global WWAN state, or dmail's data
+state. It does not create an APN or carrier profile. A primary SIM PIN prompt accepts 4–8 digits
 and reports remaining attempts. Unlocking the SIM never authenticates the
 Denial session, and device authentication does not dismiss a blocking SIM
 prompt. PUK recovery and multi-SIM management remain outside this interface.
 
-If fprintd reports a reader and an enrolled finger, verification starts
-automatically whenever the native session gate is locked, including a
+Fingerprint unlock needs a lock PIN, set in **Settings → Lock screen**. If
+fprintd reports a reader and an enrolled finger and a PIN is set, verification
+starts automatically whenever the native session gate is locked, including a
 `--start-locked` session. Password unlock remains available. The Fingerprint
-Settings page appears only when a reader is present, and it asks for the
-user's sudo password before listing or enrolling fingers.
+Settings page appears only when a reader is present, and it asks for the lock
+PIN before listing or enrolling fingers.
 
-`iio-sensor-proxy` provides automatic rotation for built-in panels.
-`hapticd` can provide optional bounded tap and fingerprint-rejection feedback.
+Phonewave's `steinerd` provides automatic rotation for built-in panels.
+Phonewave's `hapticd` can provide optional bounded tap and fingerprint-rejection
+feedback.
 
 ## Custom shells
 
-An alternative shell supplies its mobile and desktop feature scenes. Denial
-retains lifecycle, theme, localization, secure lock, input publication,
-cursor, software keyboard, screenshot selection, and overlay ordering. The
-public entry point is `runDenialShell`, with separate `mobile` and `desktop`
-scenes.
+The reference desktop, including its mobile scene, is a plugin. An
+alternative shell is a plugin that implements `ShellApplication` from
+`package:denial_flutter_sdk/application.dart` and owns its whole UI tree.
+Native Wayland ownership, resource lifetimes, authentication enforcement, and
+recovery stay in Rust.
 
 ## Where this is documented
 

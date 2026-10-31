@@ -8,7 +8,8 @@ next: droidloom
 The source tree contains three runtime components:
 
 - the Rust compositor, control client, and portal in `compositor/`;
-- the embedded Flutter shell in `dart_shell/`;
+- the embedded Flutter shell in `dart_shell/`, composed from the plugins in
+  `plugins/`;
 - the standalone Flutter Settings application in `settings_app/`.
 
 They are built and versioned together.
@@ -58,7 +59,7 @@ tools/denial-pc flutter-test
 tools/denial-pc flutter-test test/settings/settings_application_test.dart
 ```
 
-The current coupled generation is Flutter 3.44.7 and Dart 3.12.2. The exact
+The current coupled generation is Flutter 3.47.5 and Dart 3.13.4. The exact
 Flutter, Skia, engine, and ABI revisions are recorded in
 `prebuilt/flutter-engine/SOURCE_LOCK.json`; do not mix bundles or engine
 artifacts from another generation or architecture.
@@ -82,6 +83,11 @@ The development entry is separate from the packaged Denial session and does
 not replace a running compositor.
 
 ## Live-edit the Flutter shell
+
+> [!NOTE]
+> The Flutter 3.47.5 generation ships only the release engine, so the
+> `denial-ui-development` package is paused. Live editing and profiling below
+> apply again once a matching package is published.
 
 Live editing is optional and does not require rebuilding the Rust compositor.
 Install the version-matched development environment:
@@ -170,33 +176,36 @@ It returns to the packaged optimized shell without ending the Wayland session.
 
 ## Build a custom shell
 
-The public framework entry point is:
+The shell is composed from plugins. Since a complete shell is itself a plugin,
+it implements `ShellApplication` from the public SDK:
 
 ```dart
-import 'package:denial_dart_shell/denial.dart';
+@Plugin()
+library;
+
+import 'package:denial_sdk/composition.dart';
+import 'package:denial_flutter_sdk/application.dart';
 import 'package:flutter/widgets.dart';
 
-void main() {
-  runDenialShell(
-    shell: const DenialShell(
-      mobile: DenialShellScene(content: MyMobileShell()),
-      desktop: DenialShellScene(content: MyDesktopShell()),
-    ),
-  );
+@Provides(ShellApplication)
+class MyShell implements ShellApplication {
+  const MyShell();
+
+  @override
+  Widget createShell() => const MyShellRoot();
 }
 ```
 
-`runDenialShell` initializes the native bridge, lifecycle, localization,
-theme, secure lock, input publication, cursor, software keyboard, screenshot
-selection, and overlay ordering. A custom shell supplies feature scenes and
-may use the exported shell models, actions, surface hosts, window builders,
-and optional local applications. Do not import `lib/src` from code outside
-the package; only `package:denial_dart_shell/denial.dart` is the supported
-framework boundary.
+`runDenialShell` creates the Flutter bindings and the root provider scope; it
+does not mount any stock chrome. The selected shell owns its whole UI tree,
+including lock UI, input layouts, and window-surface presentation. Use only
+the public `denial_sdk` and `denial_flutter_sdk` libraries; the reference
+desktop in `plugins/denial_desktop` uses the same ones.
 
-The checked `dart_shell/example/custom_shell.dart` entry point is the
-smallest complete example. Prepare and activate its workspace with the same
-`denialctl ui workspace` and profile/live commands described above.
+`dart_shell/example/custom_shell.dart` is the smallest complete example. The
+[plugin development guide](https://github.com/denialwm/denial/blob/main/docs/PLUGIN_DEVELOPMENT.md)
+covers building, installing, and activating a plugin with
+`denial-plugin-manager`.
 
 > [!CAUTION]
 > A custom Flutter shell is trusted session code. It can observe compositor

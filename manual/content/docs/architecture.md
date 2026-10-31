@@ -53,7 +53,8 @@ Display B <── Volition / atomic KMS <── native fence <── output B po
 ```
 
 There is no shared scanout atlas in the normal Flutter path. Each output has a
-rotating three-buffer pool at that connector's physical mode size. The
+rotating pool at that connector's physical mode size: three buffers, or four
+when the output renders ahead. The
 embedder's `FlutterCompositor` backing-store callbacks lend an authorized
 framebuffer to Flutter and return the completed buffer, damage, and native GPU
 fence to Rust. A buffer cannot be rendered into while KMS still owns it.
@@ -102,17 +103,13 @@ software cursor.
 
 ## Impeller at the compositor boundary
 
-Impeller GLES is Denial's default Flutter renderer. The locked Flutter and
-Skia forks integrate Impeller with compositor-owned output backing stores
+Denial's Flutter engine is a Slimpeller build: it runs Impeller GLES, and
+Skia's Ganesh and Graphite renderers are not compiled in. The locked Flutter
+and Skia forks integrate Impeller with compositor-owned output backing stores
 rather than a window supplied by another desktop. They handle exact FBO
 selection, frames with no available target, existing-buffer damage, external
 texture lifetime, native fences, packed depth/stencil storage, and desktop
 backdrop effects.
-
-Skia/Ganesh remains compiled into the same pinned engine generation as a
-compatibility fallback. Select it with the packaged
-`DENIAL_FLUTTER_RENDERER=skia` session override; it does not require another
-engine package.
 
 ## Input and surface ownership
 
@@ -147,16 +144,16 @@ the ten-second confirmation rollback.
 
 `deniald`, its Flutter engine, and its compiled shell are one tested
 generation. A replacement bundle must match the native protocol and engine
-ABI. Custom shells should import the supported
-`package:denial_dart_shell/denial.dart` boundary and start with
-`runDenialShell`; code outside the package should not import `lib/src`.
+ABI.
 
-An alternative shell supplies its mobile and desktop feature scenes while
-Denial retains lifecycle, theme, localization, secure lock, input publication,
-cursor, software keyboard, screenshot selection, and overlay ordering. It is
-still trusted session code with access to every native capability exposed to
-the official shell. Keep `denialctl ui restore` available while developing
-one.
+The shell is composed from plugins. The reference desktop, top bar, launcher,
+and clock are first-party plugins built against the public `denial_sdk` and
+`denial_flutter_sdk` libraries, the same ones available to external plugins.
+A complete alternative shell is a plugin implementing `ShellApplication` and
+owns its whole UI tree; native Wayland ownership, resource lifetimes,
+authentication enforcement, and recovery stay in Rust. Any shell is still
+trusted session code with access to every native capability exposed to the
+official shell. Keep `denialctl ui restore` available while developing one.
 
 Each physical scanout target is limited to 16,384 pixels on either axis, and
 the aggregate allocation for all active output pools is limited to 1 GiB.

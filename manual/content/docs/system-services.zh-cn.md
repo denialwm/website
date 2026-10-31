@@ -14,7 +14,7 @@ Denial 使用标准 Linux 服务与协议，而不维护平行的设备数据库
 | --- | --- | --- |
 | 桌面音频 | PulseAudio 协议 | 输出选择、音量与静音、硬件按键及按应用音频流 |
 | Wi-Fi | NetworkManager 或 iwd | 无线状态、扫描、联网状态、连接、断开、忘记及保存配置 |
-| 蜂窝网络 | NetworkManager 与 ModemManager | 注册与信号状态、Bearer 状态、移动数据开关和主 SIM PIN 提示 |
+| 蜂窝网络 | NetworkManager 与 ModemManager，或 Phonewave 的 dmail | 注册与信号状态、Bearer 状态、移动数据开关和主 SIM PIN 提示 |
 | 蓝牙 | BlueZ | 发现、配对代理、口令、信任、连接、断开和移除 |
 | 电池 | UPower | 充电状态、健康与能量详情、时间估计和受支持的充电阈值开关 |
 | 亮度 | 内核背光与 DDC/CI | 按输出读取和控制 |
@@ -23,10 +23,11 @@ Denial 使用标准 Linux 服务与协议，而不维护平行的设备数据库
 | 会话电源 | 兼容 logind 的服务 | 挂起、休眠、重启、关机、授权与抑制器 |
 | 电源配置 | power-profiles-daemon | 可用时提供省电、平衡与性能配置 |
 | AMD 调优 | LACT | 可选的低、自动与高性能预设 |
-| 认证 | PAM 与可选 fprintd | 密码解锁、自动指纹验证与录入 |
-| 方向 | iio-sensor-proxy | 内置面板自动旋转 |
-| 触觉 | hapticd | 可选且有界的轻触与指纹拒绝反馈 |
+| 认证 | PAM 与可选 fprintd | 密码解锁、可选锁屏 PIN、自动指纹验证与录入 |
+| 方向 | Phonewave 的 steinerd | 内置面板自动旋转 |
+| 触觉 | Phonewave 的 hapticd | 可选且有界的轻触与指纹拒绝反馈 |
 | 外观 | Denial Settings Portal | 向应用提供标准配色与强调色值 |
+| 权限 | Denial Access Portal | 在 Denial 自己的对话框中显示沙盒应用的权限请求 |
 | 捕获 | wlr screencopy、PipeWire 与 Portal | 直接截图/录屏和显示器共享 |
 
 ## 音频
@@ -51,9 +52,11 @@ Denial 可为开放、WEP、WPA/WPA2 Personal、WPA3 Personal 和 OWE 网络创�
 企业 Wi-Fi 可使用已有配置，但 Denial 不会创建新的企业凭据。NetworkManager 与 iwd
 保管密码和连接；系统 D-Bus 与 polkit 策略决定允许哪些更改。
 
-NetworkManager 与 ModemManager 都可用时，移动桌面外壳会显示蜂窝注册状态、实测信号
-质量以及数据 Bearer 是否已连接。“移动数据”磁贴更改 NetworkManager 的全局 WWAN
-状态，不会创建 APN 或运营商配置。主 SIM PIN 提示接受 4–8 位数字并显示剩余次数。它与
+NetworkManager 与 ModemManager 都可用时，或使用
+[Phonewave](https://github.com/denialwm/phonewave) 的 dmail 调制解调器服务时，移动桌面
+外壳会显示蜂窝注册状态、实测信号质量以及数据 Bearer 是否已连接。dmail 运行时，Denial
+优先读取它。“移动数据”磁贴更改 NetworkManager 的全局 WWAN 状态或 dmail 的数据状态，
+不会创建 APN 或运营商配置。主 SIM PIN 提示接受 4–8 位数字并显示剩余次数。它与
 设备解锁相互独立：解锁 SIM 不会认证 Denial 会话，设备认证也不会关闭阻塞的 SIM 提示。
 PUK 恢复和多 SIM 管理不在该界面范围内。
 
@@ -88,13 +91,17 @@ sudo systemctl enable --now bluetooth
 
 ## 指纹认证
 
-如果 fprintd 报告读卡器和已录入手指，Denial 会在原生会话门锁定时自动开始验证，包括
-`--start-locked` 会话。匹配成功仍需通过 PAM 账户验证，会唤醒 Denial 关闭的输出并
+指纹解锁需要锁屏 PIN。**Settings → 锁屏** 可以设置 PIN：新 PIN 为六位数字，设置第一个
+PIN 或关闭 PIN 解锁时 Settings 会要求输入账户密码。密码始终可在 PIN 旁边使用，PIN 解锁
+仍需通过 PAM 账户策略。
+
+如果 fprintd 报告读卡器和已录入手指，并且已设置 PIN，Denial 会在原生会话门锁定时自动
+开始验证，包括 `--start-locked` 会话。匹配成功仍需通过 PAM 账户验证，会唤醒 Denial 关闭的输出并
 重置空闲期限。读卡器失败或没有录入时，密码认证仍然可用。
 
-只有读卡器存在时，Settings 才显示指纹页面。列出或录入手指前会询问用户的 sudo 密码。
-辅助进程只接受当前用户的这些有限操作，不会把密码放入进程参数，页面关闭时释放设备，
-授权五分钟后过期。在 Arch 上安装 `fprintd` 和 `sudo` 即可启用该流程。
+只有读卡器存在时，Settings 才显示指纹页面。列出或录入手指前会要求输入锁屏 PIN。
+辅助进程只接受当前用户的这些有限操作，不会把 PIN 放入进程参数，页面关闭时释放设备，
+五分钟后结束。在 Arch 上安装 `fprintd` 和 `sudo` 即可启用该流程。
 
 ## 会话激活、Portal 与自动启动
 
@@ -103,7 +110,8 @@ sudo systemctl enable --now bluetooth
 启动。elogind/非 systemd 系统的 D-Bus 激活仍能收到这些端点，但 XDG 自动启动需要该
 系统自己的会话启动器。
 
-`denial-portal` 为 Denial 已提交的配色和强调色实现桌面 Settings Portal。Denial 未实现的
+`denial-portal` 为 Denial 已提交的配色和强调色实现桌面 Settings Portal，并实现 Access
+Portal，使沙盒应用的权限请求显示在 Denial 自己的对话框中。Denial 未实现的
 Portal 命名空间仍以后备 GTK 处理。ScreenCast 与 Screenshot 路由到
 `xdg-desktop-portal-wlr`；PipeWire 不进入合成器进程。
 

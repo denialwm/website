@@ -45,7 +45,7 @@ Wayland 客户端 ──> Rust / Smithay ──> 外部纹理 ──> 逻辑 Flu
 ```
 
 正常 Flutter 路径不再使用共享扫描图集。每个输出都在该连接器的物理模式尺寸下拥有轮换的
-三缓冲池。Embedder 的 `FlutterCompositor` backing-store 回调把已授权的帧缓冲借给
+缓冲池：三个缓冲区，输出提前渲染时为四个。Embedder 的 `FlutterCompositor` backing-store 回调把已授权的帧缓冲借给
 Flutter，并把完成的缓冲区、损伤区域和原生 GPU 栅栏交回 Rust。KMS 仍占有的缓冲区不会
 被再次渲染。
 
@@ -80,13 +80,11 @@ Flutter 只渲染当前事务已授权的输出。
 
 ## 合成器边界上的 Impeller
 
-Impeller GLES 是 Denial 默认的 Flutter 渲染器。固定版本的 Flutter 与 Skia 分支将
+Denial 的 Flutter 引擎是 Slimpeller 构建：它运行 Impeller GLES，不编译 Skia 的 Ganesh
+与 Graphite 渲染器。固定版本的 Flutter 与 Skia 分支将
 Impeller 接入合成器拥有的输出 backing store，而不是另一个桌面提供的窗口。该集成
 处理精确 FBO 选择、无可用目标的帧、已有缓冲区损伤、外部纹理生命周期、原生栅栏、
 打包深度/模板存储及桌面背景效果。
-
-Skia/Ganesh 仍编译在同一个固定引擎世代中作为兼容后备。可通过打包会话覆盖
-`DENIAL_FLUTTER_RENDERER=skia` 选择它，无需另一个引擎软件包。
 
 ## 输入与表面归属
 
@@ -111,13 +109,13 @@ Skia/Ganesh 仍编译在同一个固定引擎世代中作为兼容后备。可�
 ## Bundle 兼容性与自定义桌面外壳
 
 `deniald`、Flutter 引擎与编译后的桌面外壳构成一个经过测试的世代。替代 bundle 必须
-匹配原生协议与引擎 ABI。自定义桌面外壳应导入受支持的
-`package:denial_dart_shell/denial.dart` 边界并以 `runDenialShell` 启动；软件包外部
-代码不应导入 `lib/src`。
+匹配原生协议与引擎 ABI。
 
-替代桌面外壳提供移动端和桌面端功能场景，而 Denial 保留生命周期、主题、本地化、
-安全锁屏、输入发布、光标、软键盘、截图选择及覆盖层顺序。它仍是受信任的会话代码，
-可访问官方桌面外壳公开的全部原生能力。开发时请随时准备好
+桌面外壳由插件组成。参考桌面、顶栏、启动器和时钟都是第一方插件，基于公开的
+`denial_sdk` 与 `denial_flutter_sdk` 库构建，外部插件使用的也是同样的库。完整的替代
+桌面外壳是实现 `ShellApplication` 的插件，并拥有自己的完整界面树；原生 Wayland 所有权、
+资源生命周期、认证执行和恢复仍由 Rust 负责。任何桌面外壳都是受信任的会话代码，可访问
+官方桌面外壳公开的全部原生能力。开发时请随时准备好
 `denialctl ui restore`。
 
 每个物理扫描目标的任一轴上限为 16,384 像素，全部活动输出缓冲池的总分配量上限为

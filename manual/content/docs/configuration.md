@@ -14,6 +14,7 @@ Most changes apply to the running session.
 
 | Page | What it controls |
 | --- | --- |
+| You | Display name and profile photo |
 | Appearance | Dark, light, or no-preference colour scheme; wallpaper or custom accent; cursor theme and physical size; shape, glass, opacity, blur, and focused-window treatment |
 | Language | Live shell and Settings language |
 | Keyboard | XKB layouts, variants, options, repeat delay, and repeat rate |
@@ -23,8 +24,9 @@ Most changes apply to the running session.
 | Animations | Animation speed, panel motion, lock motion, and close effect |
 | Desktop layout | Stacking, tiling, or scrolling layout; monitor-local workspaces; system bar; ordinary and maximized spacing |
 | Overlays | Launcher, dashboard, notification, and system-HUD placement and size |
-| Lock screen | Wallpaper, dimming, blur, clock scale, status visibility, and notification privacy |
-| Fingerprint | Enrollment for the session user; shown when fprintd reports a device |
+| Lock screen | Lock PIN, wallpaper, dimming, blur, clock scale, status visibility, and notification privacy |
+| Fingerprint | Enrollment for the session user after entering the lock PIN; shown when fprintd reports a device |
+| Permissions | Ask, Always allow, or Never allow for applications that request Denial's keyboard shortcuts |
 | Audio | Default output selection, volume, mute, and application streams |
 | Displays & video | Primary display, arrangement, mode, refresh, rotation, scale, VRR, and brightness |
 | Network | Wi-Fi state, scanning, connections, and saved profiles |
@@ -124,7 +126,7 @@ maximize_padding=10
 Prefer the transactional Settings UI. If manual edits prevent a usable login,
 follow [Recover an output layout](/docs/control-and-recovery/#recover-an-output-layout).
 
-When `iio-sensor-proxy` exposes an accelerometer, Denial can automatically
+When Phonewave's `steinerd` exposes an accelerometer, Denial can automatically
 rotate built-in `DSI-*`, `eDP-*`, and `LVDS-*` panels. The configured transform
 describes the fixed mounting orientation; sensor rotation is temporary and is
 not written to `outputs.conf`.
@@ -205,19 +207,7 @@ DENIAL_RENDER_DEVICE=/dev/dri/renderD128
 ```
 
 The file can also override the Flutter bundle, output-config path, Qt platform
-theme, Xwayland scale mode, shell profile, and native logging. Canonical Denial
-variables use the `DENIAL_*` prefix. Older `DENIA_*` spellings remain temporary
-compatibility aliases, and `DENIAL_*` wins when both exist.
-
-### Renderer fallback
-
-Impeller GLES is the default. Select the retained Skia/Ganesh fallback only
-for a driver-specific rendering problem:
-
-```ini
-DENIAL_FLUTTER_RENDERER=skia
-```
-
-Restart the Denial session after changing it. Remove the override or set it to
-`impeller` to return to the default. For one controlled launch, use
-`denial-session --flutter-renderer skia`.
+theme, Xwayland scale mode, shell profile, native logging, and Denial's polkit
+agent. Canonical Denial variables use the `DENIAL_*` prefix. Older `DENIA_*`
+spellings remain temporary compatibility aliases, and `DENIAL_*` wins when both
+exist.

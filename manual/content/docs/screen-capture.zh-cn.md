@@ -5,8 +5,9 @@ prev: system-services
 next: control-and-recovery
 ---
 
-Denial 内置区域截图流程，并为外部工具实现了 wlr screencopy 协议第 3 版。桌面 Portal
-会把 screencopy 帧转换为浏览器和沙盒应用可用的 PipeWire 流。
+Denial 内置区域截图流程。外部工具可以通过 `ext-image-copy-capture-v1` 捕获整个输出或
+单个窗口，旧工具可以使用 wlr screencopy 协议第 3 版。桌面 Portal 会把捕获的帧转换为
+浏览器和沙盒应用可用的 PipeWire 流。
 
 ## 内置截图
 
@@ -69,23 +70,15 @@ wf-recorder -g "100,100 1280x720" -f region.mp4
 ## 浏览器、OBS 和沙盒应用
 
 Arch 软件包安装的 Portal 路由会把 ScreenCast 和 Screenshot 请求发送到
-`xdg-desktop-portal-wlr`；其他桌面 Portal 请求使用 GTK 后端。显示器选择器使用
-Zenity，因为它能作为普通桌面窗口运行。
+`xdg-desktop-portal-wlr`；其他桌面 Portal 请求使用 GTK 后端。Denial 为其配置了 Zenity
+显示器选择器，它会作为普通桌面窗口打开。
 
 完整路径如下：
 
 ```text
-应用 → 桌面 Portal → xdg-desktop-portal-wlr → Denial screencopy
+应用 → 桌面 Portal → xdg-desktop-portal-wlr → Denial 图像捕获
      → PipeWire 流 → 应用
 ```
 
 如果应用显示系统屏幕共享对话框，请在其中选择显示器。合成器本身不链接 PipeWire；
 流由 Portal 后端管理。
-
-## 当前限制
-
-- `slurp` 需要 layer-shell，而 Denial 目前不会公布该协议。因此无法使用交互式 `slurp`
-  区域选择，但明确指定坐标仍然有效。
-- 出于同一原因，目前还不能使用基于 Portal 的交互式截图区域和颜色拾取。
-- 即使没有请求光标，直接 screencopy 客户端也可能收到 Flutter 管理的软件光标。
-  Denial 的内置截图流程会在捕获前明确隐藏它。

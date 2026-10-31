@@ -20,7 +20,7 @@ inspection and recovery.
 
 Commands return a nonzero status when an action is rejected or fails.
 Diagnostics go to standard error when JSON output is selected. `denialctl`
-only inspects outputs; use the standalone Settings application to arrange
+does not arrange outputs; use the standalone Settings application to arrange
 displays, choose modes and scaling, or enable adaptive sync. Display changes
 are tested live and automatically roll back unless confirmed within ten
 seconds.
