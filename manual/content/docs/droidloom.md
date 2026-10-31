@@ -12,8 +12,9 @@ Arknights: Endfield runs through Droidloom.
 This is an early preview. Prebuilt pacman packages are published for x86_64
 Arch Linux and aarch64 Arch Linux ARM in the
 [latest release](https://github.com/denialwm/droidloom/releases/latest).
-Droidloom is incompatible with NVIDIA graphics. WhatsApp and Phone have been
-tested on Hyprland.
+Droidloom does not work with NVIDIA graphics yet. NVIDIA support is planned
+and under development; [supporting the project](https://denialwm.org/support.html) helps it move
+forward. WhatsApp and Phone have been tested on Hyprland.
 Startup is manual: launching an app does not start a stopped runtime.
 
 Droidloom does not use closed-source libraries. Its original code is
