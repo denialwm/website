@@ -316,7 +316,7 @@ window.denialTranslations = {
       },
       why: {
         title: "不是装在盒子里的 Android 桌面。",
-        intro: "其他方案会启动一整套 Android 会话，再给你一个大窗口，让你在里面使用。Droidloom 把 Android 拆开，让每个应用作为独立窗口出现在你的桌面上，与其他窗口并列。",
+        intro: "在 Linux 上运行 Android，通常意味着只有一块 Android 屏幕：要么整个显示在一个窗口里，要么被切成几块。Droidloom 让每个应用都有自己的 Android 显示和自己的 Linux 窗口，与其他窗口并列。",
         windows: {
           title: "一个应用，一个窗口",
           copy: "每个 Android 任务都会成为独立的 <code>xdg_toplevel</code>。你可以平铺它、调整大小、在工作区之间移动，或直接从合成器关闭它。Android 会收到新的尺寸并重新布局，就像原生应用一样。",
@@ -326,8 +326,8 @@ window.denialTranslations = {
           copy: "ART、Binder、Zygote 和 system_server 直接运行在宿主机内核上，位于各自的命名空间中，并使用私有的 binderfs 实例。没有第二个内核，没有模拟器，也没有需要照看的容器镜像。Android 应用会像其他进程一样出现在 <code>htop</code> 中。",
         },
         graphics: {
-          title: "零拷贝图形",
-          copy: "应用缓冲区以 DMA-BUF 形式送达合成器，并使用显式同步。符合条件的图层会完全跳过 Android 自身的合成：合成器直接采样应用的原始缓冲区，没有中间渲染，也没有拷贝。",
+          title: "零拷贝，在 GPU 上同步",
+          copy: "应用缓冲区以 DMA-BUF 形式送达合成器，没有拷贝。每一帧都通过 <code>linux-drm-syncobj</code> 携带 GPU 栅栏，只有在合成器读完之后，Android 才会重用缓冲区，因此应用绝不会在仍在显示的帧上继续绘制。",
         },
         blobs: {
           title: "不含闭源二进制组件",
@@ -403,6 +403,68 @@ window.denialTranslations = {
           copy: "<strong>Droidloom 由一名开发者独立开发。</strong>如果它能运行你依赖的应用，你的赞助将用于它的开发工作。",
           cta: "支持 Droidloom",
         },
+      },
+      waydroid: {
+        title: "为什么不用 Waydroid？",
+        intro: "多年来，Waydroid 一直是在 Linux 上运行 Android 应用的方式，所以大家最先问到的就是它。以下对比来自阅读 Waydroid 自己的源代码，而不是猜测。",
+        same: {
+          tag: "两者",
+          title: "共同之处",
+          kernel: "Android 都运行在宿主内核上，处于各自的命名空间中。两者都不是虚拟机。",
+          buffers: "应用缓冲区都可以不经复制直接交给合成器。Waydroid 的多窗口模式同样把 Android 的缓冲区作为子表面交出。",
+          desktop: "剪贴板同步、带操作按钮的桌面通知，以及应用启动器条目。",
+        },
+        theirs: {
+          tag: "WAYDROID",
+          title: "Waydroid 领先之处",
+          community: "多年的使用历史、庞大的社区，以及覆盖大多数发行版的软件包。",
+          halium: "可以在 Halium 手机上运行，使用手机自带的 Android 厂商驱动。Droidloom 需要主线 Linux 图形驱动。",
+          sync: "可以在不支持显式同步的合成器上运行。Droidloom 需要 <code>linux-drm-syncobj</code>。",
+        },
+        ours: {
+          title: "Droidloom 领先之处",
+          window: {
+            title: "窗口就是应用",
+            copy: "每个 Android 应用都有自己的 Android 显示，大小与它的 Linux 窗口一致。Waydroid 只运行一个 Android 显示，并给每个应用一个与整个显示一样大的透明窗口，因此合成器永远看不到应用的真实大小，也无法平铺或吸附它。",
+          },
+          frame: {
+            title: "窗口边框由你的桌面绘制",
+            copy: "窗口使用合成器自己的装饰和行为。Waydroid 应用带着 Android 的自由窗口标题栏，按钮是通过补丁加进 Android 的。",
+          },
+          android: {
+            title: "Android 17",
+            copy: "基于 AOSP 17 构建。Waydroid 的镜像是 LineageOS 20，也就是 Android 13。",
+          },
+          sync: {
+            title: "在 GPU 上同步帧",
+            copy: "栅栏通过 <code>linux-drm-syncobj</code> 传递，只有在合成器读完之后，缓冲区才会还给 Android。Waydroid 在 CPU 上等待每一帧，并在提交后立即把缓冲区标记为空闲。",
+          },
+          clock: {
+            title: "跟随合成器的时钟",
+            copy: "在 Denial 上，Android 按照 Denial 的帧授予来绘制，画面不变时不再唤醒。Waydroid 用自己的固定计时器驱动 Android。",
+          },
+          input: {
+            title: "按应用分发输入，用你的键盘",
+            copy: "触控会送到每个应用自己的显示，文本框使用桌面的输入法。Waydroid 把原始输入事件写进管道，送往同一个共享显示，并使用 Android 自己的键盘输入。",
+          },
+          devices: {
+            title: "Android 能接触的宿主设备更少",
+            copy: "Android 只能看到 GPU 渲染节点和一个缓冲区堆，别的都没有：没有显示控制器，也没有输入设备。Waydroid 会把帧缓冲、视频设备、所有缓冲区堆以及 <code>/sys/kernel/debug</code> 绑定挂载进容器。",
+          },
+          power: {
+            title: "懂得省电",
+            copy: "Android 的帧提示会设定 CPU 性能下限，后台工作移到能效核心上，在 Denial 上最小化的应用会停止绘制。Waydroid 的电源控制是在没有应用可见时冻结整个容器。",
+          },
+          arm: {
+            title: "x86 上的 ARM 游戏，开箱即用",
+            copy: "Teto 随 Droidloom 一起提供，并带有针对游戏的修复。Waydroid 用户需要通过第三方脚本安装 Houdini 或 libndk。",
+          },
+          folders: {
+            title: "你的文件夹，已经共享",
+            copy: "Android 的 Download、Pictures 和 Music 就是你的 Linux 文件夹。Waydroid 的文档要你自己用 <code>sudo mount --bind</code> 挂载。",
+          },
+        },
+        note: "对比依据为 2026 年 10 月的 <a class=\"text-link\" href=\"https://github.com/waydroid\">Waydroid 源代码</a>。",
       },
       try: {
         title: "试用预览版。",
