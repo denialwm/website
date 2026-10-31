@@ -9,9 +9,11 @@ Linux Wayland windows. It uses a shared-kernel Android userspace with real
 Android APIs, GPU acceleration, and a native desktop application catalog.
 Arknights: Endfield runs through Droidloom.
 
-This is an early preview. The published package workflow targets x86_64 Arch
-Linux and Omarchy with AMD or Intel graphics. NVIDIA rendering is not
-validated. WhatsApp and Phone have been tested on Omarchy with Hyprland.
+This is an early preview. Prebuilt pacman packages are published for x86_64
+Arch Linux and aarch64 Arch Linux ARM in the
+[latest release](https://github.com/denialwm/droidloom/releases/latest).
+Droidloom is incompatible with NVIDIA graphics. WhatsApp and Phone have been
+tested on Hyprland.
 Startup is manual: launching an app does not start a stopped runtime.
 
 Droidloom does not use closed-source libraries. Its original code is

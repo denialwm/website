@@ -406,7 +406,7 @@ window.denialTranslations = {
       },
       try: {
         title: "试用预览版。",
-        intro: "桌面预览版面向使用 AMD 或 Intel 显卡的 x86_64 Arch Linux 和 Omarchy。你需要一个 Wayland 会话以及约 20 GiB 的可用空间。NVIDIA 渲染尚未经过验证。",
+        intro: "预构建软件包同时提供 x86_64 Arch Linux 和 ARM64 Arch Linux ARM 版本，见<a class=\"text-link\" href=\"https://github.com/denialwm/droidloom/releases/latest\">最新发布</a>。你需要一个 Wayland 会话以及约 20 GiB 的可用空间。Droidloom 与 NVIDIA 显卡不兼容。",
         install: {
           title: "安装软件包",
           copy: "先下载并阅读安装脚本，然后运行它。脚本会添加 Droidloom 的 pacman 软件仓库，并安装运行时和 Android 镜像。之后通过常规的 <strong>pacman -Syu</strong> 获取更新。",

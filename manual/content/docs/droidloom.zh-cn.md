@@ -8,8 +8,9 @@ prev: development
 Android 应用。它使用共享内核的 Android 用户空间、真实的 Android API、GPU 加速，以及
 原生桌面应用目录。明日方舟：终末地通过 Droidloom 运行。
 
-这是早期预览。已发布的软件包流程面向 x86_64 的 Arch Linux 和 Omarchy，使用 AMD 或
-Intel 显卡。NVIDIA 渲染尚未验证。WhatsApp 和 Phone 已在 Omarchy 的 Hyprland 上测试。
+这是早期预览。预构建的 pacman 软件包同时提供 x86_64 Arch Linux 和 aarch64 Arch Linux ARM
+版本，见[最新发布](https://github.com/denialwm/droidloom/releases/latest)。Droidloom 与 NVIDIA 显卡不兼容。
+WhatsApp 和 Phone 已在 Hyprland 上测试。
 启动需要手动进行：启动应用不会拉起已经停止的运行时。
 
 Droidloom 不使用闭源库。其原创代码采用
