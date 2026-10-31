@@ -423,64 +423,6 @@
         object-fit: cover;
       }
 
-      /* ─────────────────────────────────────────────────────────
-         Readout band
-         ───────────────────────────────────────────────────────── */
-      .strip-band {
-        position: relative;
-        overflow: hidden;
-        padding: 1rem 0;
-        border-block: 1px solid rgb(255 255 255 / 5%);
-        background: rgb(255 255 255 / 1.5%);
-        mask-image: linear-gradient(
-          90deg,
-          transparent,
-          black 10%,
-          black 90%,
-          transparent
-        );
-      }
-
-      .hero-strip-track {
-        display: flex;
-        width: max-content;
-        animation: marquee 46s linear infinite;
-      }
-
-      .strip-band:hover .hero-strip-track {
-        animation-play-state: paused;
-      }
-
-      .hero-strip-group {
-        display: flex;
-        flex: 0 0 auto;
-        gap: 2.5rem;
-        padding-right: 2.5rem;
-      }
-
-      .hero-strip-group span {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.6rem;
-        color: rgb(119 113 127 / 85%);
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        font-size: 0.65rem;
-        font-weight: 400;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        white-space: nowrap;
-      }
-
-      .hero-strip-group span::before {
-        width: 0.22rem;
-        height: 0.22rem;
-        flex: 0 0 auto;
-        border-radius: 50%;
-        background: var(--accent);
-        content: "";
-        opacity: 0.7;
-      }
-
       /* Nothing off-screen or hidden should keep the compositor awake. */
       .is-idle,
       .is-idle * {
@@ -559,40 +501,10 @@
         }
       }
 
-      @keyframes marquee {
-        to {
-          transform: translateX(-50%);
-        }
-      }
-
       /* ─────────────────────────────────────────────────────────
          Section furniture
          ───────────────────────────────────────────────────────── */
-      .section-label {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        margin: 0 0 1.4rem;
-        color: var(--quiet);
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        font-size: 0.66rem;
-        font-weight: 500;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-      }
-
-      .section-label::before {
-        width: 0.32rem;
-        height: 0.32rem;
-        flex: 0 0 auto;
-        border-radius: 50%;
-        background: var(--accent);
-        box-shadow: 0 0 0.6rem var(--accent);
-        content: "";
-      }
-
       h2 {
-        max-width: 20ch;
         margin: 0;
         color: var(--text);
         font-size: clamp(2rem, 4.4vw, 3.25rem);
@@ -707,10 +619,6 @@
         font-size: 0.8rem;
       }
 
-      .desktop-feature {
-        margin: 0 0 clamp(1.5rem, 3vw, 2.2rem);
-      }
-
       html[lang="zh-CN"] .hero-headline {
         max-width: 12em;
         letter-spacing: 0.015em;
@@ -727,16 +635,7 @@
         margin-bottom: clamp(1.75rem, 4vw, 3rem);
       }
 
-      .gallery-heading .section-label {
-        margin-bottom: 1rem;
-      }
-
-      .gallery-heading .section-label::before {
-        box-shadow: none;
-      }
-
       .gallery-heading h2 {
-        max-width: none;
         font-size: clamp(2rem, 4vw, 3.1rem);
         text-shadow: none;
       }
@@ -759,18 +658,13 @@
         }
       }
 
-      .gallery + .screenshots {
-        padding-top: 0;
-      }
-
       @media (min-width: 64rem) {
-        .gallery-grid--stills {
+        /* Three across, wider than the page column and centred on it. */
+        .gallery-grid--wide {
+          --wide: min(calc(100vw - 3rem), 100rem);
           grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-
-        .gallery-grid--stills .gallery-card:last-child:nth-child(odd) {
-          grid-column: auto;
-          width: auto;
+          width: var(--wide);
+          margin-inline: calc((100% - var(--wide)) / 2);
         }
       }
 
@@ -879,7 +773,6 @@
       }
 
       .gallery-dialog h2 {
-        max-width: none;
         font-size: clamp(1.25rem, 3vw, 1.8rem);
         font-weight: 450;
         text-shadow: none;
@@ -994,16 +887,7 @@
         padding-top: 0;
       }
 
-      .community .section-label {
-        margin-bottom: 1rem;
-      }
-
-      .community .section-label::before {
-        box-shadow: none;
-      }
-
       .community h2 {
-        max-width: 17ch;
         font-size: clamp(2rem, 4vw, 3.1rem);
         text-shadow: none;
       }
@@ -1149,7 +1033,6 @@
       }
 
       .install-heading h2 {
-        max-width: none;
         font-size: clamp(2rem, 4.4vw, 3.3rem);
       }
 
@@ -1976,8 +1859,7 @@
 .mark-shine,
 .hero-kicker,
 .hero-copy,
-.hero-actions,
-.hero-strip-track {
+.hero-actions {
           animation: none;
         }
 
@@ -2852,7 +2734,6 @@
 }
 
 .sp-hero h1 {
-  max-width: 18ch;
   margin: 0.35rem 0 0;
   font-size: clamp(2.4rem, 5.6vw, 4.1rem);
   font-weight: 500;
@@ -2971,7 +2852,7 @@
   margin: 0.5rem 0 0;
 }
 
-.sp-goal-copy p:not(.section-label) {
+.sp-goal-copy p {
   max-width: 34rem;
   margin: 0.9rem 0 0;
   color: var(--muted);
@@ -3232,24 +3113,6 @@
    Polish layer
    ───────────────────────────────────────────────────────── */
 
-/* Section labels read as small lit chips. */
-.section-label {
-  width: fit-content;
-  padding: 0.4rem 0.78rem 0.4rem 0.68rem;
-  border: 1px solid rgb(190 166 234 / 16%);
-  border-radius: 999px;
-  background: rgb(156 121 219 / 8%);
-  color: var(--accent-bright);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-}
-
-.section-label::before,
-.gallery-heading .section-label::before,
-.community .section-label::before {
-  box-shadow: 0 0 0.5rem var(--accent);
-}
-
 /* Headings get a soft white-to-lavender ink. The glow moves to a
    drop-shadow because text-shadow would paint over clipped text. */
 h2 {
@@ -3277,7 +3140,6 @@ h2 {
 }
 
 /* Media sits on a faint purple halo instead of floating flat. */
-.desktop-feature .gallery-media-frame,
 .dl-shot-frame {
   box-shadow:
     0 0 0 1px var(--glass-line),
@@ -3418,34 +3280,6 @@ h2 {
   height: 3.2rem;
   flex: none;
   border-radius: 0.55rem;
-}
-
-/* The open slot stays quiet: a dashed outline, nothing that moves. */
-.sp-company-invite {
-  gap: 0.7rem;
-  min-height: 0;
-  padding: 0.45rem 1.1rem 0.45rem 0.45rem;
-  border-style: dashed;
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-weight: 400;
-}
-
-.sp-company-invite:hover {
-  color: var(--text);
-  transform: none;
-}
-
-.sp-company-plus {
-  display: grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  flex: none;
-  border: 1px dashed var(--glass-line-lit);
-  border-radius: 0.45rem;
-  color: var(--accent-bright);
-  font-size: 1.1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

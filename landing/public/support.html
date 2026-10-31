@@ -103,20 +103,7 @@
 
     <main class="sp-page">
       <section class="sp-hero container" aria-labelledby="support-title">
-        <p class="section-label" data-i18n="supportPage.hero.label">Support</p>
-        <h1 id="support-title" data-i18n-html="supportPage.hero.title">The sponsors behind <span class="accent">Denial</span> and <span class="accent">Droidloom</span>.</h1>
-        <div class="sp-tier">
-          <p class="sp-tier-label" data-i18n="supportPage.hero.companies">Companies</p>
-          <ul class="sp-company-wall" data-company-wall data-company-invite aria-label="Company sponsors" data-i18n-aria="supportPage.hero.companiesAria"></ul>
-        </div>
-        <div class="sp-tier">
-          <p class="sp-tier-label" data-i18n="supportPage.hero.individuals">Individuals</p>
-          <ul class="sp-wall" data-sponsor-wall aria-label="GitHub sponsors" data-i18n-aria="supportPage.hero.individualsAria"></ul>
-        </div>
-        <p class="sp-wall-note" data-i18n-html="supportPage.hero.wallNote">
-          Public sponsors on <a class="text-link" href="https://github.com/sponsors/doctorlogix">GitHub Sponsors</a>,
-          refreshed every day. Private sponsorships are never listed.
-        </p>
+        <h1 id="support-title" data-i18n-html="supportPage.hero.title">Keep <span class="accent">Denial</span> and <span class="accent">Droidloom</span> going.</h1>
         <p class="page-lede" data-i18n="supportPage.hero.lede">
           Denial and Droidloom are free for everyone, with nothing locked
           behind a sponsorship: no paywalls, no sponsor-only builds, no waiting
@@ -138,7 +125,6 @@
       </section>
 
       <section class="container page-section" aria-labelledby="funding-title" data-reveal>
-        <p class="section-label" data-i18n="supportPage.funding.label">What you’re funding</p>
         <h2 id="funding-title" data-i18n="supportPage.funding.title">Built from scratch, in the open.</h2>
         <div class="sp-projects">
           <a class="sp-project" href="/">
@@ -171,7 +157,6 @@
       <section class="container page-section" aria-labelledby="goal-title" data-reveal>
         <div class="sp-goal">
           <div class="sp-goal-copy">
-            <p class="section-label" data-i18n="supportPage.goal.label">Next goal</p>
             <h2 id="goal-title" data-i18n="supportPage.goal.title">A new device on the desk.</h2>
             <p data-i18n="supportPage.goal.copy">
               Every port starts with the hardware in hand. Donations toward
@@ -192,7 +177,6 @@
       </section>
 
       <section class="container page-section" aria-labelledby="where-title" data-reveal>
-        <p class="section-label" data-i18n="supportPage.where.label">Where it goes</p>
         <h2 id="where-title" data-i18n="supportPage.where.title">What your support pays for.</h2>
         <div class="dl-grid sp-where">
           <article class="stack-card">
@@ -214,7 +198,6 @@
       </section>
 
       <section class="container page-section" id="give" aria-labelledby="give-title" data-reveal>
-        <p class="section-label" data-i18n="supportPage.give.label">Ways to give</p>
         <h2 id="give-title" data-i18n="supportPage.give.title">Pick whatever is easiest.</h2>
         <div class="tier-grid-support">
           <article class="support-card">
@@ -224,7 +207,7 @@
           </article>
           <article class="support-card">
             <h3 data-i18n="supportPage.give.platformsTitle">GitHub Sponsors or Ko-fi</h3>
-            <p data-i18n="supportPage.give.platformsCopy">Monthly or one-time. Sponsor publicly on GitHub to appear on the wall above.</p>
+            <p data-i18n="supportPage.give.platformsCopy">Monthly or one-time. Sponsor publicly on GitHub to be listed on this page.</p>
             <div class="sponsor-platforms" style="margin:0;flex-wrap:wrap">
               <iframe src="https://github.com/sponsors/doctorlogix/button" title="Sponsor doctorlogix" height="32" width="114" style="border:0;border-radius:6px"></iframe>
               <a class="support-button" href="https://ko-fi.com/E5P523D5FN" target="_blank" rel="noopener noreferrer" aria-label="Support Denial on Ko-fi" data-i18n-aria="sponsor.kofi">
@@ -245,19 +228,34 @@
         </div>
       </section>
 
-      <section class="container page-section" aria-labelledby="port-title" data-reveal>
-        <p class="section-label" data-i18n="supportPage.port.label">Device ports</p>
-        <h2 id="port-title" data-i18n="supportPage.port.title">Want Denial on your device?</h2>
-        <p class="section-intro" data-i18n="supportPage.port.copy">
-          Every port is built and tested on hardware I keep. Anyone can
-          request a device, and device sponsors make ports happen. The Denial
-          Mobile page has the details.
+      <section class="container page-section" id="sponsors" aria-labelledby="sponsors-title" data-sponsor-section hidden>
+        <h2 id="sponsors-title" data-i18n="supportPage.sponsors.title">Thank you.</h2>
+        <div class="sp-tier" data-sponsor-tier="companies" hidden>
+          <p class="sp-tier-label" data-i18n="supportPage.sponsors.companies">Companies</p>
+          <ul class="sp-company-wall" data-company-wall aria-label="Company sponsors" data-i18n-aria="supportPage.sponsors.companiesAria"></ul>
+        </div>
+        <div class="sp-tier" data-sponsor-tier="people" hidden>
+          <p class="sp-tier-label" data-i18n="supportPage.sponsors.individuals">Individuals</p>
+          <ul class="sp-wall" data-sponsor-wall aria-label="GitHub sponsors" data-i18n-aria="supportPage.sponsors.individualsAria"></ul>
+        </div>
+        <p class="sp-wall-note" data-i18n-html="supportPage.sponsors.wallNote">
+          Public sponsors on <a class="text-link" href="https://github.com/sponsors/doctorlogix">GitHub Sponsors</a>,
+          refreshed every day. Private sponsorships are never listed.
         </p>
-        <a class="button" href="/mobile.html#bring-device" data-i18n="supportPage.port.cta">Bring Denial to your device</a>
+      </section>
+
+      <section class="container page-section" aria-labelledby="port-title" data-reveal>
+        <h2 id="port-title" data-i18n="supportPage.port.title">Want Linux on your device?</h2>
+        <p class="section-intro" data-i18n="supportPage.port.copy">
+          Denial runs wherever Linux does. Bringing Linux to a phone or tablet
+          needs the device in hand: every Linux Perpetua port is built and
+          tested on hardware I keep. Anyone can request a device, and device
+          sponsors make ports happen. The Denial Mobile page has the details.
+        </p>
+        <a class="button" href="/mobile.html#bring-device" data-i18n="supportPage.port.cta">Bring Linux to your device</a>
       </section>
 
       <section class="container page-section" id="companies" aria-labelledby="company-title" data-reveal>
-        <p class="section-label" data-i18n="commercial.label">Companies</p>
         <h2 id="company-title" data-i18n="commercial.heading">Working with companies</h2>
         <div class="tier-grid-support">
           <article class="support-card sp-company-offer">

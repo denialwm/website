@@ -160,62 +160,12 @@
         </div>
       </section>
 
-      <div class="strip-band" data-idle aria-hidden="true">
-        <div class="hero-strip-track">
-          <div class="hero-strip-group">
-            <span data-i18n="strip.touchShell">Touch-first Wayland shell</span>
-            <span data-i18n="strip.gestures">Gestures</span>
-            <span data-i18n="strip.keyboard">Software keyboard</span>
-            <span data-i18n="strip.glass">Glass</span>
-            <span data-i18n="strip.layouts">Stacking · tiling · scrolling</span>
-            <span>Xwayland</span>
-            <span data-i18n="strip.screenSharing">Screen sharing</span>
-            <span data-i18n="strip.sameCode">Same codebase on mobile</span>
-            <span data-i18n="strip.openSource">Open source · GPL-3.0</span>
-          </div>
-          <div class="hero-strip-group" aria-hidden="true">
-            <span data-i18n="strip.touchShell">Touch-first Wayland shell</span>
-            <span data-i18n="strip.gestures">Gestures</span>
-            <span data-i18n="strip.keyboard">Software keyboard</span>
-            <span data-i18n="strip.glass">Glass</span>
-            <span data-i18n="strip.layouts">Stacking · tiling · scrolling</span>
-            <span>Xwayland</span>
-            <span data-i18n="strip.screenSharing">Screen sharing</span>
-            <span data-i18n="strip.sameCode">Same codebase on mobile</span>
-            <span data-i18n="strip.openSource">Open source · GPL-3.0</span>
-          </div>
-        </div>
-      </div>
-
-            <section class="gallery container" id="desktop" aria-labelledby="gallery-title" data-reveal>
+      <section class="gallery container" id="desktop" aria-labelledby="gallery-title" data-reveal>
         <div class="gallery-heading">
-          <p class="section-label" data-i18n="gallery.label">Gallery</p>
           <h2 id="gallery-title" data-i18n="gallery.heading">Sometimes words are not enough.</h2>
         </div>
 
-        <figure class="desktop-feature">
-          <div class="gallery-media-frame">
-            <video
-              class="gallery-media gallery-video"
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              poster="/assets/home-main.webp"
-              width="1280"
-              height="720"
-              aria-label="A short preview of the Denial desktop"
-              data-i18n-aria="hero.previewLabel"
-              data-gallery-video
-            >
-              <source src="/assets/home-main.mp4" type="video/mp4">
-              <span data-i18n="gallery.videoUnsupported">Your browser does not support embedded video.</span>
-            </video>
-          </div>
-        </figure>
-
-        <div class="gallery-grid">
+        <div class="gallery-grid gallery-grid--wide">
           <figure
             class="gallery-card"
             role="button"
@@ -438,102 +388,6 @@
 
       </section>
 
-      <section class="gallery screenshots container" id="screenshots" aria-labelledby="screenshots-title" data-reveal>
-        <div class="gallery-heading">
-          <p class="section-label" data-i18n="screenshots.label">Screenshots</p>
-          <h2 id="screenshots-title" data-i18n="screenshots.heading">Glass, moods and the launcher.</h2>
-        </div>
-
-        <div class="gallery-grid gallery-grid--stills">
-          <figure
-            class="gallery-card"
-            role="button"
-            tabindex="0"
-            aria-label="Open Glass dashboard"
-            data-gallery-item
-            data-gallery-type="image"
-            data-gallery-src="/assets/desktop-glass-dashboard.webp"
-            data-gallery-title="Glass dashboard"
-            data-gallery-kind="Translucent dashboard and terminal visualizers"
-            data-i18n-gallery="gallery.items.glassDashboard"
-          >
-            <div class="gallery-media-frame">
-              <img
-                class="gallery-media"
-                src="/assets/desktop-glass-dashboard.webp"
-                alt=""
-                width="1600"
-                height="901"
-              >
-            </div>
-            <figcaption>
-              <h3 class="gallery-item-title">Glass dashboard</h3>
-              <p class="gallery-item-kind">
-                Translucent dashboard and terminal visualizers
-              </p>
-            </figcaption>
-          </figure>
-
-          <figure
-            class="gallery-card"
-            role="button"
-            tabindex="0"
-            aria-label="Open Another mood"
-            data-gallery-item
-            data-gallery-type="image"
-            data-gallery-src="/assets/desktop-purple.webp"
-            data-gallery-title="Another mood"
-            data-gallery-kind="Purple wallpaper, btop, launcher, and an audio visualizer"
-            data-i18n-gallery="gallery.items.desktopPurple"
-          >
-            <div class="gallery-media-frame">
-              <img
-                class="gallery-media"
-                src="/assets/desktop-purple.webp"
-                alt=""
-                width="1600"
-                height="902"
-              >
-            </div>
-            <figcaption>
-              <h3 class="gallery-item-title">Another mood</h3>
-              <p class="gallery-item-kind">
-                Purple wallpaper, btop, launcher, and an audio visualizer
-              </p>
-            </figcaption>
-          </figure>
-
-          <figure
-            class="gallery-card"
-            role="button"
-            tabindex="0"
-            aria-label="Open Launcher, up close"
-            data-gallery-item
-            data-gallery-type="image"
-            data-gallery-src="/assets/desktop-glass-launcher.webp"
-            data-gallery-title="Launcher, up close"
-            data-gallery-kind="Glass application launcher over the desktop wallpaper"
-            data-i18n-gallery="gallery.items.glassLauncher"
-          >
-            <div class="gallery-media-frame">
-              <img
-                class="gallery-media"
-                src="/assets/desktop-glass-launcher.webp"
-                alt=""
-                width="1600"
-                height="756"
-              >
-            </div>
-            <figcaption>
-              <h3 class="gallery-item-title">Launcher, up close</h3>
-              <p class="gallery-item-kind">
-                Glass application launcher over the desktop wallpaper
-              </p>
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
       <dialog
         class="gallery-dialog"
         aria-labelledby="gallery-dialog-title"
@@ -613,39 +467,9 @@
         </div>
       </dialog>
 
-      <section class="beyond container page-section" aria-labelledby="beyond-title" data-reveal>
-        <p class="section-label" data-i18n="home.beyond.label">Beyond the desktop</p>
-        <h2 id="beyond-title" data-i18n="home.beyond.heading">Denial doesn’t stop at the desktop.</h2>
-        <div class="sp-projects">
-          <a class="sp-project" href="/mobile.html">
-            <img class="sp-project-img--top" src="/assets/mobile-card.webp" width="1018" height="720" alt="" loading="lazy" decoding="async">
-            <div class="sp-project-copy">
-              <h3>Denial Mobile</h3>
-              <p data-i18n="home.beyond.mobileCopy">
-                The same compositor as a touch-first shell for phones and
-                tablets. Plug one into a monitor and it becomes your desktop.
-              </p>
-              <span class="text-link" data-i18n="home.beyond.mobileLink">See Denial Mobile →</span>
-            </div>
-          </a>
-          <a class="sp-project" href="/droidloom.html">
-            <img src="/assets/droidloom-desktop-teto.webp" width="2000" height="1124" alt="" loading="lazy" decoding="async">
-            <div class="sp-project-copy">
-              <h3>Droidloom</h3>
-              <p data-i18n="home.beyond.droidloomCopy">
-                Android apps and games as real Linux windows, tiled next to
-                everything else on your Denial desktop.
-              </p>
-              <span class="text-link" data-i18n="home.beyond.droidloomLink">See Droidloom →</span>
-            </div>
-          </a>
-        </div>
-      </section>
-
       <section class="install container page-section" id="install" aria-labelledby="install-title">
         <div class="install-heading" data-reveal>
           <div>
-            <p class="section-label" data-i18n="install.label">Install</p>
             <h2 id="install-title" data-i18n="install.desktopOnlyHeading">Install Denial on desktop.</h2>
           </div>
         </div>
@@ -833,9 +657,36 @@
         </div>
       </section>
 
+      <section class="beyond container page-section" aria-labelledby="beyond-title" data-reveal>
+        <h2 id="beyond-title" data-i18n="home.beyond.heading">Denial doesn’t stop at the desktop.</h2>
+        <div class="sp-projects">
+          <a class="sp-project" href="/mobile.html">
+            <img class="sp-project-img--top" src="/assets/mobile-card.webp" width="1018" height="720" alt="" loading="lazy" decoding="async">
+            <div class="sp-project-copy">
+              <h3>Denial Mobile</h3>
+              <p data-i18n="home.beyond.mobileCopy">
+                The same compositor as a touch-first shell for phones and
+                tablets. Plug one into a monitor and it becomes your desktop.
+              </p>
+              <span class="text-link" data-i18n="home.beyond.mobileLink">See Denial Mobile →</span>
+            </div>
+          </a>
+          <a class="sp-project" href="/droidloom.html">
+            <img src="/assets/droidloom-desktop-teto.webp" width="2000" height="1124" alt="" loading="lazy" decoding="async">
+            <div class="sp-project-copy">
+              <h3>Droidloom</h3>
+              <p data-i18n="home.beyond.droidloomCopy">
+                Android apps and games as real Linux windows, tiled next to
+                everything else on your Denial desktop.
+              </p>
+              <span class="text-link" data-i18n="home.beyond.droidloomLink">See Droidloom →</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
       <section class="community container page-section" aria-labelledby="community-title" data-reveal>
         <div>
-          <p class="section-label" data-i18n="community.label">Community</p>
           <h2 id="community-title" data-i18n="community.heading">Developed in the open.</h2>
           <p class="community-text" data-i18n="community.copy">
             Follow along on GitHub, chat on Discord, or support the project if
@@ -874,8 +725,8 @@
           </a>
         </nav>
 
-        <div class="home-sponsors">
-          <p class="section-label" data-i18n="sponsorWall.label">Sponsored by</p>
+        <div class="home-sponsors" data-sponsor-section hidden>
+          <p class="sp-tier-label" data-i18n="sponsorWall.label">Sponsored by</p>
           <ul class="sp-company-wall" data-company-wall aria-label="Company sponsors" data-i18n-aria="sponsorWall.companiesLabel" hidden></ul>
           <ul class="sp-wall" data-sponsor-wall aria-label="GitHub sponsors" data-i18n-aria="sponsorWall.peopleLabel"></ul>
         </div>

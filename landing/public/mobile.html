@@ -104,7 +104,6 @@
     <main class="mb-page">
       <section class="mb-hero container" aria-labelledby="mobile-title">
         <div class="mb-hero-copy">
-          <p class="section-label" data-i18n="hero.mobile">Denial Mobile</p>
           <h1 id="mobile-title" data-i18n-html="mobilePage.hero.title">A Linux phone you’d <span class="accent">actually</span> use.</h1>
           <p class="page-lede" data-i18n="mobilePage.hero.lede">
             Denial Mobile is the Denial compositor as a touch-first shell for
@@ -144,7 +143,6 @@
       </section>
 
       <section class="container page-section" aria-labelledby="touch-title" data-reveal>
-        <p class="section-label" data-i18n="mobilePage.shell.label">The shell</p>
         <h2 id="touch-title" data-i18n="mobilePage.shell.heading">Built for touch, from the compositor up.</h2>
         <p class="section-intro" data-i18n="mobilePage.shell.intro">
           The mobile shell has its own home
@@ -187,7 +185,6 @@
       </section>
 
       <section class="container page-section" aria-labelledby="hardware-title" data-reveal>
-        <p class="section-label" data-i18n="mobilePage.hardware.label">The hardware</p>
         <h2 id="hardware-title" data-i18n="mobilePage.hardware.heading">Fingerprint, SIM, rotation and haptics.</h2>
         <div class="dl-grid mb-hardware">
           <article class="stack-card">
@@ -201,16 +198,16 @@
           <article class="stack-card">
             <h3 data-i18n="mobilePage.hardware.sim.title">Mobile data and SIM</h3>
             <p data-i18n="mobilePage.hardware.sim.copy">
-              Carrier, signal and data status from ModemManager. Toggle mobile
-              data from quick settings and unlock your SIM with its PIN.
+              Carrier, signal and data status from dmail or ModemManager.
+              Toggle mobile data from quick settings and unlock your SIM with
+              its PIN.
             </p>
           </article>
           <article class="stack-card">
             <h3 data-i18n="mobilePage.hardware.rotation.title">Auto-rotation</h3>
             <p data-i18n-html="mobilePage.hardware.rotation.copy">
               The shell and your apps follow the device through
-              <code>iio-sensor-proxy</code>, with a rotation lock in quick
-              settings.
+              <code>steinerd</code>, with a rotation lock in quick settings.
             </p>
           </article>
           <article class="stack-card">
@@ -230,7 +227,6 @@
       <section class="container page-section" aria-labelledby="any-screen-title" data-reveal>
         <div class="mb-split">
           <div>
-            <p class="section-label" data-i18n="mobilePage.convergence.label">Convergence</p>
             <h2 id="any-screen-title" data-i18n="mobilePage.convergence.heading">Same Denial, any screen.</h2>
             <p class="section-intro" data-i18n="mobilePage.convergence.intro">
               Plug any Denial phone or tablet into a monitor and it becomes
@@ -251,7 +247,6 @@
       </section>
 
       <section class="container page-section" aria-labelledby="apps-title" data-reveal>
-        <p class="section-label" data-i18n="mobilePage.apps.label">Android apps</p>
         <h2 id="apps-title" data-i18n="mobilePage.apps.heading">Your apps come with you.</h2>
         <p class="section-intro" data-i18n="mobilePage.apps.intro">
           Moving to a Linux phone usually means leaving your apps behind, but
@@ -286,8 +281,14 @@
       </section>
 
       <section class="container page-section" id="devices" aria-labelledby="devices-title" data-reveal>
-        <p class="section-label" data-i18n="mobilePage.devices.label">Devices</p>
-        <h2 id="devices-title" data-i18n="mobilePage.devices.heading">Running Denial today.</h2>
+        <h2 id="devices-title" data-i18n="mobilePage.devices.heading">If Linux runs, Denial runs.</h2>
+        <p class="section-intro" data-i18n-html="mobilePage.devices.intro">
+          Denial doesn’t need a port for each device, only a working Linux.
+          The phones and tablets below share
+          <a class="text-link" href="https://github.com/denialwm/linux-perpetua">Linux Perpetua</a>:
+          one mainline kernel for all of them, kept in step with every
+          release from Linus Torvalds.
+        </p>
         <div class="mb-table-wrap">
           <table class="mb-table">
             <thead>
@@ -302,52 +303,62 @@
                 <th scope="col" data-i18n="mobilePage.devices.columns.camera">Camera</th>
                 <th scope="col" data-i18n="mobilePage.devices.columns.fingerprint">Fingerprint</th>
                 <th scope="col" data-i18n="mobilePage.devices.columns.mobileData">Mobile data</th>
+                <th scope="col" data-i18n="mobilePage.devices.columns.calls">Calls</th>
                 <th scope="col" data-i18n="mobilePage.devices.columns.androidApps">Android apps</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th scope="row">OnePlus Pad 4<span data-i18n="mobilePage.devices.tablet">Tablet</span></th>
-                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes">SuperVOOC</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="na">—</td><td class="na">—</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
+                <th scope="row">RedMagic 11 Pro<span data-i18n="mobilePage.devices.phone">Phone</span></th>
+                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="early" data-i18n="mobilePage.devices.partial">Partial</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
               </tr>
               <tr>
-                <th scope="row">Lenovo Idea Tab Pro<span data-i18n="mobilePage.devices.tablet">Tablet</span></th>
-                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="na">—</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
+                <th scope="row">OnePlus 12R / Ace 3<span data-i18n="mobilePage.devices.phone">Phone</span></th>
+                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes">SuperVOOC</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="early" data-i18n="mobilePage.devices.partial">Partial</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
               </tr>
               <tr>
                 <th scope="row">Motorola Edge 70<span data-i18n="mobilePage.devices.phone">Phone</span></th>
-                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="early" data-i18n="mobilePage.devices.early">Early</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
+                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="early" data-i18n="mobilePage.devices.partial">Partial</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="no" data-i18n="mobilePage.devices.untested">Untested</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="no" data-i18n="mobilePage.devices.untested">Untested</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
               </tr>
               <tr>
-                <th scope="row">OnePlus 12R<span data-i18n="mobilePage.devices.phone">Phone</span></th>
-                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes">SuperVOOC</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
+                <th scope="row">OnePlus Pad 4<span data-i18n="mobilePage.devices.tablet">Tablet</span></th>
+                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="early" data-i18n="mobilePage.devices.partial">Partial</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="no" data-i18n="mobilePage.devices.untested">Untested</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="yes" data-i18n="mobilePage.devices.yes">Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Lenovo Idea Tab Pro<span data-i18n="mobilePage.devices.tablet">Tablet</span></th>
+                <td class="yes" data-i18n="mobilePage.devices.yes">Yes</td><td class="early" data-i18n="mobilePage.devices.partial">Partial</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="early" data-i18n="mobilePage.devices.partial">Partial</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="no" data-i18n="mobilePage.devices.notYet">Not yet</td><td class="na">—</td><td class="na">—</td><td class="no" data-i18n="mobilePage.devices.untested">Untested</td>
               </tr>
             </tbody>
           </table>
         </div>
         <p class="stack-note" data-i18n-html="mobilePage.devices.note">
-          <strong>Not yet</strong>: the hardware is there but hasn’t been
-          brought up yet. Every item on this list can be implemented. <strong>—</strong> means the device doesn’t have that
-          hardware.
+          <strong>Partial</strong>: works, with a gap still open.
+          <strong>Not yet</strong>: the hardware is there but doesn’t work
+          yet. <strong>Untested</strong>: not tried on the current kernel.
+          <strong>—</strong>: the device doesn’t have that hardware.
         </p>
 
         <div class="support-nudge">
-          <p><strong data-i18n="mobilePage.devices.nudge">Help fund the next device and the next feature.</strong></p>
+          <p data-i18n-html="mobilePage.devices.nudge"><strong>Every device here started on my desk.</strong> Donations buy the next one to bring to Linux Perpetua.</p>
           <a class="button" href="/support.html" data-i18n="mobilePage.devices.supportCta">Support the project</a>
         </div>
       </section>
 
       <section class="container page-section" id="get-it" aria-labelledby="get-it-title" data-reveal>
-        <p class="section-label" data-i18n="mobilePage.getIt.label">Get it</p>
-        <h2 id="get-it-title" data-i18n="mobilePage.getIt.heading">Get Denial on your device.</h2>
+        <h2 id="get-it-title" data-i18n="mobilePage.getIt.heading">It starts with Linux.</h2>
+        <p class="section-intro" data-i18n="mobilePage.getIt.intro">
+          Denial runs on any phone or tablet with a working Linux. The work
+          is getting Linux to drive the hardware, and that’s what Linux
+          Perpetua does for the devices above.
+        </p>
         <div class="dl-grid dl-grid--2">
           <article class="stack-card mb-get-card">
             <p class="mb-status" data-i18n="mobilePage.getIt.status">Soon</p>
-            <h3 data-i18n="mobilePage.getIt.install.title">Install on your device</h3>
+            <h3 data-i18n="mobilePage.getIt.install.title">Install on a Perpetua device</h3>
             <p data-i18n="mobilePage.getIt.install.copy">
-              Ready-to-flash images and ARM64 Droidloom builds for every
-              ported device, free for everyone. The installer only writes
-              non-critical partitions, so your device always stays
+              Ready-to-flash images with Denial and Droidloom for the devices
+              above, free for everyone. The installer only writes
+              non-critical partitions, so the device always stays
               recoverable.
             </p>
             <div class="mb-get-actions">
@@ -362,19 +373,19 @@
             </p>
           </article>
           <article class="stack-card mb-get-card" id="bring-device">
-            <h3 data-i18n="mobilePage.getIt.bring.title">Bring Denial to your device</h3>
+            <h3 data-i18n="mobilePage.getIt.bring.title">Bring Linux to your device</h3>
             <p data-i18n="mobilePage.getIt.bring.copy">
-              Ask for your device in the Device requests discussions, or upvote
-              it if it’s already there. It needs published kernel source and an
-              unlockable bootloader. A request shows what people want, not a
-              promise.
+              Ask for your device in Linux Perpetua’s Device requests, or
+              upvote it if it’s already there. It needs published kernel source
+              and an unlockable bootloader. A request shows what people want,
+              not a promise.
             </p>
             <div class="mb-get-actions">
               <a class="button button-primary" href="https://github.com/denialwm/linux-perpetua/discussions/new?category=device-requests&title=Device%20request%3A%20&body=%3C%21--%20Search%20the%20existing%20requests%20first%3A%20if%20your%20device%20is%20already%20there%2C%20upvote%20it%20instead.%0APorts%20work%20best%20on%20devices%20from%202022%20onward%20with%20a%20Snapdragon%207%20Gen%201%20or%20newer%2C%20or%20a%20comparable%20MediaTek%20Dimensity.%0AA%20request%20shows%20what%20people%20want.%20It%20isn%27t%20a%20promise.%20--%3E%0A%0A%23%23%20Device%0AName%20and%20model%3A%0A%0ACodename%20%28if%20known%29%3A%0A%0ASoC%3A%0A%0A%23%23%20Kernel%20source%0AManufacturer%20kernel%20source%2C%20or%20an%20existing%20mainline%20or%20LineageOS%20kernel%3A%0A%0A%23%23%20Bootloader%0ACan%20it%20be%20unlocked%3F%20Is%20yours%20unlocked%3F%0A%0A%23%23%20Notes%0A" target="_blank" rel="noopener noreferrer" data-i18n="mobilePage.getIt.bring.requestCta">Request a device</a>
               <a class="button" href="https://github.com/denialwm/linux-perpetua/discussions/categories/device-requests" target="_blank" rel="noopener noreferrer" data-i18n="mobilePage.getIt.bring.browse">See all requests</a>
             </div>
             <p class="mb-get-note">
-              <span data-i18n="mobilePage.getIt.bring.sponsor">Every port is built and retested on hardware I keep, and device sponsors are credited on the device list.</span>
+              <span data-i18n="mobilePage.getIt.bring.sponsor">A port needs the device in hand: Linux Perpetua is brought up and retested on hardware I keep, and device sponsors are credited on the device list.</span>
               <a class="text-link" href="mailto:doctor.logix@gmail.com?subject=Sponsoring%20a%20device%20for%20Denial%20Mobile&body=Device%20model%3A%0A%0ACodename%20%28if%20known%29%3A%0A%0AIs%20the%20bootloader%20unlocked%3F%0A%0AWhere%20you%20are%20%28for%20shipping%29%3A%0A%0AHow%20you%27d%20like%20to%20be%20credited%20%28name%2C%20handle%2C%20or%20anonymous%29%3A%0A%0ALink%20to%20the%20device%20request%20%28if%20there%20is%20one%29%3A%0A" data-i18n="mobilePage.getIt.bring.sponsorCta">Thinking of sponsoring one? Email me first.</a>
             </p>
           </article>

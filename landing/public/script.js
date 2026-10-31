@@ -842,24 +842,22 @@ if (sponsorWalls.length || companyWalls.length) {
       const companies = sponsors.filter((sponsor) => sponsor.org);
       const people = sponsors.filter((sponsor) => !sponsor.org);
 
-      // Companies get their own row. The Support page keeps an open slot
-      // in it; elsewhere the row only appears once a company sponsors.
+      // Sponsor sections stay hidden until someone sponsors, and each row
+      // only appears once it has a name in it.
+      document.querySelectorAll("[data-sponsor-section]").forEach((section) => {
+        section.hidden = !sponsors.length;
+      });
+      document.querySelectorAll("[data-sponsor-tier]").forEach((tier) => {
+        tier.hidden = !(tier.dataset.sponsorTier === "companies" ? companies : people).length;
+      });
+
+      // Companies get their own row above the individuals.
       companyWalls.forEach((wall) => {
         companies.forEach((sponsor) => {
           const item = document.createElement("li");
           item.append(sponsorLink(sponsor, "sp-company", 56));
           wall.append(item);
         });
-        if (wall.hasAttribute("data-company-invite")) {
-          const invite = document.createElement("li");
-          invite.innerHTML =
-            '<a class="sp-company sp-company-invite" href="#companies"><span class="sp-company-plus" aria-hidden="true">+</span><span></span></a>';
-          invite.querySelector("span:last-child").textContent = translation(
-            "sponsorWall.company",
-            "Your company here",
-          );
-          wall.append(invite);
-        }
         if (wall.children.length) wall.hidden = false;
       });
 

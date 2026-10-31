@@ -40,16 +40,6 @@ window.denialTranslations = {
       mobile: "Denial Mobile",
       previewLabel: "Denial 桌面的简短预览",
     },
-    strip: {
-      touchShell: "触控优先的 Wayland 外壳",
-      gestures: "手势",
-      keyboard: "屏幕键盘",
-      glass: "玻璃效果",
-      layouts: "堆叠 · 平铺 · 滚动",
-      screenSharing: "屏幕共享",
-      sameCode: "移动端同一套代码",
-      openSource: "开源 · GPL-3.0",
-    },
     sponsor: {
       kofi: "在 Ko-fi 上支持 Denial",
     },
@@ -58,7 +48,6 @@ window.denialTranslations = {
     },
     home: {
       beyond: {
-        label: "不止桌面",
         heading: "Denial 不止于桌面。",
         mobileCopy: "同一个合成器，作为手机和平板的触控优先外壳。接上显示器，它就成了你的桌面。",
         mobileLink: "了解 Denial Mobile →",
@@ -67,7 +56,6 @@ window.denialTranslations = {
       },
     },
     gallery: {
-      label: "图库",
       heading: "有时，文字不足以说明一切。",
       videoUnsupported: "你的浏览器不支持嵌入式视频。",
       open: "打开“{title}”",
@@ -102,18 +90,6 @@ window.denialTranslations = {
           title: "Flutter DevTools",
           kind: "Denial 完整支持 Flutter DevTools",
         },
-        glassDashboard: {
-          title: "玻璃控制面板",
-          kind: "半透明控制面板和终端可视化效果",
-        },
-        desktopPurple: {
-          title: "换个心情",
-          kind: "紫色壁纸、btop、启动器和音频可视化效果",
-        },
-        glassLauncher: {
-          title: "启动器，凑近看看",
-          kind: "桌面壁纸上的玻璃应用启动器",
-        },
       },
     },
     community: {
@@ -135,7 +111,6 @@ window.denialTranslations = {
       copied: "群号已复制",
     },
     install: {
-      label: "安装",
       desktopOnlyHeading: "在桌面安装 Denial。",
       repository: {
         title: "配置 Denial 软件仓库",
@@ -174,7 +149,6 @@ window.denialTranslations = {
       tryAgain: "重试",
     },
     commercial: {
-      label: "企业",
       heading: "与企业合作",
       copy: "有时硬件或嵌入式团队希望获得 Denial 或 Droidloom 的集成帮助。若是如此，发一封简短邮件即可。这里没有推销。",
       emailLabel: "电子邮箱",
@@ -185,10 +159,6 @@ window.denialTranslations = {
       manual: "手册",
       license: "Denial 是自由开源软件，采用 <a href=\"https://github.com/denialwm/denial/blob/main/LICENSE\">GPL-3.0-or-later</a> 许可证。",
     },
-    screenshots: {
-      label: "截图",
-      heading: "玻璃、氛围与启动器。",
-    },
     nudge: {
       home: "<strong>Denial 免费，由一位开发者独立打造。</strong>如果它已经成了你的桌面，不妨考虑赞助。",
       cta: "支持项目",
@@ -197,7 +167,6 @@ window.denialTranslations = {
       label: "赞助者",
       companiesLabel: "企业赞助者",
       peopleLabel: "GitHub 赞助者",
-      company: "你的企业在这里",
       you: "下一个是你？",
     },
     mobilePage: {
@@ -211,7 +180,6 @@ window.denialTranslations = {
         note: "<strong>这些都是 Linux 移动设备！</strong>不是 Android，也不是 PC。",
       },
       shell: {
-        label: "外壳",
         heading: "为触控打造，从合成器开始。",
         intro: "移动外壳有自己的主屏幕、最近任务、快捷设置、通知和键盘，全部由 Denial 自己绘制。",
         listAria: "移动外壳界面",
@@ -247,7 +215,6 @@ window.denialTranslations = {
         },
       },
       hardware: {
-        label: "硬件",
         heading: "指纹、SIM、旋转和振动反馈。",
         fingerprint: {
           title: "指纹解锁",
@@ -255,11 +222,11 @@ window.denialTranslations = {
         },
         sim: {
           title: "移动数据与 SIM",
-          copy: "运营商、信号和数据状态来自 ModemManager。可在快捷设置中开关移动数据，并用 PIN 码解锁 SIM 卡。",
+          copy: "运营商、信号和数据状态来自 dmail 或 ModemManager。可在快捷设置中开关移动数据，并用 PIN 码解锁 SIM 卡。",
         },
         rotation: {
           title: "自动旋转",
-          copy: "外壳和应用通过 <code>iio-sensor-proxy</code> 跟随设备方向旋转，快捷设置中还提供旋转锁定。",
+          copy: "外壳和应用通过 <code>steinerd</code> 跟随设备方向旋转，快捷设置中还提供旋转锁定。",
         },
         haptics: {
           title: "振动反馈",
@@ -268,14 +235,12 @@ window.denialTranslations = {
         note: "Denial 使用设备上已有的系统服务。相应的硬件和服务就绪后，对应功能就会出现。",
       },
       convergence: {
-        label: "融合",
         heading: "同一个 Denial，任何屏幕。",
         intro: "把任意一台运行 Denial 的手机或平板接上显示器，它就成了桌面：堆叠、平铺与滚动布局，完整的外壳，还有你刚才用手指操作的那些应用。",
         videoAria: "连接显示器的 OnePlus Pad 4，在全屏游戏和平铺的 Denial 桌面之间切换",
         caption: "OnePlus Pad 4 接上显示器。Denial 在大屏幕上运行桌面，平板则充当键盘和触控板。",
       },
       apps: {
-        label: "Android 应用",
         heading: "你的应用随你而来。",
         intro: "换用 Linux 手机通常意味着放弃原来的应用，但有了 Droidloom，它们可以一起过来。Droidloom 在 ARM 上原生运行 Android 应用，每个应用都有独立窗口：Google Play、你的聊天软件，甚至是高负载游戏。",
         shotAlt: "在运行 Denial 的 OnePlus Pad 4 上并排平铺的明日方舟：终末地、明日方舟和 htop",
@@ -295,8 +260,8 @@ window.denialTranslations = {
         more: "进一步了解 Droidloom",
       },
       devices: {
-        label: "设备",
-        heading: "已在运行 Denial 的设备。",
+        heading: "Linux 能运行，Denial 就能运行。",
+        intro: "Denial 不需要为每台设备单独移植，只需要一个能正常工作的 Linux。下面的手机和平板共用 <a class=\"text-link\" href=\"https://github.com/denialwm/linux-perpetua\">Linux Perpetua</a>：一个所有设备共享的主线内核，紧跟 Linus Torvalds 的每一次发布。",
         columns: {
           device: "设备",
           touchShell: "触控外壳",
@@ -306,6 +271,7 @@ window.denialTranslations = {
           camera: "相机",
           fingerprint: "指纹",
           mobileData: "移动数据",
+          calls: "通话",
           androidApps: "Android 应用",
         },
         tablet: "平板",
@@ -313,25 +279,27 @@ window.denialTranslations = {
         yes: "可用",
         notYet: "尚未",
         early: "早期",
-        note: "<strong>尚未</strong>：硬件存在，但还没有完成适配。列表中的每一项都可以实现。<strong>—</strong> 表示设备没有该硬件。",
-        nudge: "帮助资助下一台设备和下一个功能。",
+        partial: "部分可用",
+        untested: "未测试",
+        note: "<strong>部分可用</strong>：可以使用，但仍有未完成的部分。<strong>尚未</strong>：硬件存在，但还不能使用。<strong>未测试</strong>：尚未在当前内核上测试。<strong>—</strong> 表示设备没有该硬件。",
+        nudge: "<strong>这里的每台设备都是从我的桌上开始的。</strong>你的捐助会用来购买下一台，把它带到 Linux Perpetua。",
         supportCta: "支持项目",
       },
       getIt: {
-        label: "获取",
-        heading: "在你的设备上用上 Denial。",
+        heading: "一切从 Linux 开始。",
+        intro: "只要手机或平板上有能正常工作的 Linux，Denial 就能运行。真正的工作是让 Linux 驱动硬件，而上面这些设备的这部分工作由 Linux Perpetua 完成。",
         status: "即将推出",
         install: {
-          title: "在你的设备上安装",
-          copy: "可直接刷入的镜像和 ARM64 版 Droidloom，会为每台已完成移植的设备提供，所有人免费使用。安装程序只写入非关键分区，因此设备始终可以恢复。",
+          title: "安装到 Perpetua 设备",
+          copy: "为上面这些设备提供包含 Denial 和 Droidloom 的可直接刷入镜像，所有人免费使用。安装程序只写入非关键分区，因此设备始终可以恢复。",
           discord: "在 Discord 上关注进展",
         },
         bring: {
-          title: "把 Denial 带到你的设备上",
-          copy: "在 Device requests 讨论区提交你的设备请求，如果已经有人提过，就点赞支持。设备需要厂商已公开内核源码，且 bootloader 可以解锁。请求代表大家的需求，并不是承诺。",
+          title: "把 Linux 带到你的设备上",
+          copy: "在 Linux Perpetua 的 Device requests 讨论区提交你的设备请求，如果已经有人提过，就点赞支持。设备需要厂商已公开内核源码，且 bootloader 可以解锁。请求代表大家的需求，并不是承诺。",
           requestCta: "提交设备请求",
           browse: "查看所有请求",
-          sponsor: "每个移植都在我保留的真机上开发，并随每次发布重新测试；设备赞助者会在设备列表中署名致谢。",
+          sponsor: "移植需要真机在手：Linux Perpetua 在我保留的真机上完成适配，并随每次发布重新测试；设备赞助者会在设备列表中署名致谢。",
           sponsorCta: "想赞助一台设备？请先发邮件联系我。",
         },
         freeNote: "Denial 是自由开源软件，没有任何内容需要赞助才能解锁。<a class=\"text-link\" href=\"/support.html\">赞助</a>用于支付开发、测试设备和下载托管的费用。",
@@ -347,7 +315,6 @@ window.denialTranslations = {
         shotCaption: "运行 Denial 的 OnePlus Pad 4。Play 商店和 Firefox 都是 Android 应用，各自运行在独立窗口中；htop 把它们列为普通的宿主机进程。",
       },
       why: {
-        label: "有何不同",
         title: "不是装在盒子里的 Android 桌面。",
         intro: "其他方案会启动一整套 Android 会话，再给你一个大窗口，让你在里面使用。Droidloom 把 Android 拆开，让每个应用作为独立窗口出现在你的桌面上，与其他窗口并列。",
         windows: {
@@ -368,7 +335,6 @@ window.denialTranslations = {
         },
       },
       integration: {
-        label: "桌面集成",
         title: "仿佛它一直都在那里。",
         launcher: {
           title: "出现在应用启动器中",
@@ -398,7 +364,6 @@ window.denialTranslations = {
         shotCaption: "Endfield、Arknights 和 Google Play 与 htop 平铺在一起，htop 将 Endfield 列为一个普通的 Linux 进程。",
       },
       denial: {
-        label: "搭配 Denial 更好用",
         title: "协同打造，深入到协议层。",
         intro: "Droidloom 可在任何现代 Wayland 合成器上运行。在 Denial 上则更进一步：两者通过专门的 Wayland 协议通信，让 Android 应用表现得就像 Denial 是它们自己的系统界面。",
         insets: {
@@ -418,7 +383,6 @@ window.denialTranslations = {
         note: "这些协议不绑定特定产品，文档位于 <a class=\"text-link\" href=\"https://github.com/denialwm/droidloom/tree/main/docs/contracts\">Droidloom 仓库</a>。任何合成器都可以实现它们。",
       },
       runs: {
-        label: "能运行什么",
         title: "ARM 上原生运行，x86 上按需转译。",
         arm: {
           tag: "ARM64 · 手机和平板",
@@ -441,7 +405,6 @@ window.denialTranslations = {
         },
       },
       try: {
-        label: "试用",
         title: "试用预览版。",
         intro: "桌面预览版面向使用 AMD 或 Intel 显卡的 x86_64 Arch Linux 和 Omarchy。你需要一个 Wayland 会话以及约 20 GiB 的可用空间。NVIDIA 渲染尚未经过验证。",
         install: {
@@ -463,18 +426,19 @@ window.denialTranslations = {
     },
     supportPage: {
       hero: {
-        label: "支持",
-        title: "<span class=\"accent\">Denial</span> 与 <span class=\"accent\">Droidloom</span> 背后的赞助者。",
+        title: "让 <span class=\"accent\">Denial</span> 与 <span class=\"accent\">Droidloom</span> 继续前进。",
+        lede: "Denial 和 Droidloom 对所有人免费，没有任何东西需要赞助才能解锁：没有付费墙，没有赞助者专属版本，也不用等待。赞助用来支付背后的开发时间、测试设备和托管费用。",
+        cta: "支持 Denial",
+      },
+      sponsors: {
+        title: "谢谢你们。",
         companies: "企业",
         companiesAria: "企业赞助者",
         individuals: "个人",
         individualsAria: "GitHub 赞助者",
         wallNote: "名单来自 <a class=\"text-link\" href=\"https://github.com/sponsors/doctorlogix\">GitHub Sponsors</a> 上的公开赞助者，每天更新。私密赞助永远不会被列出。",
-        lede: "Denial 和 Droidloom 对所有人免费，没有任何东西需要赞助才能解锁：没有付费墙，没有赞助者专属版本，也不用等待。赞助用来支付背后的开发时间、测试设备和托管费用。",
-        cta: "支持 Denial",
       },
       funding: {
-        label: "你在资助什么",
         title: "从零开始，公开开发。",
         denial: "用 Flutter 编写的 Wayland 合成器。桌面、平板和手机共用一套代码，外壳还能在运行时实时修改。",
         denialLink: "了解 Denial →",
@@ -482,14 +446,12 @@ window.denialTranslations = {
         droidloomLink: "了解 Droidloom →",
       },
       goal: {
-        label: "下一个目标",
         title: "桌上再添一台新设备。",
         copy: "每一次移植都从拿到真机开始。为这个目标捐赠的钱会用来购买下一台要移植 Denial 的设备，移植成果和其他一切一样，对所有人免费。",
         of: "/ 目标",
         progressAria: "下一台设备的筹款进度",
       },
       where: {
-        label: "资金去向",
         title: "你的支持用在哪里。",
         timeTitle: "开发时间",
         timeCopy: "投入在合成器、移动外壳和 Droidloom 上的时间，而不是花在别的工作上。",
@@ -499,23 +461,21 @@ window.denialTranslations = {
         hostingCopy: "软件包仓库和数 GB 的设备镜像，所有人都能免费下载。",
       },
       give: {
-        label: "支持方式",
         title: "哪种方便选哪种。",
         pageTitle: "赞助页面",
         pageCopy: "一个页面汇总了支持项目的所有方式。",
         pageCta: "支持 Denial",
         platformsTitle: "GitHub Sponsors 或 Ko-fi",
-        platformsCopy: "按月或一次性均可。在 GitHub 上公开赞助，就会出现在上方的名单里。",
+        platformsCopy: "按月或一次性均可。在 GitHub 上公开赞助，就会列在本页的赞助者名单里。",
         freeTitle: "没钱？一样能帮上忙。",
         freeStar: "在 GitHub 上给 <a class=\"text-link\" href=\"https://github.com/denialwm/denial\">Denial</a> 和 <a class=\"text-link\" href=\"https://github.com/denialwm/droidloom\">Droidloom</a> 点 Star。",
         freeShare: "晒一张你的配置截图。大多数人就是这样知道 Denial 的。",
         freeTest: "在你的硬件上测试，并<a class=\"text-link\" href=\"https://github.com/denialwm/denial/issues\">报告出问题的地方</a>。",
       },
       port: {
-        label: "设备移植",
-        title: "想让 Denial 跑在你的设备上？",
-        copy: "每个移植都在我保留的真机上开发和测试。任何人都可以提交设备请求，而设备赞助者让移植得以实现。详情见 Denial Mobile 页面。",
-        cta: "把 Denial 带到你的设备上",
+        title: "想让你的设备用上 Linux？",
+        copy: "Linux 能运行的地方，Denial 就能运行。把 Linux 带到手机或平板上需要真机在手：每个 Linux Perpetua 移植都在我保留的真机上开发和测试。任何人都可以提交设备请求，而设备赞助者让移植得以实现。详情见 Denial Mobile 页面。",
+        cta: "把 Linux 带到你的设备上",
       },
       company: {
         sponsorTitle: "以企业身份赞助",
