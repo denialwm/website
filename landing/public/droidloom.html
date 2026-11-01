@@ -327,6 +327,148 @@
         </div>
       </section>
 
+      <section class="container page-section dl-fwd" id="nvidia" aria-labelledby="dl-nvidia-title" data-reveal>
+        <h2 id="dl-nvidia-title" data-i18n="droidloomPage.nvidia.title">NVIDIA, through GPU forwarding.</h2>
+        <p class="section-intro" data-i18n="droidloomPage.nvidia.intro">
+          NVIDIA’s driver has no Android build. Droidloom gives Android a
+          Vulkan driver of its own that hands every call to the NVIDIA driver
+          already on your desktop. Games, video and web views render on the
+          GeForce card, and their windows show up next to everything else.
+        </p>
+
+        <div class="dl-fwd-stats">
+          <div class="dl-fwd-stat"><b>33.1<small>k</small></b><span data-i18n="droidloomPage.nvidia.stats.vkmark">vkmark score through the forwarding, every default scene</span></div>
+          <div class="dl-fwd-stat"><b>36<small>ns</small></b><span data-i18n="droidloomPage.nvidia.stats.draw">per draw call forwarded, 34&nbsp;ns on the driver directly</span></div>
+          <div class="dl-fwd-stat"><b>155<small>µs</small></b><span data-i18n="droidloomPage.nvidia.stats.present">for an Android frame to be presented and handed back</span></div>
+          <div class="dl-fwd-stat"><b>ES 3.2</b><span data-i18n="droidloomPage.nvidia.stats.gles">OpenGL ES through ANGLE, with Android’s required texture formats</span></div>
+        </div>
+
+        <div class="dl-fwd-journey">
+          <figure class="dl-fwd-diagram">
+            <svg viewBox="0 0 800 730" role="img" aria-labelledby="dl-fwd-diagram-title">
+              <title id="dl-fwd-diagram-title" data-i18n="droidloomPage.nvidia.diagram.label">How a frame travels: the Android app, ANGLE and vulkan.droidloom in the Android cell; droidloom-gpu-server, the NVIDIA driver and the GeForce GPU on the host; the finished frame returns through a shared buffer, droidloom-wayland and your compositor.</title>
+              <rect class="dl-fwd-zone" x="40" y="16" width="720" height="330" rx="14"/>
+              <text class="dl-fwd-zone-label" x="62" y="40" data-i18n="droidloomPage.nvidia.diagram.cell">ANDROID CELL</text>
+              <rect class="dl-fwd-zone dl-fwd-zone--host" x="40" y="406" width="720" height="306" rx="14"/>
+              <text class="dl-fwd-zone-label dl-fwd-zone-label--host" x="62" y="430" data-i18n="droidloomPage.nvidia.diagram.host">LINUX HOST</text>
+
+              <g aria-hidden="true">
+                <rect class="dl-fwd-slot is-full" x="132" y="362" width="14" height="14" rx="3"/>
+                <rect class="dl-fwd-slot is-full" x="150" y="362" width="14" height="14" rx="3"/>
+                <rect class="dl-fwd-slot is-full" x="168" y="362" width="14" height="14" rx="3"/>
+                <rect class="dl-fwd-slot" x="186" y="362" width="14" height="14" rx="3"/>
+                <rect class="dl-fwd-slot" x="204" y="362" width="14" height="14" rx="3"/>
+                <rect class="dl-fwd-slot" x="222" y="362" width="14" height="14" rx="3"/>
+                <rect class="dl-fwd-slot" x="240" y="362" width="14" height="14" rx="3"/>
+                <rect class="dl-fwd-slot" x="258" y="362" width="14" height="14" rx="3"/>
+                <rect class="dl-fwd-slot" x="276" y="362" width="14" height="14" rx="3"/>
+                <text class="dl-fwd-band" x="132" y="396" data-i18n="droidloomPage.nvidia.diagram.ring">ring of call records in shared memory</text>
+                <text class="dl-fwd-band" x="440" y="374" data-i18n="droidloomPage.nvidia.diagram.socket1">one socket: DMA-BUFs and fences</text>
+                <text class="dl-fwd-band" x="440" y="392" data-i18n="droidloomPage.nvidia.diagram.socket2">pass as file descriptors</text>
+              </g>
+
+              <path id="dl-fwd-route" class="dl-fwd-wire" d="M220,86 L220,646 L580,646 L580,466"/>
+              <path id="dl-fwd-side" class="dl-fwd-wire dl-fwd-wire--side" d="M440,176 C 400,176 400,266 360,266"/>
+
+              <g class="dl-fwd-node"><rect x="80" y="56" width="280" height="60" rx="10"/><text class="dl-fwd-num" x="338" y="82">1</text><text class="dl-fwd-name" x="100" y="82" data-i18n="droidloomPage.nvidia.steps.app.title">Android app</text><text class="dl-fwd-sub" x="100" y="102" data-i18n="droidloomPage.nvidia.diagram.appSub">game · video · browser</text></g>
+              <g class="dl-fwd-node"><rect x="80" y="146" width="280" height="60" rx="10"/><text class="dl-fwd-num" x="338" y="172">2</text><text class="dl-fwd-name" x="100" y="172">ANGLE</text><text class="dl-fwd-sub" x="100" y="192">OpenGL ES 3.2 → Vulkan</text></g>
+              <g class="dl-fwd-node"><rect x="80" y="236" width="280" height="60" rx="10"/><text class="dl-fwd-num" x="338" y="262">3</text><text class="dl-fwd-name" x="100" y="262">vulkan.droidloom</text><text class="dl-fwd-sub" x="100" y="282" data-i18n="droidloomPage.nvidia.diagram.icdSub">Android’s Vulkan driver</text></g>
+              <g class="dl-fwd-node"><rect x="440" y="146" width="280" height="60" rx="10"/><text class="dl-fwd-name" x="460" y="172">SurfaceFlinger</text><text class="dl-fwd-sub" x="460" y="192" data-i18n="droidloomPage.nvidia.diagram.sfSub">Android’s compositor, same path</text></g>
+              <g class="dl-fwd-node dl-fwd-node--host"><rect x="80" y="436" width="280" height="60" rx="10"/><text class="dl-fwd-num" x="338" y="462">4</text><text class="dl-fwd-name" x="100" y="462">droidloom-gpu-server</text><text class="dl-fwd-sub" x="100" y="482" data-i18n="droidloomPage.nvidia.diagram.serverSub">one per Android process</text></g>
+              <g class="dl-fwd-node dl-fwd-node--host"><rect x="80" y="526" width="280" height="60" rx="10"/><text class="dl-fwd-num" x="338" y="552">5</text><text class="dl-fwd-name" x="100" y="552" data-i18n="droidloomPage.nvidia.steps.driver.title">NVIDIA driver</text><text class="dl-fwd-sub" x="100" y="572" data-i18n="droidloomPage.nvidia.diagram.driverSub">the host’s own Vulkan</text></g>
+              <g class="dl-fwd-node dl-fwd-node--host"><rect x="80" y="616" width="280" height="60" rx="10"/><text class="dl-fwd-num" x="338" y="642">6</text><text class="dl-fwd-name" x="100" y="642" data-i18n="droidloomPage.nvidia.steps.gpu.title">GeForce GPU</text><text class="dl-fwd-sub" x="100" y="662" data-i18n="droidloomPage.nvidia.diagram.gpuSub">draws in its own VRAM</text></g>
+              <g class="dl-fwd-node dl-fwd-node--host"><rect x="440" y="616" width="280" height="60" rx="10"/><text class="dl-fwd-num" x="698" y="642">7</text><text class="dl-fwd-name" x="460" y="642" data-i18n="droidloomPage.nvidia.steps.buffer.title">Shared buffer</text><text class="dl-fwd-sub" x="460" y="662" data-i18n="droidloomPage.nvidia.diagram.bufferSub">DMA-BUF in system memory</text></g>
+              <g class="dl-fwd-node dl-fwd-node--host"><rect x="440" y="526" width="280" height="60" rx="10"/><text class="dl-fwd-num" x="698" y="552">8</text><text class="dl-fwd-name" x="460" y="552">droidloom-wayland</text><text class="dl-fwd-sub" x="460" y="572" data-i18n="droidloomPage.nvidia.diagram.presenterSub">one Wayland window per task</text></g>
+              <g class="dl-fwd-node dl-fwd-node--host"><rect x="440" y="436" width="280" height="60" rx="10"/><text class="dl-fwd-num" x="698" y="462">9</text><text class="dl-fwd-name" x="460" y="462" data-i18n="droidloomPage.nvidia.steps.compositor.title">Your compositor</text><text class="dl-fwd-sub" x="460" y="482" data-i18n="droidloomPage.nvidia.diagram.compositorSub">on the AMD or Intel GPU</text></g>
+
+              <g aria-hidden="true">
+                <circle class="dl-fwd-packet" r="5"><animateMotion dur="3.2s" repeatCount="indefinite" keyPoints="0;0.62" keyTimes="0;1" calcMode="linear"><mpath href="#dl-fwd-route"/></animateMotion></circle>
+                <circle class="dl-fwd-packet" r="5"><animateMotion dur="3.2s" begin="0.8s" repeatCount="indefinite" keyPoints="0;0.62" keyTimes="0;1" calcMode="linear"><mpath href="#dl-fwd-route"/></animateMotion></circle>
+                <circle class="dl-fwd-packet" r="5"><animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite" keyPoints="0;0.62" keyTimes="0;1" calcMode="linear"><mpath href="#dl-fwd-route"/></animateMotion></circle>
+                <circle class="dl-fwd-packet" r="5"><animateMotion dur="3.2s" begin="2.4s" repeatCount="indefinite" keyPoints="0;0.62" keyTimes="0;1" calcMode="linear"><mpath href="#dl-fwd-route"/></animateMotion></circle>
+                <circle class="dl-fwd-packet" r="4"><animateMotion dur="2.4s" begin="0.4s" repeatCount="indefinite"><mpath href="#dl-fwd-side"/></animateMotion></circle>
+                <rect class="dl-fwd-packet dl-fwd-packet--frame" x="-7" y="-5" width="14" height="10" rx="2"><animateMotion dur="3.2s" begin="1.2s" repeatCount="indefinite" keyPoints="0.62;1" keyTimes="0;1" calcMode="linear"><mpath href="#dl-fwd-route"/></animateMotion></rect>
+                <rect class="dl-fwd-packet dl-fwd-packet--frame" x="-7" y="-5" width="14" height="10" rx="2"><animateMotion dur="3.2s" begin="2.8s" repeatCount="indefinite" keyPoints="0.62;1" keyTimes="0;1" calcMode="linear"><mpath href="#dl-fwd-route"/></animateMotion></rect>
+              </g>
+            </svg>
+            <figcaption data-i18n="droidloomPage.nvidia.diagram.caption">Violet dots are Vulkan calls on their way to the host. Blue frames are finished pictures on their way to your screen. SurfaceFlinger, Android’s own compositor, takes the same path.</figcaption>
+          </figure>
+
+          <ol class="dl-fwd-steps">
+            <li><h3 data-i18n="droidloomPage.nvidia.steps.app.title">Android app</h3><p data-i18n="droidloomPage.nvidia.steps.app.copy">Draws with OpenGL ES or Vulkan, exactly as it would on a phone.</p></li>
+            <li><h3>ANGLE</h3><p data-i18n="droidloomPage.nvidia.steps.angle.copy">Turns OpenGL ES 3.2 into Vulkan, so GL apps take the same path.</p></li>
+            <li><h3>vulkan.droidloom</h3><p data-i18n="droidloomPage.nvidia.steps.icd.copy">Android’s Vulkan driver. Each call becomes a record in memory both sides share; buffers and fences cross as file descriptors, never as copies.</p></li>
+            <li><h3>droidloom-gpu-server</h3><p data-i18n="droidloomPage.nvidia.steps.server.copy">One host process per Android process replays the calls, so a crash stays inside one app.</p></li>
+            <li><h3 data-i18n="droidloomPage.nvidia.steps.driver.title">NVIDIA driver</h3><p data-i18n="droidloomPage.nvidia.steps.driver.copy">The proprietary driver you already have. Droidloom ships no NVIDIA code.</p></li>
+            <li><h3 data-i18n="droidloomPage.nvidia.steps.gpu.title">GeForce GPU</h3><p data-i18n="droidloomPage.nvidia.steps.gpu.copy">Renders the frame in its own VRAM.</p></li>
+            <li><h3 data-i18n="droidloomPage.nvidia.steps.buffer.title">Shared buffer</h3><p data-i18n="droidloomPage.nvidia.steps.buffer.copy">The finished frame lands in system memory that every GPU in the machine can read.</p></li>
+            <li><h3>droidloom-wayland</h3><p data-i18n="droidloomPage.nvidia.steps.presenter.copy">Hands it to your compositor as the app’s own window.</p></li>
+            <li><h3 data-i18n="droidloomPage.nvidia.steps.compositor.title">Your compositor</h3><p data-i18n="droidloomPage.nvidia.steps.compositor.copy">Shows it from the AMD or Intel GPU that drives the screen.</p></li>
+          </ol>
+        </div>
+
+        <h3 class="dl-compare-heading" data-i18n="droidloomPage.nvidia.adds.title">What the server fills in</h3>
+        <div class="dl-grid dl-grid--2">
+          <article class="stack-card">
+            <p class="stack-index" data-i18n="droidloomPage.nvidia.adds.windows.tag">WINDOW BUFFERS</p>
+            <h3 data-i18n="droidloomPage.nvidia.adds.windows.title">Fast images in VRAM</h3>
+            <p data-i18n="droidloomPage.nvidia.adds.windows.copy">Android’s buffers are linear, and NVIDIA cannot draw into a linear image while depth is attached. Apps draw into an image in VRAM, and the server copies the frame out when the app hands it over.</p>
+          </article>
+          <article class="stack-card">
+            <p class="stack-index">NV12 · YV12 · P010</p>
+            <h3 data-i18n="droidloomPage.nvidia.adds.video.title">Video</h3>
+            <p data-i18n="droidloomPage.nvidia.adds.video.copy">Each plane of a decoded frame is brought in on its own and copied into one YUV image, which ANGLE samples with a colour conversion. Video plays in apps and in browsers.</p>
+          </article>
+          <article class="stack-card">
+            <p class="stack-index">ETC2 · EAC · ASTC</p>
+            <h3 data-i18n="droidloomPage.nvidia.adds.textures.title">Android’s texture formats</h3>
+            <p data-i18n="droidloomPage.nvidia.adds.textures.copy">Android requires them and desktop NVIDIA has none. Compute shaders decode them inside the app’s own command buffer, and the original blocks are kept, so copies stay exact.</p>
+          </article>
+          <article class="stack-card">
+            <p class="stack-index" data-i18n="droidloomPage.nvidia.adds.timelines.tag">KERNEL SYNCOBJS</p>
+            <h3 data-i18n="droidloomPage.nvidia.adds.timelines.title">Timeline semaphores</h3>
+            <p data-i18n="droidloomPage.nvidia.adds.timelines.copy">Timelines live in the kernel on the Android side and are fed by every submission’s fence, so waiting on the GPU never needs a trip to the server.</p>
+          </article>
+        </div>
+
+        <div class="dl-grid dl-grid--2 dl-fwd-bottom">
+          <article class="stack-card">
+            <p class="stack-index" data-i18n="droidloomPage.nvidia.cost.tag">OVERHEAD</p>
+            <h3 data-i18n="droidloomPage.nvidia.cost.title">A second process, almost free</h3>
+            <div class="dl-fwd-meter">
+              <p class="dl-fwd-meter-label" data-i18n="droidloomPage.nvidia.cost.draw">Per draw call</p>
+              <div class="dl-fwd-bar"><span data-i18n="droidloomPage.nvidia.cost.direct">Direct</span><div class="dl-fwd-track"><div class="dl-fwd-fill" style="width: 94.4%"></div></div><span class="dl-fwd-val">34 ns</span></div>
+              <div class="dl-fwd-bar"><span data-i18n="droidloomPage.nvidia.cost.forwarded">Forwarded</span><div class="dl-fwd-track"><div class="dl-fwd-fill dl-fwd-fill--fwd" style="width: 100%"></div></div><span class="dl-fwd-val">36 ns</span></div>
+            </div>
+            <div class="dl-fwd-meter">
+              <p class="dl-fwd-meter-label" data-i18n="droidloomPage.nvidia.cost.timeline">Timeline submit and wait</p>
+              <div class="dl-fwd-bar"><span data-i18n="droidloomPage.nvidia.cost.direct">Direct</span><div class="dl-fwd-track"><div class="dl-fwd-fill" style="width: 66%"></div></div><span class="dl-fwd-val">37.6 µs</span></div>
+              <div class="dl-fwd-bar"><span data-i18n="droidloomPage.nvidia.cost.forwarded">Forwarded</span><div class="dl-fwd-track"><div class="dl-fwd-fill dl-fwd-fill--fwd" style="width: 100%"></div></div><span class="dl-fwd-val">57 µs</span></div>
+            </div>
+          </article>
+          <article class="stack-card">
+            <p class="stack-index" data-i18n="droidloomPage.nvidia.setup.tag">SETUP</p>
+            <h3 data-i18n="droidloomPage.nvidia.setup.title">It turns itself on</h3>
+            <p data-i18n-html="droidloomPage.nvidia.setup.copy">With an NVIDIA card the installer sets up forwarding by itself; with AMD or Intel only, Android renders natively with Mesa. <code>droidloomctl gpu</code> lists the GPUs and picks another one.</p>
+            <div class="code-panel code-panel--compact">
+              <div class="code-panel-header">
+                <span class="code-panel-identity">
+                  <span class="code-panel-icon" aria-hidden="true">$</span>
+                  <span class="code-panel-title">droidloomctl gpu</span>
+                </span>
+              </div>
+              <pre><code><span class="code-line">NVIDIA GPU 0000:04:00.0 (nvidia, /dev/dri/renderD128)</span><span class="code-line">AMD GPU 0000:0a:00.0 (amdgpu, /dev/dri/renderD129)</span><span class="code-line">GPU choice auto: Android renders on the NVIDIA GPU</span><span class="code-line">  0000:04:00.0 through droidloom-gpu-server (GPU forwarding)</span></code></pre>
+            </div>
+          </article>
+        </div>
+        <p class="stack-note" data-i18n="droidloomPage.nvidia.note">
+          Measured on a GeForce RTX 5060 Ti, with the display on a Radeon RX
+          9070 XT. Draw and timeline figures compare a test client on the
+          NVIDIA driver directly and through the forwarding. Forwarding is
+          available on x86_64.
+        </p>
+      </section>
+
       <section class="container page-section" id="waydroid" aria-labelledby="dl-waydroid-title" data-reveal>
         <h2 id="dl-waydroid-title" data-i18n="droidloomPage.waydroid.title">Why not Waydroid?</h2>
         <p class="section-intro" data-i18n="droidloomPage.waydroid.intro">
@@ -394,6 +536,10 @@
             <p data-i18n="droidloomPage.waydroid.ours.arm.copy">Teto ships with Droidloom and carries its own fixes for games. Waydroid users add Houdini or libndk through third-party scripts.</p>
           </li>
           <li>
+            <h3 data-i18n="droidloomPage.waydroid.ours.nvidia.title">NVIDIA GPUs</h3>
+            <p data-i18n-html="droidloomPage.waydroid.ours.nvidia.copy">Android renders on an NVIDIA card through <a class="text-link" href="#nvidia">GPU forwarding</a>. Waydroid skips NVIDIA GPUs: on a machine with only an NVIDIA card, Android draws on the CPU with SwiftShader.</p>
+          </li>
+          <li>
             <h3 data-i18n="droidloomPage.waydroid.ours.folders.title">Your folders, already shared</h3>
             <p data-i18n-html="droidloomPage.waydroid.ours.folders.copy">Android’s Download, Pictures and Music are your Linux folders. Waydroid’s documentation has you <code>sudo mount --bind</code> them yourself.</p>
           </li>
@@ -412,10 +558,8 @@
           Linux ARM, in the
           <a class="text-link" href="https://github.com/denialwm/droidloom/releases/latest">latest release</a>.
           You need a Wayland session and about 20&nbsp;GiB of free space.
-          Droidloom does not work with NVIDIA graphics yet. NVIDIA support is
-          planned and under development, and
-          <a class="text-link" href="/support.html">supporting the project</a>
-          helps it move forward.
+          AMD and Intel GPUs render natively; NVIDIA GPUs render through
+          <a class="text-link" href="#nvidia">GPU forwarding</a> on x86_64.
         </p>
 
         <svg class="visually-hidden" aria-hidden="true">

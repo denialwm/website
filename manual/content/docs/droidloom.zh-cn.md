@@ -9,8 +9,8 @@ Android 应用。它使用共享内核的 Android 用户空间、真实的 Andro
 原生桌面应用目录。明日方舟：终末地通过 Droidloom 运行。
 
 这是早期预览。预构建的 pacman 软件包同时提供 x86_64 Arch Linux 和 aarch64 Arch Linux ARM
-版本，见[最新发布](https://github.com/denialwm/droidloom/releases/latest)。Droidloom 目前还不支持 NVIDIA 显卡。
-NVIDIA 支持已在计划中并正在开发，[支持本项目](https://denialwm.org/support.html)能帮助它更快推进。
+版本，见[最新发布](https://github.com/denialwm/droidloom/releases/latest)。AMD 和 Intel 显卡原生渲染。
+在 x86_64 上，NVIDIA 显卡通过 [GPU 转发](https://denialwm.org/droidloom.html#nvidia)渲染；`droidloomctl gpu` 会显示 Android 使用哪块显卡，也可以改选另一块。
 WhatsApp 和 Phone 已在 Hyprland 上测试。
 启动需要手动进行：启动应用不会拉起已经停止的运行时。
 

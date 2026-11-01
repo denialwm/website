@@ -2339,6 +2339,290 @@
   list-style: none;
 }
 
+/* NVIDIA forwarding: stats, the frame's path beside its numbered steps, then
+   the server's additions, overhead and setup. Violet = Android, blue = host. */
+.dl-fwd {
+  --dl-host: #6d9ede;
+  --dl-host-bright: #9cbfec;
+}
+
+.dl-fwd-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(9.5rem, 100%), 1fr));
+  margin-top: clamp(1.75rem, 4vw, 2.6rem);
+  overflow: hidden;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-lg);
+  background: var(--glass);
+  box-shadow: var(--rim);
+}
+
+.dl-fwd-stat {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0 -1px -1px 0;
+  padding: 1.1rem 1.25rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.dl-fwd-stat b {
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 1.5rem;
+  font-weight: 450;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-fwd-stat b small {
+  margin-left: 0.15em;
+  color: var(--muted);
+  font-size: 0.6em;
+}
+
+.dl-fwd-stat span {
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.dl-fwd-journey {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3rem);
+  margin-top: 0.9rem;
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .dl-fwd-journey {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  }
+}
+
+.dl-fwd-diagram {
+  margin: 0;
+  min-width: 0;
+}
+
+.dl-fwd-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-lg);
+  background: #0d0b14;
+}
+
+.dl-fwd-diagram figcaption {
+  margin-top: 0.8rem;
+  color: var(--quiet);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.dl-fwd-zone {
+  fill: rgb(156 121 219 / 7%);
+  stroke: rgb(190 166 234 / 22%);
+}
+
+.dl-fwd-zone--host {
+  fill: rgb(109 158 222 / 6%);
+  stroke: rgb(109 158 222 / 26%);
+}
+
+.dl-fwd-zone-label,
+.dl-fwd-band,
+.dl-fwd-sub,
+.dl-fwd-num {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.dl-fwd-zone-label {
+  fill: var(--accent-bright);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.dl-fwd-zone-label--host {
+  fill: var(--dl-host-bright);
+}
+
+.dl-fwd-band {
+  fill: var(--muted);
+  font-size: 11.5px;
+}
+
+.dl-fwd-slot {
+  fill: rgb(255 255 255 / 4%);
+  stroke: rgb(190 166 234 / 22%);
+}
+
+.dl-fwd-slot.is-full {
+  fill: var(--accent);
+  stroke: none;
+}
+
+.dl-fwd-wire {
+  fill: none;
+  stroke: rgb(190 166 234 / 26%);
+  stroke-width: 2;
+}
+
+.dl-fwd-wire--side {
+  stroke-dasharray: 4 5;
+}
+
+.dl-fwd-node rect {
+  fill: #17131f;
+  stroke: rgb(190 166 234 / 24%);
+  stroke-width: 1.2;
+}
+
+.dl-fwd-node--host rect {
+  stroke: rgb(109 158 222 / 30%);
+}
+
+.dl-fwd-name {
+  fill: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.dl-fwd-sub {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.dl-fwd-num {
+  fill: var(--quiet);
+  font-size: 11px;
+  text-anchor: end;
+}
+
+.dl-fwd-packet {
+  fill: var(--accent-bright);
+}
+
+.dl-fwd-packet--frame {
+  fill: var(--dl-host);
+}
+
+.dl-fwd-steps {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: dl-fwd-step;
+}
+
+.dl-fwd-steps li {
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr);
+  column-gap: 0.6rem;
+  padding: 0.7rem 0;
+  border-top: 1px solid var(--line);
+  counter-increment: dl-fwd-step;
+}
+
+.dl-fwd-steps li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.dl-fwd-steps li::before {
+  content: counter(dl-fwd-step);
+  grid-row: span 2;
+  color: var(--accent-bright);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.dl-fwd-steps li:nth-child(n + 4)::before {
+  color: var(--dl-host-bright);
+}
+
+.dl-fwd-steps h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.dl-fwd-steps p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.dl-fwd-bottom {
+  margin-top: 0.9rem;
+}
+
+.dl-fwd-meter {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.4rem;
+}
+
+.dl-fwd-meter .dl-fwd-meter-label {
+  color: var(--text);
+  font-size: 0.86rem;
+}
+
+.dl-fwd-bar {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) 4.6rem;
+  gap: 0.75rem;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.dl-fwd-val {
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-fwd-track {
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 5%);
+}
+
+.dl-fwd-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: rgb(240 238 245 / 22%);
+}
+
+.dl-fwd-fill--fwd {
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent-bright));
+}
+
+.dl-fwd .code-panel {
+  margin-top: 0.3rem;
+}
+
+.dl-fwd .code-panel code {
+  min-width: 0;
+  font-size: 0.72rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dl-fwd-packet {
+    display: none;
+  }
+}
+
 .dl-try-links {
   display: flex;
   flex-wrap: wrap;

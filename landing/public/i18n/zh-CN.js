@@ -404,6 +404,103 @@ window.denialTranslations = {
           cta: "支持 Droidloom",
         },
       },
+      nvidia: {
+        title: "NVIDIA，通过 GPU 转发运行。",
+        intro: "NVIDIA 的驱动没有 Android 版本。Droidloom 为 Android 提供了一个自己的 Vulkan 驱动，把每一次调用交给你桌面上已经安装的 NVIDIA 驱动。游戏、视频和网页视图都在 GeForce 显卡上渲染，它们的窗口和其他窗口并排出现。",
+        stats: {
+          vkmark: "通过转发运行的 vkmark 得分，覆盖全部默认场景",
+          draw: "每次绘制调用经转发的耗时，直接使用驱动为 34 ns",
+          present: "一帧 Android 画面完成呈现并交还所需的时间",
+          gles: "通过 ANGLE 提供的 OpenGL ES，包含 Android 要求的纹理格式",
+        },
+        diagram: {
+          label: "一帧画面的路径：Android 单元中的 Android 应用、ANGLE 和 vulkan.droidloom；宿主上的 droidloom-gpu-server、NVIDIA 驱动和 GeForce GPU；完成的帧经由共享缓冲区、droidloom-wayland 和你的合成器返回。",
+          cell: "ANDROID 单元",
+          host: "LINUX 宿主",
+          ring: "共享内存中的调用记录环",
+          socket1: "一个套接字：DMA-BUF 和栅栏",
+          socket2: "以文件描述符传递",
+          appSub: "游戏 · 视频 · 浏览器",
+          icdSub: "Android 的 Vulkan 驱动",
+          sfSub: "Android 的合成器，同一路径",
+          serverSub: "每个 Android 进程一个",
+          driverSub: "宿主自己的 Vulkan",
+          gpuSub: "在自己的显存中绘制",
+          bufferSub: "系统内存中的 DMA-BUF",
+          presenterSub: "每个任务一个 Wayland 窗口",
+          compositorSub: "运行在 AMD 或 Intel GPU 上",
+          caption: "紫色圆点是发往宿主的 Vulkan 调用，蓝色方块是发往屏幕的完成画面。Android 自己的合成器 SurfaceFlinger 也走同一条路径。",
+        },
+        steps: {
+          app: {
+            title: "Android 应用",
+            copy: "用 OpenGL ES 或 Vulkan 绘制，和在手机上完全一样。",
+          },
+          angle: {
+            copy: "把 OpenGL ES 3.2 转换为 Vulkan，所以 GL 应用也走同一条路径。",
+          },
+          icd: {
+            copy: "Android 的 Vulkan 驱动。每次调用都成为双方共享内存中的一条记录；缓冲区和栅栏以文件描述符传递，从不复制。",
+          },
+          server: {
+            copy: "每个 Android 进程对应一个宿主进程来重放调用，所以崩溃只会影响一个应用。",
+          },
+          driver: {
+            title: "NVIDIA 驱动",
+            copy: "你已经安装的专有驱动。Droidloom 不附带任何 NVIDIA 代码。",
+          },
+          gpu: {
+            title: "GeForce GPU",
+            copy: "在自己的显存中渲染这一帧。",
+          },
+          buffer: {
+            title: "共享缓冲区",
+            copy: "完成的帧落在机器中每块 GPU 都能读取的系统内存里。",
+          },
+          presenter: {
+            copy: "把它作为应用自己的窗口交给你的合成器。",
+          },
+          compositor: {
+            title: "你的合成器",
+            copy: "由驱动屏幕的 AMD 或 Intel GPU 显示出来。",
+          },
+        },
+        adds: {
+          title: "服务器补上的部分",
+          windows: {
+            tag: "窗口缓冲区",
+            title: "显存中的高速图像",
+            copy: "Android 的缓冲区是线性布局，而 NVIDIA 无法在挂载深度缓冲时绘制到线性图像。应用绘制到显存中的图像，应用交出画面时由服务器把帧复制出去。",
+          },
+          video: {
+            title: "视频",
+            copy: "解码帧的每个平面单独导入，再复制到一张 YUV 图像中，由 ANGLE 通过颜色转换进行采样。视频可以在应用和浏览器中播放。",
+          },
+          textures: {
+            title: "Android 的纹理格式",
+            copy: "Android 要求支持这些格式，而桌面版 NVIDIA 驱动一个都没有。计算着色器在应用自己的命令缓冲区中解码它们，并保留原始数据块，因此复制结果完全一致。",
+          },
+          timelines: {
+            tag: "内核 SYNCOBJ",
+            title: "时间线信号量",
+            copy: "时间线保存在 Android 一侧的内核中，由每次提交的栅栏推进，因此等待 GPU 时无需往返服务器。",
+          },
+        },
+        cost: {
+          tag: "开销",
+          title: "多一个进程，几乎没有代价",
+          draw: "每次绘制调用",
+          timeline: "时间线提交并等待",
+          direct: "直接",
+          forwarded: "转发",
+        },
+        setup: {
+          tag: "设置",
+          title: "自动开启",
+          copy: "检测到 NVIDIA 显卡时，安装程序会自动设置转发；只有 AMD 或 Intel 时，Android 使用 Mesa 原生渲染。<code>droidloomctl gpu</code> 可以列出 GPU 并选择其他 GPU。",
+        },
+        note: "测试环境为 GeForce RTX 5060 Ti，显示输出由 Radeon RX 9070 XT 负责。绘制和时间线数据比较的是测试客户端直接使用 NVIDIA 驱动与经过转发的结果。转发功能适用于 x86_64。",
+      },
       waydroid: {
         title: "为什么不用 Waydroid？",
         intro: "多年来，Waydroid 一直是在 Linux 上运行 Android 应用的方式，所以大家最先问到的就是它。以下对比来自阅读 Waydroid 自己的源代码，而不是猜测。",
@@ -459,6 +556,10 @@ window.denialTranslations = {
             title: "x86 上的 ARM 游戏，开箱即用",
             copy: "Teto 随 Droidloom 一起提供，并带有针对游戏的修复。Waydroid 用户需要通过第三方脚本安装 Houdini 或 libndk。",
           },
+          nvidia: {
+            title: "NVIDIA 显卡",
+            copy: "Android 通过 <a class=\"text-link\" href=\"#nvidia\">GPU 转发</a>在 NVIDIA 显卡上渲染。Waydroid 会跳过 NVIDIA GPU：在只有 NVIDIA 显卡的机器上，Android 使用 SwiftShader 在 CPU 上绘制。",
+          },
           folders: {
             title: "你的文件夹，已经共享",
             copy: "Android 的 Download、Pictures 和 Music 就是你的 Linux 文件夹。Waydroid 的文档要你自己用 <code>sudo mount --bind</code> 挂载。",
@@ -468,7 +569,7 @@ window.denialTranslations = {
       },
       try: {
         title: "试用预览版。",
-        intro: "预构建软件包同时提供 x86_64 Arch Linux 和 ARM64 Arch Linux ARM 版本，见<a class=\"text-link\" href=\"https://github.com/denialwm/droidloom/releases/latest\">最新发布</a>。你需要一个 Wayland 会话以及约 20 GiB 的可用空间。Droidloom 目前还不支持 NVIDIA 显卡。NVIDIA 支持已在计划中并正在开发，<a class=\"text-link\" href=\"/support.html\">支持本项目</a>能帮助它更快推进。",
+        intro: "预构建软件包同时提供 x86_64 Arch Linux 和 ARM64 Arch Linux ARM 版本，见<a class=\"text-link\" href=\"https://github.com/denialwm/droidloom/releases/latest\">最新发布</a>。你需要一个 Wayland 会话以及约 20 GiB 的可用空间。AMD 和 Intel GPU 原生渲染；NVIDIA GPU 在 x86_64 上通过 <a class=\"text-link\" href=\"#nvidia\">GPU 转发</a>渲染。",
         install: {
           title: "安装软件包",
           copy: "先下载并阅读安装脚本，然后运行它。脚本会添加 Droidloom 的 pacman 软件仓库，并安装运行时和 Android 镜像。之后通过常规的 <strong>pacman -Syu</strong> 获取更新。",
