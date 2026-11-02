@@ -272,7 +272,7 @@ window.denialTranslations = {
           fingerprint: "指纹",
           mobileData: "移动数据",
           calls: "通话",
-          androidApps: "Android 应用",
+          displayOut: "视频输出",
         },
         tablet: "平板",
         phone: "手机",
