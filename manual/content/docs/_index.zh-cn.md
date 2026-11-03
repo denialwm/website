@@ -30,24 +30,24 @@ Denial 是一款面向受支持 x86-64 和 ARM64 Linux 系统的 Flutter 原生 
 ## 从这里开始
 
 {{< cards >}}
-  {{< card link="getting-started/" title="入门" subtitle="安装 Denial、运行预检并启动第一个会话。" icon="play" >}}
-  {{< card link="using-denial/" title="使用 Denial" subtitle="了解桌面、窗口控制、键盘快捷键和内置工具。" icon="desktop-computer" >}}
-  {{< card link="mobile-and-tablets/" title="手机与平板" subtitle="触控手势、移动桌面外壳，以及它可以使用的系统服务。" icon="device-mobile" >}}
-  {{< card link="droidloom/" title="Droidloom" subtitle="把 Android 应用作为 Linux Wayland 窗口运行。早期预览，并链接到安装指南。" icon="collection" >}}
+  {{< card link="/zh-cn/docs/getting-started/" title="入门" subtitle="安装 Denial、运行预检并启动第一个会话。" icon="play" >}}
+  {{< card link="/zh-cn/docs/using-denial/" title="使用 Denial" subtitle="了解桌面、窗口控制、键盘快捷键和内置工具。" icon="desktop-computer" >}}
+  {{< card link="/zh-cn/docs/mobile-and-tablets/" title="手机与平板" subtitle="触控手势、移动桌面外壳，以及它可以使用的系统服务。" icon="device-mobile" >}}
+  {{< card link="/zh-cn/docs/droidloom/" title="Droidloom" subtitle="把 Android 应用作为 Linux Wayland 窗口运行。早期预览，并链接到安装指南。" icon="collection" >}}
 {{< /cards >}}
 
 ## 桌面与系统
 
 {{< cards >}}
-  {{< card link="configuration/" title="设置与显示器" subtitle="使用独立 Settings 应用配置桌面外壳、显示器、输入、外观与电源。" icon="adjustments" >}}
-  {{< card link="system-services/" title="系统服务" subtitle="音频、Wi-Fi、蜂窝网络、蓝牙、认证、电源和硬件集成。" icon="puzzle" >}}
-  {{< card link="screen-capture/" title="截图与共享" subtitle="使用内置捕获、直接工具和桌面 Portal。" icon="camera" >}}
+  {{< card link="/zh-cn/docs/configuration/" title="设置与显示器" subtitle="使用独立 Settings 应用配置桌面外壳、显示器、输入、外观与电源。" icon="adjustments" >}}
+  {{< card link="/zh-cn/docs/system-services/" title="系统服务" subtitle="音频、Wi-Fi、蜂窝网络、蓝牙、认证、电源和硬件集成。" icon="puzzle" >}}
+  {{< card link="/zh-cn/docs/screen-capture/" title="截图与共享" subtitle="使用内置捕获、直接工具和桌面 Portal。" icon="camera" >}}
 {{< /cards >}}
 
 ## 维护与原理
 
 {{< cards >}}
-  {{< card link="control-and-recovery/" title="控制与恢复" subtitle="检查正在运行的会话，并从损坏的桌面外壳或显示布局中恢复。" icon="terminal" >}}
-  {{< card link="architecture/" title="架构" subtitle="了解嵌入式 Flutter 场景如何进入独立的按输出 KMS 缓冲池。" icon="cube" >}}
-  {{< card link="development/" title="开发" subtitle="构建全部运行时组件、实时编辑桌面或创建自定义桌面外壳。" icon="code" >}}
+  {{< card link="/zh-cn/docs/control-and-recovery/" title="控制与恢复" subtitle="检查正在运行的会话，并从损坏的桌面外壳或显示布局中恢复。" icon="terminal" >}}
+  {{< card link="/zh-cn/docs/architecture/" title="架构" subtitle="了解嵌入式 Flutter 场景如何进入独立的按输出 KMS 缓冲池。" icon="cube" >}}
+  {{< card link="/zh-cn/docs/development/" title="开发" subtitle="构建全部运行时组件、实时编辑桌面或创建自定义桌面外壳。" icon="code" >}}
 {{< /cards >}}
