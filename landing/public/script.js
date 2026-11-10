@@ -150,12 +150,16 @@ const applyLocale = (locale, { persist = false, updateUrl = false } = {}) => {
     item.querySelector(".gallery-item-kind").textContent = kind;
   });
 
+  // A local preview links to the local manual (hugo server, port 1313).
+  const manualOrigin = ["localhost", "127.0.0.1"].includes(location.hostname)
+    ? `http://${location.hostname}:1313`
+    : "https://manual.denialwm.org";
   manualLinks.forEach((link) => {
     const path = (link.dataset.manualPath || "").replace(/^\//, "");
     link.href =
       activeLocale === "zh-CN"
-        ? `https://manual.denialwm.org/zh-cn/${path}`
-        : `https://manual.denialwm.org/${path}`;
+        ? `${manualOrigin}/zh-cn/${path}`
+        : `${manualOrigin}/${path}`;
   });
 
   sponsorLinks.forEach((link) => {
