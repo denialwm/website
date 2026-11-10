@@ -24,15 +24,15 @@ boot 镜像，里面是它的内核。
 
 | 文件 | 内容 |
 | --- | --- |
-| [denial-mobile-2026.11.10.zip](https://packages.denialwm.org/images/denial-mobile-2026.11.10.zip)（1.8 GB） | `userdata.img`，系统；`init_boot.img`，所有手机共用的安装程序；`flash.sh`；`SHA256SUMS` |
+| [denial-mobile-2026.11.11.zip](https://packages.denialwm.org/images/denial-mobile-2026.11.11.zip)（1.8 GB） | `userdata.img`，系统；`init_boot.img`，所有手机共用的安装程序；`flash.sh`；`SHA256SUMS` |
 | 上表中你的设备的 boot 镜像 | `boot.img`，内核；`SHA256SUMS` |
 
 每个下载旁边都有一个 `.sha256` 文件。先校验下载，解压，再校验里面的文件：
 
 ```console
-sha256sum -c denial-mobile-2026.11.10.zip.sha256
-unzip denial-mobile-2026.11.10.zip
-cd denial-mobile-2026.11.10 && sha256sum -c SHA256SUMS
+sha256sum -c denial-mobile-2026.11.11.zip.sha256
+unzip denial-mobile-2026.11.11.zip
+cd denial-mobile-2026.11.11 && sha256sum -c SHA256SUMS
 ```
 
 电脑上还需要 Android platform tools 里的 `fastboot`。
