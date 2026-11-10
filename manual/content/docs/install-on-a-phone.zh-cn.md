@@ -53,6 +53,9 @@ fastboot flash init_boot init_boot.img
 fastboot reboot
 ```
 
+名称里不带槽位时，`fastboot` 写入当前活动槽位，也就是手机启动所用的那个。只有
+想把 Denial 装到另一个槽位时，才需要写明（`boot_a`、`boot_b`）。
+
 如果不能，例如 RedMagic 11 Pro，就需要用厂商自己的刷写方式写入。这只需要做
 一次：之后的内核通过 Denial 的安装程序写入（见[更新](#更新)）。
 
@@ -165,7 +168,7 @@ fastboot reboot
 ```
 
 安装界面的 fastboot 在所有手机上都能写入 `boot` 和 `init_boot`，包括 bootloader
-自身不能写入的手机。
+自身不能写入的手机。它始终写入手机启动所用的槽位，并拒绝写入另一个槽位。
 
 ## 重新安装
 

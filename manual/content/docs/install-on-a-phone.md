@@ -57,6 +57,10 @@ fastboot flash init_boot init_boot.img
 fastboot reboot
 ```
 
+Without a slot in the name, `fastboot` writes the active slot, the one the
+phone starts from. Name the other one (`boot_a`, `boot_b`) only if that is
+where you want Denial.
+
 Where it does not, as on the RedMagic 11 Pro, they have to be written with
 the vendor's own flashing method. That is needed once: later kernels go in
 through Denial's installer (see [Updating](#updating)).
@@ -180,7 +184,8 @@ fastboot reboot
 ```
 
 The install screen's fastboot writes `boot` and `init_boot` on every phone,
-also where the bootloader's own does not.
+also where the bootloader's own does not. It always writes the slot the phone
+started from, and refuses the other one.
 
 ## Starting over
 
