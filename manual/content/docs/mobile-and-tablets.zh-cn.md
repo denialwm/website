@@ -2,11 +2,11 @@
 title: 手机与平板
 weight: 25
 prev: using-denial
-next: configuration
+next: install-on-a-phone
 ---
 
 本页汇总手册里已经写明的移动桌面外壳、直接触控，以及这套外壳可以使用的系统服务。
-公开软件包仍面向 x86-64 PC。移动设备目前使用架构匹配的源码构建。
+要把 Denial 装到手机上，请参阅[安装到手机](../install-on-a-phone/)。
 
 ## 窗口上的触控
 

@@ -261,6 +261,7 @@ window.denialTranslations = {
       },
       devices: {
         heading: "Linux 能运行，Denial 就能运行。",
+        install: "安装",
         intro: "Denial 不需要为每台设备单独移植，只需要一个能正常工作的 Linux。下面的手机和平板共用 <a class=\"text-link\" href=\"https://github.com/denialwm/linux-perpetua\">Linux Perpetua</a>：一个所有设备共享的主线内核，紧跟 Linus Torvalds 的每一次发布。",
         columns: {
           device: "设备",
@@ -288,10 +289,10 @@ window.denialTranslations = {
       getIt: {
         heading: "一切从 Linux 开始。",
         intro: "只要手机或平板上有能正常工作的 Linux，Denial 就能运行。真正的工作是让 Linux 驱动硬件，而上面这些设备的这部分工作由 Linux Perpetua 完成。",
-        status: "即将推出",
         install: {
           title: "安装到 Perpetua 设备",
-          copy: "为上面这些设备提供包含 Denial 和 Droidloom 的可直接刷入镜像，所有人免费使用。安装程序只写入非关键分区，因此设备始终可以恢复。",
+          copy: "包含 Denial 和 Droidloom 的可直接刷入镜像，所有人免费使用，首先支持 RedMagic 11 Pro。安装程序只写入非关键分区，因此设备始终可以恢复。",
+          guide: "阅读安装指南",
           discord: "在 Discord 上关注进展",
         },
         bring: {

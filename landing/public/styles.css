@@ -2963,6 +2963,13 @@
   font-weight: 400;
 }
 
+.mb-table tbody th .mb-install-link {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
 .mb-table td.yes {
   color: var(--accent-bright);
 }

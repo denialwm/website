@@ -1,7 +1,7 @@
 ---
 title: Settings and displays
 weight: 30
-prev: mobile-and-tablets
+prev: install-on-a-phone
 next: system-services
 ---
 

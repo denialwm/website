@@ -34,6 +34,7 @@ everyday use, configuration, system integration, and development.
   {{< card link="/docs/getting-started/" title="Getting started" subtitle="Install Denial, run the preflight check, and start your first session." icon="play" >}}
   {{< card link="/docs/using-denial/" title="Using Denial" subtitle="Learn the desktop, window controls, keyboard shortcuts, and built-in tools." icon="desktop-computer" >}}
   {{< card link="/docs/mobile-and-tablets/" title="Mobile and tablets" subtitle="Touch gestures, the mobile shell, and the system services it can use." icon="device-mobile" >}}
+  {{< card link="/docs/install-on-a-phone/" title="Install on a phone" subtitle="Download the image, flash it from the install screen, and keep it updated." icon="download" >}}
   {{< card link="/docs/droidloom/" title="Droidloom" subtitle="Android apps as Linux Wayland windows. Early preview, with a link to the install guide." icon="collection" >}}
 {{< /cards >}}
 

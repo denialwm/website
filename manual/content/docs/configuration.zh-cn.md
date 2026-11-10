@@ -1,7 +1,7 @@
 ---
 title: 设置与显示器
 weight: 30
-prev: mobile-and-tablets
+prev: install-on-a-phone
 next: system-services
 ---
 

@@ -33,6 +33,7 @@ Denial 是一款面向受支持 x86-64 和 ARM64 Linux 系统的 Flutter 原生 
   {{< card link="getting-started/" title="入门" subtitle="安装 Denial、运行预检并启动第一个会话。" icon="play" >}}
   {{< card link="using-denial/" title="使用 Denial" subtitle="了解桌面、窗口控制、键盘快捷键和内置工具。" icon="desktop-computer" >}}
   {{< card link="mobile-and-tablets/" title="手机与平板" subtitle="触控手势、移动桌面外壳，以及它可以使用的系统服务。" icon="device-mobile" >}}
+  {{< card link="install-on-a-phone/" title="安装到手机" subtitle="下载镜像，在安装界面刷入，并保持更新。" icon="download" >}}
   {{< card link="droidloom/" title="Droidloom" subtitle="把 Android 应用作为 Linux Wayland 窗口运行。早期预览，并链接到安装指南。" icon="collection" >}}
 {{< /cards >}}
 

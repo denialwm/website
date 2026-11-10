@@ -2,13 +2,12 @@
 title: Mobile and tablets
 weight: 25
 prev: using-denial
-next: configuration
+next: install-on-a-phone
 ---
 
 This page collects what Denial already documents for the mobile shell, direct
-touch, and the system services that shell can use. Public packages still
-target x86-64 PCs. Mobile deployments currently use architecture-matched
-source builds.
+touch, and the system services that shell can use. To put Denial
+on a phone, see [Install on a phone](../install-on-a-phone/).
 
 ## Touch on a window
 
