@@ -67,10 +67,38 @@ the stock release each boot image was tested with. With other firmware the
 phone starts and says which release was tested; with required files missing
 it stops at the install screen and says which release to flash.
 
+## The install screen
+
+`init_boot.img` is a small program that runs every time the phone starts,
+before any system. It looks for an installed Denial system on `denial`, then
+on `userdata`, and starts it. It stops at the install screen instead when:
+
+- no system is installed yet, which is the case right after you wrote the
+  two images;
+- you hold a volume key while the phone starts, from the bootloader's logo
+  until the screen appears.
+
+The screen shows the phone's name, why it stopped, and the commands to
+install. While it is up, the phone answers `fastboot` over USB, and takes
+only these:
+
+| Command | Does |
+| --- | --- |
+| `fastboot flash userdata userdata.img` | writes the system (`denial` in place of `userdata` where that partition exists) |
+| `fastboot flash package FILE.pkg.tar.zst` | stores a package the system installs as it next starts |
+| `fastboot flash ssh-key KEY.pub` | stores an SSH public key for your account |
+| `fastboot flash boot boot.img` | writes the kernel, on the slot the phone started from |
+| `fastboot flash init_boot init_boot.img` | writes the installer itself, on that slot |
+| `fastboot reboot` | leaves the install screen |
+
+It writes nothing else: never the partition table, never the other slot.
+`fastboot getvar denial-install` answers `yes` only here, which tells this
+screen apart from the bootloader's own fastboot.
+
 ## Install
 
 Start the phone. With the two images in place and no system installed yet,
-it stops at Denial's install screen and waits for fastboot over USB.
+it stops at the install screen and waits for fastboot over USB.
 
 On Linux and macOS, from the unpacked folder:
 
@@ -91,10 +119,6 @@ Writing `userdata` erases Android's data. A phone that has a partition named
 userdata.img`) and keeps `userdata`; `flash.sh` picks it by itself.
 {{< /callout >}}
 
-The installer writes only `denial` or `userdata`, and the `boot` and
-`init_boot` of the slot the phone started from. It never touches the
-partition table or the other slot.
-
 ### Google apps
 
 Droidloom runs Android apps without Google apps. To have the Play Store and
@@ -113,14 +137,29 @@ phone installs it as it first starts. Google apps have to be there before
 Android starts for the first time: they cannot join Android data that
 already exists.
 
+### An SSH key
+
+SSH on the phone accepts keys only, and the image holds none. Before you
+leave the install screen, give it your public key:
+
+```console
+fastboot flash ssh-key ~/.ssh/id_ed25519.pub
+fastboot reboot
+```
+
+The key goes to the account you make in setup, and from then on
+`ssh YOU@10.77.71.2` works over the USB cable, or the phone's address on
+Wi-Fi. Without a key the only way in is the phone's own screen. You can add
+one later the same way: hold a volume key while the phone starts, flash the
+key, reboot.
+
 ## First start
 
 The phone restarts into setup: language, Wi-Fi, time zone, your name and
 password, a lock PIN, a fingerprint where the phone has a reader, and the
 phone's name. Android starts with your session when setup ends.
 
-Your account can use `sudo` with its password. SSH is on and accepts keys
-only; the image holds none.
+Your account can use `sudo` with its password.
 
 ## Updating
 

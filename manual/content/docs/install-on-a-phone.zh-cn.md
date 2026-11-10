@@ -60,10 +60,35 @@ fastboot reboot
 列出了每个 boot 镜像测试时所用的原厂版本。固件版本不同时，手机照常启动，并
 提示测试所用的版本；缺少必需文件时，手机停在安装界面，并提示应刷入哪个版本。
 
+## 安装界面
+
+`init_boot.img` 是一个小程序，手机每次启动时都会先运行它，早于任何系统。它
+先在 `denial`、再在 `userdata` 上查找已安装的 Denial 系统并启动它。出现以下
+情况时，它会停在安装界面：
+
+- 还没有安装系统，也就是刚写入两个镜像之后的状态；
+- 手机启动时按住任一音量键，从 bootloader 的标志出现一直按到界面出现。
+
+界面上显示手机名称、停在这里的原因，以及安装命令。界面显示期间，手机通过 USB
+响应 `fastboot`，并且只接受以下命令：
+
+| 命令 | 作用 |
+| --- | --- |
+| `fastboot flash userdata userdata.img` | 写入系统（有 `denial` 分区时用 `denial` 代替 `userdata`） |
+| `fastboot flash package FILE.pkg.tar.zst` | 存入一个软件包，系统下次启动时安装 |
+| `fastboot flash ssh-key KEY.pub` | 为你的账户存入一个 SSH 公钥 |
+| `fastboot flash boot boot.img` | 把内核写入手机启动所用的槽位 |
+| `fastboot flash init_boot init_boot.img` | 把安装程序自身写入该槽位 |
+| `fastboot reboot` | 离开安装界面 |
+
+除此之外它不写入任何东西：不改动分区表，也不改动另一个槽位。只有在这里，
+`fastboot getvar denial-install` 才会回答 `yes`，据此可以把这个界面和 bootloader
+自带的 fastboot 区分开。
+
 ## 安装
 
-启动手机。两个镜像就位且尚未安装系统时，手机会停在 Denial 的安装界面，通过
-USB 等待 fastboot。
+启动手机。两个镜像就位且尚未安装系统时，手机会停在安装界面，通过 USB 等待
+fastboot。
 
 在 Linux 和 macOS 上，在解压后的文件夹里运行：
 
@@ -84,9 +109,6 @@ fastboot reboot
 `flash.sh` 会自动选择。
 {{< /callout >}}
 
-安装程序只写入 `denial` 或 `userdata`，以及手机启动所用槽位的 `boot` 和
-`init_boot`。它不会改动分区表，也不会改动另一个槽位。
-
 ### Google 应用
 
 Droidloom 运行 Android 应用时不带 Google 应用。如需 Play 商店和 Play 服务，从
@@ -103,13 +125,27 @@ fastboot reboot
 会在首次启动时安装它。Google 应用必须在 Android 第一次启动之前就位：它们无法
 加入已经存在的 Android 数据。
 
+### SSH 密钥
+
+手机上的 SSH 只接受密钥，而镜像里没有任何密钥。离开安装界面之前，把你的公钥
+交给它：
+
+```console
+fastboot flash ssh-key ~/.ssh/id_ed25519.pub
+fastboot reboot
+```
+
+密钥会交给你在设置向导中创建的账户，此后通过 USB 线可以用
+`ssh 你的用户名@10.77.71.2` 登录，也可以用手机在 Wi-Fi 上的地址。没有密钥时，
+唯一的入口是手机自己的屏幕。之后也可以用同样的方式添加：启动时按住音量键，
+刷入密钥，重启。
+
 ## 首次启动
 
 手机重启后进入设置向导：语言、Wi-Fi、时区、姓名和密码、锁屏 PIN、指纹（如果
 手机有指纹传感器），以及手机名称。向导结束后，Android 随你的会话一起启动。
 
-你的账户可以用自己的密码执行 `sudo`。SSH 已开启，只接受密钥；镜像里没有任何
-密钥。
+你的账户可以用自己的密码执行 `sudo`。
 
 ## 更新
 
