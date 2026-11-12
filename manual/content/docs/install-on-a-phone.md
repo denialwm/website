@@ -18,6 +18,7 @@ want to keep first.
 | Device | Boot image | Tested with stock firmware | Bootloader fastboot writes `boot` and `init_boot` |
 | --- | --- | --- | :---: |
 | RedMagic 11 Pro | [nx809j-boot-321.zip](https://packages.denialwm.org/images/boot/nx809j/nx809j-boot-321.zip) | `Kaanapali.LA.1.0.r1-00850-STD.PROD-1.124266.75` | No |
+| OnePlus Pad 4 | [iceland-boot-349.zip](https://packages.denialwm.org/images/boot/iceland/iceland-boot-349.zip) | `Kaanapali.LA.1.0.r1-00975-STD.PROD-1` | Yes |
 
 Other devices from the [device list](https://denialwm.org/mobile.html#devices)
 join this table as their images are published.
@@ -26,16 +27,16 @@ join this table as their images are published.
 
 | File | Holds |
 | --- | --- |
-| [denial-mobile-2026.11.11.zip](https://packages.denialwm.org/images/denial-mobile-2026.11.11.zip) (1.8 GB) | `userdata.img`, the system; `init_boot.img`, the installer every phone shares; `flash.sh`; `SHA256SUMS` |
+| [denial-mobile-2026.11.12.zip](https://packages.denialwm.org/images/denial-mobile-2026.11.12.zip) (1.8 GB) | `userdata.img`, the system; `init_boot.img`, the installer every phone shares; `flash.sh`; `SHA256SUMS` |
 | Your device's boot image, from the table above | `boot.img`, the kernel; `SHA256SUMS` |
 
 Every download has a `.sha256` file beside it. Check the download, unpack it,
 then check the files inside:
 
 ```console
-sha256sum -c denial-mobile-2026.11.11.zip.sha256
-unzip denial-mobile-2026.11.11.zip
-cd denial-mobile-2026.11.11 && sha256sum -c SHA256SUMS
+sha256sum -c denial-mobile-2026.11.12.zip.sha256
+unzip denial-mobile-2026.11.12.zip
+cd denial-mobile-2026.11.12 && sha256sum -c SHA256SUMS
 ```
 
 You also need `fastboot` on your computer, from Android's platform tools.
