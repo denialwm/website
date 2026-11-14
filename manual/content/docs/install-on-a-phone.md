@@ -19,6 +19,7 @@ want to keep first.
 | --- | --- | --- | :---: |
 | RedMagic 11 Pro | [nx809j-boot-321.zip](https://packages.denialwm.org/images/boot/nx809j/nx809j-boot-321.zip) | `Kaanapali.LA.1.0.r1-00850-STD.PROD-1.124266.75` | No |
 | OnePlus Pad 4 | [iceland-boot-358.zip](https://packages.denialwm.org/images/boot/iceland/iceland-boot-358.zip) | `Kaanapali.LA.1.0.r1-00975-STD.PROD-1` | Yes |
+| OnePlus 12R | [aston-boot-362.zip](https://packages.denialwm.org/images/boot/aston/aston-boot-362.zip) | `Kailua.LA.1.0.r1-02022-STD.PROD-1` | Yes |
 
 Other devices from the [device list](https://denialwm.org/mobile.html#devices)
 join this table as their images are published.
