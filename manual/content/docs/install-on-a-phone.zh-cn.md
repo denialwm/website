@@ -18,6 +18,7 @@ boot 镜像，里面是它的内核。
 | RedMagic 11 Pro | [nx809j-boot-321.zip](https://packages.denialwm.org/images/boot/nx809j/nx809j-boot-321.zip) | `Kaanapali.LA.1.0.r1-00850-STD.PROD-1.124266.75` | 否 |
 | OnePlus Pad 4 | [iceland-boot-358.zip](https://packages.denialwm.org/images/boot/iceland/iceland-boot-358.zip) | `Kaanapali.LA.1.0.r1-00975-STD.PROD-1` | 是 |
 | OnePlus 12R | [aston-boot-363.zip](https://packages.denialwm.org/images/boot/aston/aston-boot-363.zip) | `Kailua.LA.1.0.r1-02022-STD.PROD-1` | 是 |
+| Motorola Edge 70 | [roadstr-boot-388.zip](https://packages.denialwm.org/images/boot/roadstr/roadstr-boot-388.zip) | `W1WR36.39-115` | 是 |
 
 [设备列表](https://denialwm.org/mobile.html#devices)中的其他设备会在镜像发布后
 加入此表。
@@ -26,15 +27,15 @@ boot 镜像，里面是它的内核。
 
 | 文件 | 内容 |
 | --- | --- |
-| [denial-mobile-2026.11.13.zip](https://packages.denialwm.org/images/denial-mobile-2026.11.13.zip)（1.8 GB） | `userdata.img`，系统；`init_boot.img`，所有手机共用的安装程序；`flash.sh`；`SHA256SUMS` |
+| [denial-mobile-2026.11.15.zip](https://packages.denialwm.org/images/denial-mobile-2026.11.15.zip)（1.8 GB） | `userdata.img`，系统；`init_boot.img`，所有手机共用的安装程序；`flash.sh`；`SHA256SUMS` |
 | 上表中你的设备的 boot 镜像 | `boot.img`，内核；`SHA256SUMS` |
 
 每个下载旁边都有一个 `.sha256` 文件。先校验下载，解压，再校验里面的文件：
 
 ```console
-sha256sum -c denial-mobile-2026.11.13.zip.sha256
-unzip denial-mobile-2026.11.13.zip
-cd denial-mobile-2026.11.13 && sha256sum -c SHA256SUMS
+sha256sum -c denial-mobile-2026.11.15.zip.sha256
+unzip denial-mobile-2026.11.15.zip
+cd denial-mobile-2026.11.15 && sha256sum -c SHA256SUMS
 ```
 
 电脑上还需要 Android platform tools 里的 `fastboot`。
