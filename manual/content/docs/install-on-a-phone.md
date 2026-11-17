@@ -21,6 +21,7 @@ want to keep first.
 | OnePlus Pad 4 | [iceland-boot-358.zip](https://packages.denialwm.org/images/boot/iceland/iceland-boot-358.zip) | `Kaanapali.LA.1.0.r1-00975-STD.PROD-1` | Yes |
 | OnePlus 12R | [aston-boot-363.zip](https://packages.denialwm.org/images/boot/aston/aston-boot-363.zip) | `Kailua.LA.1.0.r1-02022-STD.PROD-1` | Yes |
 | Motorola Edge 70 | [roadstr-boot-388.zip](https://packages.denialwm.org/images/boot/roadstr/roadstr-boot-388.zip) | `W1WR36.39-115` | Yes |
+| OnePlus Pad 3 | [erhai-boot-72.zip](https://packages.denialwm.org/images/boot/erhai/erhai-boot-72.zip) | `Pakala.LA.1.0.r1-01218-STD.PROD-1` | Yes |
 
 Other devices from the [device list](https://denialwm.org/mobile.html#devices)
 join this table as their images are published.

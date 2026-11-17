@@ -19,6 +19,7 @@ boot 镜像，里面是它的内核。
 | OnePlus Pad 4 | [iceland-boot-358.zip](https://packages.denialwm.org/images/boot/iceland/iceland-boot-358.zip) | `Kaanapali.LA.1.0.r1-00975-STD.PROD-1` | 是 |
 | OnePlus 12R | [aston-boot-363.zip](https://packages.denialwm.org/images/boot/aston/aston-boot-363.zip) | `Kailua.LA.1.0.r1-02022-STD.PROD-1` | 是 |
 | Motorola Edge 70 | [roadstr-boot-388.zip](https://packages.denialwm.org/images/boot/roadstr/roadstr-boot-388.zip) | `W1WR36.39-115` | 是 |
+| OnePlus Pad 3 | [erhai-boot-72.zip](https://packages.denialwm.org/images/boot/erhai/erhai-boot-72.zip) | `Pakala.LA.1.0.r1-01218-STD.PROD-1` | 是 |
 
 [设备列表](https://denialwm.org/mobile.html#devices)中的其他设备会在镜像发布后
 加入此表。
