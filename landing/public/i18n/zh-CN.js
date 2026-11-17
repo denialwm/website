@@ -274,6 +274,7 @@ window.denialTranslations = {
           mobileData: "移动数据",
           modem: "调制解调器",
           displayOut: "视频输出",
+          credit: "贡献者",
         },
         tablet: "平板",
         phone: "手机",
@@ -283,7 +284,7 @@ window.denialTranslations = {
         partial: "部分可用",
         untested: "未测试",
         note: "<strong>部分可用</strong>：可以使用，但仍有未完成的部分。<strong>尚未</strong>：硬件存在，但还不能使用。<strong>未测试</strong>：尚未在当前内核上测试。<strong>—</strong> 表示设备没有该硬件。",
-        nudge: "<strong>这里的每台设备都是从我的桌上开始的。</strong>你的捐助会用来购买下一台，把它带到 Linux Perpetua。",
+        nudge: "<strong>这里的大多数设备都是从我的桌上开始的。</strong>你的捐助会用来购买下一台，把它带到 Linux Perpetua。",
         supportCta: "支持项目",
       },
       getIt: {
