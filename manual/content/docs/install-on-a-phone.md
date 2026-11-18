@@ -17,8 +17,8 @@ want to keep first.
 
 | Device | Boot image | Tested with stock firmware | Bootloader fastboot writes `boot` and `init_boot` | Maintainer |
 | --- | --- | --- | :---: | --- |
-| RedMagic 11 Pro | [nx809j-boot-321.zip](https://packages.denialwm.org/images/boot/nx809j/nx809j-boot-321.zip) | `Kaanapali.LA.1.0.r1-00850-STD.PROD-1.124266.75` | No | [Doctor Logix](https://github.com/doctorlogix) |
-| OnePlus Pad 4 | [iceland-boot-358.zip](https://packages.denialwm.org/images/boot/iceland/iceland-boot-358.zip) | `Kaanapali.LA.1.0.r1-00975-STD.PROD-1` | Yes | [Doctor Logix](https://github.com/doctorlogix) |
+| RedMagic 11 Pro | [nx809j-boot-393.zip](https://packages.denialwm.org/images/boot/nx809j/nx809j-boot-393.zip) | `Kaanapali.LA.1.0.r1-00850-STD.PROD-1.124266.75` | No | [Doctor Logix](https://github.com/doctorlogix) |
+| OnePlus Pad 4 | [iceland-boot-392.zip](https://packages.denialwm.org/images/boot/iceland/iceland-boot-392.zip) | `Kaanapali.LA.1.0.r1-00975-STD.PROD-1` | Yes | [Doctor Logix](https://github.com/doctorlogix) |
 | OnePlus 12R | [aston-boot-363.zip](https://packages.denialwm.org/images/boot/aston/aston-boot-363.zip) | `Kailua.LA.1.0.r1-02022-STD.PROD-1` | Yes | [Doctor Logix](https://github.com/doctorlogix) |
 | Motorola Edge 70 | [roadstr-boot-388.zip](https://packages.denialwm.org/images/boot/roadstr/roadstr-boot-388.zip) | `W1WR36.39-115` | Yes | [Doctor Logix](https://github.com/doctorlogix) |
 | OnePlus Pad 3 | [erhai-boot-72.zip](https://packages.denialwm.org/images/boot/erhai/erhai-boot-72.zip) | `Pakala.LA.1.0.r1-01218-STD.PROD-1` | Yes | [amenyxia](https://github.com/amenyxia) |
