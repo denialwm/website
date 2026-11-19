@@ -13,10 +13,16 @@ on a phone, see [Install on a phone](../install-on-a-phone/).
 
 On an ordinary window, direct touch reserves a compositor gesture vocabulary:
 
-- Dragging from the top 48 logical pixels moves the window.
-- Pinching resizes it around its center.
-- A two-finger downward swipe from the top strip minimizes it.
-- Three simultaneous contacts close it.
+- Dragging one finger from any of its corners moves the window.
+- Pinching two fingers resizes it.
+- A two-finger downward swipe begun in its bottom 48 logical pixels minimizes
+  it.
+- Pinching four fingers on it inward, toward its center, closes it. Sliding
+  four fingers across it together does not.
+
+Three- and four-finger swipes use the same shortcut bindings as the touchpad:
+by default, three fingers up open the Overview, three fingers left or right
+switch windows, and four fingers switch workspaces.
 
 Once a gesture is recognized, Denial cancels the application's previous touch
 sequence. Those gestures are recognized at the native surface boundary, so

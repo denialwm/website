@@ -124,10 +124,12 @@ expose their application-provided menus and pointer actions.
 ## Touch and mobile shell
 
 On an ordinary window, direct touch reserves a compositor gesture vocabulary:
-dragging from its top 48 logical pixels moves it, pinching resizes it around
-its center, a two-finger downward swipe from the top strip minimizes it, and
-three simultaneous contacts close it. Once a gesture is recognized, Denial
-cancels the application's previous touch sequence.
+dragging one finger from any of its corners moves it, pinching two fingers
+resizes it, a two-finger downward swipe begun in its bottom 48 logical pixels
+minimizes it, and pinching four fingers on it inward, toward its center, closes
+it. Three- and four-finger swipes use the same shortcut bindings as the
+touchpad. Once a gesture is recognized, Denial cancels the application's
+previous touch sequence.
 
 The explicitly selected mobile shell adds a paged home grid, app recents,
 notification history, quick settings, a status bar, mobile wallpaper controls,
