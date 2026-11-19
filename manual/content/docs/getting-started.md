@@ -18,7 +18,9 @@ GitHub release. NixOS 26.05 has a first-party source flake and module; see the
 Void Linux has completed runtime validation but has no first-party package
 yet. Debian Forky/Sid may use the Debian
 13 `trixie` repository on a best-effort basis; that rolling target has not
-completed the validation matrix.
+completed the validation matrix. Other derivatives of Arch, Debian, and Ubuntu
+(for example PikaOS) use their base's repository on the same best-effort
+basis; the installer recognizes them by `ID_LIKE` in `/etc/os-release`.
 
 | Architecture | Working | Binaries available |
 | --- | :---: | :---: |

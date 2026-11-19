@@ -16,7 +16,9 @@ Alpine Linux 3.24 也已受支持，其签名 APK 文件附在每个 GitHub Rele
 有官方源码 flake 和模块，参见
 [NixOS 指南](https://github.com/denialwm/denial/blob/main/packaging/nixos/README.md)。
 Void Linux 已通过运行时验证，但目前尚无官方软件包。Debian Forky/Sid 可尽力使用
-Debian 13 的 `trixie` 仓库；该滚动版本尚未完成完整验证矩阵。
+Debian 13 的 `trixie` 仓库；该滚动版本尚未完成完整验证矩阵。Arch、Debian 和 Ubuntu
+的其他衍生发行版（例如 PikaOS）同样尽力使用其上游的仓库；安装程序根据
+`/etc/os-release` 中的 `ID_LIKE` 识别它们。
 
 | 架构 | 可正常运行 | 提供二进制软件包 |
 | --- | :---: | :---: |
