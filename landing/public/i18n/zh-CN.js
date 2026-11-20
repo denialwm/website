@@ -585,7 +585,6 @@ window.denialTranslations = {
           copyLabel: "复制首次运行命令",
         },
         guide: "完整安装指南",
-        knownIssues: "已知问题",
         build: "自行构建",
       },
     },

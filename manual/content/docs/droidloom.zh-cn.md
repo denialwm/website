@@ -20,8 +20,6 @@ Droidloom 不使用闭源库。其原创代码采用
 
 预览版的安装步骤见上游指南：
 [docs/INSTALL.md](https://github.com/denialwm/droidloom/blob/main/docs/INSTALL.md)。
-安装前请阅读
-[已知问题](https://github.com/denialwm/droidloom/blob/main/docs/KNOWN_ISSUES.md)。
 
 Droidloom 的文本输入契约涵盖 Android 输入法，以及关闭 Denial 键盘。参见
 [文本输入契约](https://github.com/denialwm/droidloom/blob/main/docs/contracts/text-input-v1.md)。

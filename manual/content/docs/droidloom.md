@@ -24,8 +24,6 @@ An APK you install keeps its own terms.
 
 Install the preview from the upstream guide:
 [docs/INSTALL.md](https://github.com/denialwm/droidloom/blob/main/docs/INSTALL.md).
-Read [known issues](https://github.com/denialwm/droidloom/blob/main/docs/KNOWN_ISSUES.md)
-before installing.
 
 Droidloom's text-input contract covers Android IME and Denial keyboard
 dismissal. See the
