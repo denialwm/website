@@ -21,7 +21,7 @@ want to keep first.
 | OnePlus Pad 4 | [iceland-boot-392.zip](https://packages.denialwm.org/images/boot/iceland/iceland-boot-392.zip) | `Kaanapali.LA.1.0.r1-00975-STD.PROD-1` | Yes | [Doctor Logix](https://github.com/doctorlogix) |
 | OnePlus 12R | [aston-boot-363.zip](https://packages.denialwm.org/images/boot/aston/aston-boot-363.zip) | `Kailua.LA.1.0.r1-02022-STD.PROD-1` | Yes | [Doctor Logix](https://github.com/doctorlogix) |
 | Motorola Edge 70 | [roadstr-boot-388.zip](https://packages.denialwm.org/images/boot/roadstr/roadstr-boot-388.zip) | `W1WR36.39-115` | Yes | [Doctor Logix](https://github.com/doctorlogix) |
-| OnePlus Pad 3 | [erhai-boot-72.zip](https://packages.denialwm.org/images/boot/erhai/erhai-boot-72.zip) | `Pakala.LA.1.0.r1-01218-STD.PROD-1` | Yes | [amenyxia](https://github.com/amenyxia) |
+| OnePlus Pad 3 | [erhai-boot-99.zip](https://packages.denialwm.org/images/boot/erhai/erhai-boot-99.zip) | `Pakala.LA.1.0.r1-01218-STD.PROD-1` | Yes | [amenyxia](https://github.com/amenyxia) |
 
 The maintainer brought the device to Linux Perpetua and looks after its boot image.
 
