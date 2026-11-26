@@ -15,7 +15,7 @@ boot 镜像，里面是它的内核。
 
 | 设备 | boot 镜像 | 测试所用的原厂固件 | bootloader 的 fastboot 能否写入 `boot` 和 `init_boot` | 维护者 |
 | --- | --- | --- | :---: | --- |
-| RedMagic 11 Pro | [nx809j-boot-405.zip](https://packages.denialwm.org/images/boot/nx809j/nx809j-boot-405.zip) | `Kaanapali.LA.1.0.r1-00850-STD.PROD-1.124266.75` | 否 | [Doctor Logix](https://github.com/doctorlogix) |
+| RedMagic 11 Pro | [nx809j-boot-399.zip](https://packages.denialwm.org/images/boot/nx809j/nx809j-boot-399.zip) | `Kaanapali.LA.1.0.r1-00850-STD.PROD-1.124266.75` | 否 | [Doctor Logix](https://github.com/doctorlogix) |
 | OnePlus Pad 4 | [iceland-boot-392.zip](https://packages.denialwm.org/images/boot/iceland/iceland-boot-392.zip) | `Kaanapali.LA.1.0.r1-00975-STD.PROD-1` | 是 | [Doctor Logix](https://github.com/doctorlogix) |
 | OnePlus 12R | [aston-boot-363.zip](https://packages.denialwm.org/images/boot/aston/aston-boot-363.zip) | `Kailua.LA.1.0.r1-02022-STD.PROD-1` | 是 | [Doctor Logix](https://github.com/doctorlogix) |
 | Motorola Edge 70 | [roadstr-boot-388.zip](https://packages.denialwm.org/images/boot/roadstr/roadstr-boot-388.zip) | `W1WR36.39-115` | 是 | [Doctor Logix](https://github.com/doctorlogix) |
@@ -176,9 +176,8 @@ fastboot reboot
 安装界面的 fastboot 在所有手机上都能写入 `boot` 和 `init_boot`，包括 bootloader
 自身不能写入的手机。它始终写入手机启动所用的槽位，并拒绝写入另一个槽位。
 
-RedMagic 11 Pro 的通话回声消除需要 FastRPC 音频服务和 399 或更新版本的 boot
-镜像；肩键和 RGB 灯需要 405 版 boot 镜像。先运行 `sudo pacman -Syu`，再按上述步骤
-更新 boot 镜像。
+RedMagic 11 Pro 的通话回声消除需要 FastRPC 音频服务和 399 版 boot 镜像。
+先运行 `sudo pacman -Syu`，再按上述步骤更新 boot 镜像。
 
 ## 重新安装
 
