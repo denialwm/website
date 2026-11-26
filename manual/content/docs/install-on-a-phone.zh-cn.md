@@ -15,7 +15,7 @@ boot 镜像，里面是它的内核。
 
 | 设备 | boot 镜像 | 测试所用的原厂固件 | bootloader 的 fastboot 能否写入 `boot` 和 `init_boot` | 维护者 |
 | --- | --- | --- | :---: | --- |
-| RedMagic 11 Pro | [nx809j-boot-406.zip](https://packages.denialwm.org/images/boot/nx809j/nx809j-boot-406.zip) | `Kaanapali.LA.1.0.r1-00850-STD.PROD-1.124266.75` | 否 | [Doctor Logix](https://github.com/doctorlogix) |
+| RedMagic 11 Pro | [nx809j-boot-407.zip](https://packages.denialwm.org/images/boot/nx809j/nx809j-boot-407.zip) | `Kaanapali.LA.1.0.r1-00850-STD.PROD-1.124266.75` | 否 | [Doctor Logix](https://github.com/doctorlogix) |
 | OnePlus Pad 4 | [iceland-boot-392.zip](https://packages.denialwm.org/images/boot/iceland/iceland-boot-392.zip) | `Kaanapali.LA.1.0.r1-00975-STD.PROD-1` | 是 | [Doctor Logix](https://github.com/doctorlogix) |
 | OnePlus 12R | [aston-boot-363.zip](https://packages.denialwm.org/images/boot/aston/aston-boot-363.zip) | `Kailua.LA.1.0.r1-02022-STD.PROD-1` | 是 | [Doctor Logix](https://github.com/doctorlogix) |
 | Motorola Edge 70 | [roadstr-boot-388.zip](https://packages.denialwm.org/images/boot/roadstr/roadstr-boot-388.zip) | `W1WR36.39-115` | 是 | [Doctor Logix](https://github.com/doctorlogix) |
